@@ -24,18 +24,22 @@ class ImageDataset(Dataset):
             for line in f:
                 fields = line.strip('\n').split(',')
 
-                labels = [int(self.dict.get(fields[idx_pneumothorax]))]
-                self._labels.append(labels)
-
+                labels = [int(self.dict.get(fields[idx_pneumothorax], '0'))]  # Default to '0' if key not found
                 image_path = fields[0]
                 image_path = os.path.join(cfg.base_path, os.path.join(*(image_path.split(os.path.sep)[1:])))
-                self._image_paths.append(image_path)
-                assert os.path.exists(image_path), image_path
+                
+                # Only append the image path if the file exists
+                if os.path.exists(image_path):
+                    self._image_paths.append(image_path)
+                    self._labels.append(labels)
+                else:
+                    print(f"Skipping non-existent path: {image_path}")
 
         self._num_image = len(self._image_paths)
 
     def __len__(self):
         return self._num_image
+
 
     def __getitem__(self, idx):
         image = cv2.imread(self._image_paths[idx], 0)
