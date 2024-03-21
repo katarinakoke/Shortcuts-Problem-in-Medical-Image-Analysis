@@ -37,6 +37,7 @@ class ImageDataset(Dataset):
                 self._image_paths.append(image_path)
                 assert os.path.exists(image_path), image_path
 
+
         self._num_image = len(self._image_paths)
 
     def __len__(self):

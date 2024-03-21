@@ -6,6 +6,7 @@ from model.backbone.densenet import (densenet121, densenet169, densenet201)
 from model.backbone.inception import (inception_v3)
 from model.global_pool import GlobalPool
 from model.attention_map import AttentionMap
+import torch
 
 
 BACKBONES = {'vgg19': vgg19,
@@ -23,6 +24,19 @@ BACKBONES_TYPES = {'vgg19': 'vgg',
                    'densenet201': 'densenet',
                    'inception_v3': 'inception'}
 
+class GradientReversalLayer(torch.autograd.Function):
+    @staticmethod
+    def forward(ctx, x, lambda_val):
+        ctx.lambda_val = lambda_val
+        return x.view_as(x)
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        lambda_val = ctx.lambda_val
+        lambda_val = grad_output.new_tensor(lambda_val)
+        dx = lambda_val * grad_output.neg()
+        return dx, None
+
 
 class Classifier(nn.Module):
 
@@ -39,6 +53,7 @@ class Classifier(nn.Module):
         self._init_classifier()
         self._init_bn()
         self._init_attention_map()
+        self._init_sensitive_attribute_classifier()
 
     def _init_classifier(self):
         for index, num_class in enumerate(self.cfg.num_classes):
@@ -124,11 +139,15 @@ class Classifier(nn.Module):
             raise Exception(
                 'Unknown backbone type : {}'.format(self.cfg.backbone)
             )
+    
+    def _init_sensitive_attribute_classifier(self):
+
+        self.sensitive_attribute_classifier = nn.Linear(self.backbone.num_features * self.expand, 1)
 
     def cuda(self, device=None):
         return self._apply(lambda t: t.cuda(device))
 
-    def forward(self, x):
+    def forward(self, x, lambda_val=1.0):
         # (N, C, H, W)
         feat_map = self.backbone(x)
         # [(N, 1), (N,1),...]
@@ -159,5 +178,10 @@ class Classifier(nn.Module):
             # (N, num_class)
             logit = logit.squeeze(-1).squeeze(-1)
             logits.append(logit)
+        
+        # Sensitive attribute prediction
+        # Gradient reversal and sensitive attribute prediction
+        reverse_feat_map = GradientReversalLayer.apply(feat_map, lambda_val)
+        sensitive_logits = self.sensitive_attr_classifier(self.global_pool(reverse_feat_map))
 
-        return (logits, logit_maps)
+        return (logits, logit_maps, sensitive_logits)
