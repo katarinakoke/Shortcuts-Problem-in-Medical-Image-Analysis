@@ -15,17 +15,22 @@ class ImageDataset(Dataset):
         self._label_header = None
         self._image_paths = []
         self._labels = []
+        self._senstive_attribute = []
         self._mode = mode
-        self.dict = {'1.0': '1', '1': '1', '': '0', '0.0': '0', '0': '0', '-1.0': '0', '-1': '0'}
+        self.dict = {'1.0': '1', '1': '1', '': '0', '0.0': '0', '0': '0', '-1.0': '0', '-1': '0', 'Female': '1', 'Male': '0', 'Unknown': '0'}
         with open(label_path) as f:
             header = f.readline().strip('\n').split(',')
             idx_pneumothorax = header.index('Pneumothorax')
+            idx_sensitive_attribute = header.index(cfg.get('sensitive_attribute'))
             self._label_header = [header[idx_pneumothorax]]
             for line in f:
                 fields = line.strip('\n').split(',')
 
                 labels = [int(self.dict.get(fields[idx_pneumothorax]))]
                 self._labels.append(labels)
+
+                sensitive_attribute = [int(self.dict.get(fields[idx_sensitive_attribute]))]
+                self._senstive_attribute.append(sensitive_attribute)
 
                 image_path = fields[0]
                 image_path = os.path.join(cfg.base_path, os.path.join(*(image_path.split(os.path.sep)[1:])))
@@ -45,11 +50,12 @@ class ImageDataset(Dataset):
         image = np.array(image)
         image = transform(image, self.cfg)
         labels = np.array(self._labels[idx]).astype(np.float32)
+        sensitive_attribute = np.array(self._senstive_attribute[idx]).astype(np.float32)
 
         path = self._image_paths[idx]
 
         if self._mode == 'train' or self._mode == 'dev':
-            return (image, labels)
+            return (image, labels, sensitive_attribute)
         elif self._mode == 'test':
             return (image, path)
         elif self._mode == 'heatmap':
