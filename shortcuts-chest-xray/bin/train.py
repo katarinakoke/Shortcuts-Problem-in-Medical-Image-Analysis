@@ -22,7 +22,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 torch.manual_seed(0)
 torch.cuda.manual_seed_all(0)
 
-from data.dataset import ImageDataset  # noqa 
+from data.dataset import ImageDataset  # noqa
 from model.classifier import Classifier  # noqa
 from utils.misc import lr_schedule  # noqa
 from model.utils import get_optimizer  # noqa
@@ -45,305 +45,6 @@ parser.add_argument('--logtofile', default=False, type=bool, help="Save log "
 parser.add_argument('--verbose', default=False, type=bool, help="Detail info")
 
 def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
-
-    target = target.to(device)
-    sensitive_target = sensitive_target.to(device)
-
-    # For the primary task
-    primary_target = target[:, index].view(-1)
-    pos_weight_primary = torch.from_numpy(np.array(cfg.pos_weight[index], dtype=np.float32)).to(device).type_as(primary_target)
-    
-    # Adjust loss calculation based on batch_weight
-    if cfg.batch_weight:
-        weight = (primary_target.size()[0] - primary_target.sum()) / primary_target.sum() if primary_target.sum() > 0 else None
-        primary_loss = F.binary_cross_entropy_with_logits(output[index].view(-1), primary_target, pos_weight=weight if weight is not None else pos_weight_primary)
-    else:
-        primary_loss = F.binary_cross_entropy_with_logits(output[index].view(-1), primary_target, pos_weight=pos_weight_primary)
-
-<<<<<<< HEAD
-    primary_label = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
-    primary_acc = (primary_target == primary_label).float().sum() / len(primary_label)
-
-=======
-# def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
-#     # Ensure target is on the same device as the model output
-#     target = target.to(device)
-#     # Ensure sensitive_target is on the same device as the model output
-#     sensitive_target = sensitive_target.to(device)
-
-#     # Existing loss calculation for primary task(s)
-#     if cfg.criterion == 'BCE':
-#         for num_class in cfg.num_classes:
-#             assert num_class == 1
-#         target = target[:, index].view(-1)
-#         pos_weight = torch.from_numpy(
-#             np.array(cfg.pos_weight,
-#                      dtype=np.float32)).to(device).type_as(target)
-#         if cfg.batch_weight:
-#             if target.sum() == 0:
-#                 primary_loss = torch.tensor(0., requires_grad=True).to(device)
-#             else:
-#                 weight = (target.size()[0] - target.sum()) / target.sum()
-#                 primary_loss = F.binary_cross_entropy_with_logits(
-#                     output[index].view(-1), target, pos_weight=weight)
-#         else:
-#             primary_loss = F.binary_cross_entropy_with_logits(
-#                 output[index].view(-1), target, pos_weight=pos_weight[index])
-
-#         primary_label = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
-#         primary_acc = (target == primary_label).float().sum() / len(primary_label)
-#     else:
-#         raise Exception('Unknown criterion : {}'.format(cfg.criterion))
-    
-#     # Sensitive attribute loss calculation (assuming binary classification for demonstration)
-#     sensitive_target = sensitive_target.view(-1)  # Make sure sensitive_target is correctly shaped
-#     sensitive_loss = F.binary_cross_entropy_with_logits(sensitive_logits.view(-1), sensitive_target)
-
-#     sensitive_label = torch.sigmoid(sensitive_logits.view(-1)).ge(0.5).float()
-#     sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
-
-#     # Combine the losses (you might want to weigh them differently)
-#     total_loss = primary_loss + sensitive_loss
-#     total_acc = (primary_acc, sensitive_acc)  # Tuple of accuracies
-
-#     return (total_loss, total_acc)
-# def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
-#     # Ensure target is on the same device as the model output
-#     target = target.to(device)
-#     # Ensure sensitive_target is on the same device as the model output
-#     sensitive_target = sensitive_target.to(device)
-    
-#     # Existing loss calculation for primary task(s)
-#     if cfg.criterion == 'BCE':
-#         for num_class in cfg.num_classes:
-#             assert num_class == 1
-#         target = target[:, index].view(-1)
-#         pos_weight = torch.from_numpy(
-#             np.array(cfg.pos_weight,
-#                      dtype=np.float32)).to(device).type_as(target)
-        
-#         # Calculate primary loss
-#         if cfg.batch_weight:
-#             weight = torch.zeros_like(target)  # Default to 0, will be updated if target.sum() is not 0
-#             if target.sum() > 0:
-#                 weight = (target.size()[0] - target.sum()) / target.sum()
-#             primary_loss = F.binary_cross_entropy_with_logits(
-#                 output[index].view(-1), target, pos_weight=weight)
-#         else:
-#             primary_loss = F.binary_cross_entropy_with_logits(
-#                 output[index].view(-1), target, pos_weight=pos_weight[index])
-
-#         primary_label = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
-#         primary_acc = (target == primary_label).float().sum() / len(primary_label)
-#     else:
-#         raise Exception('Unknown criterion : {}'.format(cfg.criterion))
-    
-#     # Existing loss calculation for primary task(s)
-#     if cfg.criterion == 'BCE':
-#         for num_class in cfg.num_classes:
-#             assert num_class == 1
-#         sensitive_target = sensitive_target[:, index].view(-1)
-#         pos_weight = torch.from_numpy(
-#             np.array(cfg.pos_weight,
-#                      dtype=np.float32)).to(device).type_as(target)
-        
-#         # Calculate primary loss
-#         if cfg.batch_weight:
-#             weight = torch.zeros_like(sensitive_target)  # Default to 0, will be updated if target.sum() is not 0
-#             if sensitive_target.sum() > 0:
-#                 weight = (sensitive_target.size()[0] - sensitive_target.sum()) / sensitive_target.sum()
-#             sensitive_loss = F.binary_cross_entropy_with_logits(
-#                 output[index].view(-1), sensitive_target, pos_weight=weight)
-#         else:
-#             sensitive_loss = F.binary_cross_entropy_with_logits(
-#                 output[index].view(-1), sensitive_target, pos_weight=pos_weight[index])
-
-#         sensitive_label = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
-#         sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
-#     else:
-#         raise Exception('Unknown criterion : {}'.format(cfg.criterion))
-#     # Sensitive attribute loss calculation
-#     # sensitive_target = sensitive_target.view(-1)
-#     # sensitive_loss = F.binary_cross_entropy_with_logits(sensitive_logits.view(-1), sensitive_target)
-
-#     # sensitive_label = torch.sigmoid(sensitive_logits.view(-1)).ge(0.5).float()
-#     # sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
-
-#     # Combine the losses
-#     total_loss = primary_loss + sensitive_loss
-#     total_acc = (primary_acc, sensitive_acc)
-
-#     return (total_loss, total_acc)
-
-# def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
-#     target = target.to(device)
-#     sensitive_target = sensitive_target.to(device)
-    
-#     if cfg.criterion != 'BCE':
-#         raise Exception('Unknown criterion: {}'.format(cfg.criterion))
-
-#     # Common function to compute BCE loss
-#     def compute_loss(logits, targets, pos_weights, batch_weights):
-#         logits = logits.view(-1)
-#         targets = targets.view(-1)
-#         if batch_weights:
-#             weight = torch.zeros_like(targets)
-#             if targets.sum() > 0:
-#                 weight = (targets.size(0) - targets.sum()) / targets.sum()
-#             loss = F.binary_cross_entropy_with_logits(logits, targets, pos_weight=weight)
-#         else:
-#             loss = F.binary_cross_entropy_with_logits(logits, targets, pos_weight=pos_weights)
-#         label = torch.sigmoid(logits).ge(0.5).float()
-#         acc = (targets == label).float().sum() / len(label)
-#         return loss, acc
-
-#     # Calculate primary loss and accuracy
-#     pos_weight_primary = torch.tensor(cfg.pos_weight[index], dtype=torch.float32, device=device)
-#     primary_loss, primary_acc = compute_loss(output[index], target[:, index], pos_weight_primary, cfg.batch_weight)
-
-#     # Calculate sensitive loss and accuracy
-#     pos_weight_sensitive = torch.tensor(cfg.pos_weight[index], dtype=torch.float32, device=device)  # Adjust if different pos_weight for sensitive task
-#     sensitive_loss, sensitive_acc = compute_loss(sensitive_logits, sensitive_target, pos_weight_sensitive, cfg.batch_weight)
-
-#     # Combine the losses and accuracies
-#     total_loss = primary_loss + sensitive_loss
-#     total_acc = (primary_acc, sensitive_acc)
-
-#     return (total_loss, total_acc)
-
-import torch
-import torch.nn.functional as F
-import numpy as np
-
-# def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
-    
-#     target = target.to(device)
-#     sensitive_target = sensitive_target.to(device)
-
-#     # Head 1 Loss
-#     if cfg.criterion == 'BCE':
-#         target = target[:, index].view(-1)
-#         pos_weight = torch.from_numpy(
-#             np.array(cfg.pos_weight, dtype=np.float32)).to(device).type_as(target)
-#         if cfg.batch_weight:
-#             if target.sum() == 0:
-#                 loss1 = torch.tensor(0., requires_grad=True).to(device)
-#             else:
-#                 weight = (target.size()[0] - target.sum()) / target.sum()
-#                 loss1 = F.binary_cross_entropy_with_logits(
-#                     output[index].view(-1), target, pos_weight=weight)
-#         else:
-#             loss1 = F.binary_cross_entropy_with_logits(
-#                 output[index].view(-1), target, pos_weight=pos_weight[index])
-
-#         label1 = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
-#         acc1 = (target == label1).float().sum() / len(label1)
-#     else:
-#         raise Exception('Unknown criterion for main task: {}'.format(cfg.criterion))
-
-#     # Head 2 Loss (Assuming similar settings for the sensitive head)
-#     sensitive_target = sensitive_target.view(-1)  # Assuming sensitive_target is already correctly shaped
-#     pos_weight_sensitive = torch.from_numpy(
-#         np.array(cfg.sensitive_pos_weight, dtype=np.float32)).to(device).type_as(sensitive_target)
-#     if cfg.batch_weight_sensitive:
-#         if sensitive_target.sum() == 0:
-#             loss2 = torch.tensor(0., requires_grad=True).to(device)
-#         else:
-#             weight_sensitive = (sensitive_target.size()[0] - sensitive_target.sum()) / sensitive_target.sum()
-#             loss2 = F.binary_cross_entropy_with_logits(
-#                 sensitive_logits.view(-1), sensitive_target, pos_weight=weight_sensitive)
-#     else:
-#         loss2 = F.binary_cross_entropy_with_logits(
-#             sensitive_logits.view(-1), sensitive_target, pos_weight=pos_weight_sensitive)
-
-#     label2 = torch.sigmoid(sensitive_logits.view(-1)).ge(0.5).float()
-#     acc2 = (sensitive_target == label2).float().sum() / len(label2)
-
-#     # Combine Losses
-#     total_loss = loss1 + loss2
-#     # Combine Accuracies (optional, depending on whether you need it)
-#     total_acc = (acc1 + acc2) / 2
-
-#     return (total_loss, total_acc)
-# def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
-#     target = target.to(device)
-#     sensitive_target = sensitive_target.to(device)
-
-#     # Calculate loss and accuracy for the primary task specified by index
-#     primary_target = target[:, index].view(-1)
-#     pos_weight_primary = torch.from_numpy(
-#         np.array(cfg.pos_weight[index], dtype=np.float32)
-#     ).to(device).type_as(primary_target)
-    
-#     if cfg.batch_weight:
-#         primary_loss = torch.tensor(0., requires_grad=True).to(device) if primary_target.sum() == 0 else \
-#             F.binary_cross_entropy_with_logits(
-#                 output[index].view(-1), primary_target,
-#                 pos_weight=(primary_target.size()[0] - primary_target.sum()) / primary_target.sum()
-#             )
-#     else:
-#         primary_loss = F.binary_cross_entropy_with_logits(
-#             output[index].view(-1), primary_target, pos_weight=pos_weight_primary
-#         )
-
-#     primary_label = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
-#     primary_acc = (primary_target == primary_label).float().sum() / len(primary_label)
-
-#     # Calculate loss and accuracy for the sensitive attribute
-#     pos_weight_sensitive = torch.from_numpy(
-#         np.array(cfg.sensitive_pos_weight, dtype=np.float32)
-#     ).to(device).type_as(sensitive_target)
-    
-#     sensitive_loss = torch.tensor(0., requires_grad=True).to(device) if sensitive_target.sum() == 0 else \
-#         F.binary_cross_entropy_with_logits(
-#             sensitive_logits.view(-1), sensitive_target,
-#             pos_weight=(sensitive_target.size()[0] - sensitive_target.sum()) / sensitive_target.sum()
-#         )
-
-#     sensitive_label = torch.sigmoid(sensitive_logits.view(-1)).ge(0.5).float()
-#     sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
-
-#     # Return primary task loss and accuracy, and sensitive task loss and accuracy
-#     return (primary_loss, primary_acc), (sensitive_loss, sensitive_acc)
-
-# def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
-
-#     target = target.to(device)
-#     sensitive_target = sensitive_target.to(device)
-
-#     # For the primary task
-#     primary_target = target[:, index].view(-1)
-#     pos_weight_primary = torch.from_numpy(np.array(cfg.pos_weight[index], dtype=np.float32)).to(device).type_as(primary_target)
-    
-#     # Adjust loss calculation based on batch_weight
-#     if cfg.batch_weight:
-#         if primary_target.sum() == 0:
-#             primary_loss = torch.tensor(0., requires_grad=True).to(device)
-#         else:
-#             weight = (primary_target.size()[0] - primary_target.sum()) / primary_target.sum()
-#             primary_loss = F.binary_cross_entropy_with_logits(output[index].view(-1), primary_target, pos_weight=weight)
-#     else:
-#         primary_loss = F.binary_cross_entropy_with_logits(output[index].view(-1), primary_target, pos_weight=pos_weight_primary)
-
-#     primary_label = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
-#     primary_acc = (primary_target == primary_label).float().sum() / len(primary_label)
-
-#     # For the sensitive attribute, ensure both tensors are the correct shape
-#     sensitive_target = sensitive_target.view(-1)  # Flatten the sensitive_target
-#     sensitive_logits = sensitive_logits.view(-1)  # Ensure logits are also flattened if not already
-#     pos_weight_sensitive = torch.from_numpy(np.array(cfg.sensitive_pos_weight, dtype=np.float32)).to(device).type_as(sensitive_target)
-    
-#     # Adjust loss calculation for sensitive attribute based on batch_weight_sensitive
-#     sensitive_loss = torch.tensor(0., requires_grad=True).to(device) if sensitive_target.sum() == 0 else \
-#         F.binary_cross_entropy_with_logits(sensitive_logits, sensitive_target, pos_weight=(sensitive_target.size()[0] - sensitive_target.sum()) / sensitive_target.sum())
-
-#     sensitive_label = torch.sigmoid(sensitive_logits).ge(0.5).float()
-#     sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
-
-#     return (primary_loss, primary_acc), (sensitive_loss, sensitive_acc)
-
-def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
-
     target = target.to(device)
     sensitive_target = sensitive_target.to(device)
 
@@ -361,25 +62,24 @@ def get_loss(output, target, sensitive_logits, sensitive_target, index, device, 
     primary_label = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
     primary_acc = (primary_target == primary_label).float().sum() / len(primary_label)
 
->>>>>>> 7c8e1873d550e42946d2817420d4414d55a70f43
     # For the sensitive attribute, ensure both tensors are the correct shape
     sensitive_target = sensitive_target.view(-1)  # Flatten the sensitive_target
     sensitive_logits = sensitive_logits.view(-1)  # Ensure logits are also flattened if not already
     pos_weight_sensitive = torch.from_numpy(np.array(cfg.sensitive_pos_weight, dtype=np.float32)).to(device).type_as(sensitive_target)
-    
-    # Adjust loss calculation for sensitive attribute based on batch_weight_sensitive
-    weight_sensitive = (sensitive_target.size()[0] - sensitive_target.sum()) / sensitive_target.sum() if sensitive_target.sum() > 0 else None
-    sensitive_loss = F.binary_cross_entropy_with_logits(sensitive_logits, sensitive_target, pos_weight=weight_sensitive if weight_sensitive is not None else pos_weight_sensitive)
+        
+    if cfg.sensitive_criterion == 'BCE':
+        # Adjust loss calculation for sensitive attribute based on batch_weight_sensitive
+        weight_sensitive = (sensitive_target.size()[0] - sensitive_target.sum()) / sensitive_target.sum() if sensitive_target.sum() > 0 else None
+        sensitive_loss = F.binary_cross_entropy_with_logits(sensitive_logits, sensitive_target, pos_weight=weight_sensitive if weight_sensitive is not None else pos_weight_sensitive)
 
-    sensitive_label = torch.sigmoid(sensitive_logits).ge(0.5).float()
-    sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
+        sensitive_label = torch.sigmoid(sensitive_logits).ge(0.5).float()
+        sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
 
+    # else:
+    #     sensitive_loss = F.l1_loss(sensitive_logits, sensitive_target)
+        
     return (primary_loss, primary_acc), (sensitive_loss, sensitive_acc)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 7c8e1873d550e42946d2817420d4414d55a70f43
 
 
 def train_epoch(summary, summary_dev, cfg, args, model, dataloader,
@@ -413,7 +113,6 @@ def train_epoch(summary, summary_dev, cfg, args, model, dataloader,
 
         for t in range(num_tasks):
             (loss_t, acc_t), (sensitive_loss, sensitive_acc) = get_loss(output, target, sensitive_logits, sensitive_target, t, device, cfg)
-<<<<<<< HEAD
             
             total_loss += loss_t + sensitive_loss
             
@@ -422,16 +121,6 @@ def train_epoch(summary, summary_dev, cfg, args, model, dataloader,
 
             sensitive_loss_sum[t] += sensitive_loss.item()
             sensitive_acc_sum[t] += sensitive_acc.item()
-=======
-            total_loss += loss_t
-            loss_sum[t] += loss_t.item()
-            acc_sum[t] += acc_t.item()  # Now acc_t is a scalar
-        
-        # Assuming the sensitive task is handled in the last position
-        loss_sum[-1] += sensitive_loss.item()
-        acc_sum[-1] += sensitive_acc.item()
-
->>>>>>> 7c8e1873d550e42946d2817420d4414d55a70f43
 
         optimizer.zero_grad()
 
@@ -626,10 +315,9 @@ def test_epoch(summary, cfg, args, model, dataloader):
     dataiter = iter(dataloader)
     num_tasks = len(cfg.num_classes)
 
-    loss_sum = np.zeros(num_tasks + 1)  # +1 to include sensitive attribute
-    acc_sum = np.zeros(num_tasks + 1)  # +1 to include sensitive attribute
+    loss_sum = np.zeros(num_tasks)
+    acc_sum = np.zeros(num_tasks)
 
-<<<<<<< HEAD
     sensitive_loss_sum = np.zeros(num_tasks)
     sensitive_acc_sum = np.zeros(num_tasks)
 
@@ -638,12 +326,6 @@ def test_epoch(summary, cfg, args, model, dataloader):
 
     sensitive_predlist = list(x for x in range(len(cfg.num_classes)))
     sensitive_true_list = list(x for x in range(len(cfg.num_classes)))
-=======
-    predlist = [np.array([]) for _ in range(num_tasks)]
-    true_list = [np.array([]) for _ in range(num_tasks)]
-    sensitive_predlist = np.array([])
-    sensitive_true_list = np.array([])
->>>>>>> 7c8e1873d550e42946d2817420d4414d55a70f43
 
     for step in range(steps):
         image, target, sensitive_target = next(dataiter)
@@ -653,7 +335,6 @@ def test_epoch(summary, cfg, args, model, dataloader):
         sensitive_target = sensitive_target.to(device)
         output, logit_map, sensitive_logits = model(image)
 
-<<<<<<< HEAD
         # different number of tasks
         for t in range(len(cfg.num_classes)):
 
@@ -662,19 +343,12 @@ def test_epoch(summary, cfg, args, model, dataloader):
             # AUC
             output_tensor = torch.sigmoid(
                 output[t].view(-1)).cpu().detach().numpy()
-=======
-        # Process primary tasks
-        for t in range(num_tasks):
-            (loss_t, acc_t), (sens_loss, sens_acc) = get_loss(output, target, sensitive_logits, sensitive_target, t, device, cfg)
-            output_tensor = torch.sigmoid(output[t].view(-1)).cpu().detach().numpy()
->>>>>>> 7c8e1873d550e42946d2817420d4414d55a70f43
             target_tensor = target[:, t].view(-1).cpu().detach().numpy()
 
             sensitive_output_tensor = torch.sigmoid(
                 sensitive_logits[t].view(-1)).cpu().detach().numpy()
             sensitive_target_tensor = sensitive_target[t].view(-1).cpu().detach().numpy()
 
-<<<<<<< HEAD
             if step == 0:
                 predlist[t] = output_tensor
                 true_list[t] = target_tensor
@@ -689,21 +363,9 @@ def test_epoch(summary, cfg, args, model, dataloader):
 
             loss_sum[t] += loss_t.item()
             acc_sum[t] += acc_t.item()
-=======
-            loss_sum[t] += loss_t.item()
-            acc_sum[t] += acc_t.item()
-
-        # Assuming sensitive attribute is processed along with the last task
-        sensitive_output_tensor = torch.sigmoid(sensitive_logits.view(-1)).cpu().detach().numpy()
-        sensitive_target_tensor = sensitive_target.view(-1).cpu().detach().numpy()
->>>>>>> 7c8e1873d550e42946d2817420d4414d55a70f43
 
             sensitive_loss_sum[t] += sensitive_loss.item()
             sensitive_acc_sum[t] += sensitive_acc.item()
-
-        # Aggregate the sensitive task's metrics
-        loss_sum[-1] += sens_loss.item()
-        acc_sum[-1] += sens_acc.item()
 
     summary['loss'] = loss_sum / steps
     summary['acc'] = acc_sum / steps

@@ -24,18 +24,18 @@ BACKBONES_TYPES = {'vgg19': 'vgg',
                    'densenet201': 'densenet',
                    'inception_v3': 'inception'}
 
-# class GradientReversalLayer(torch.autograd.Function):
-#     @staticmethod
-#     def forward(ctx, x, lambda_val):
-#         ctx.lambda_val = lambda_val
-#         return x.view_as(x)
+class GradientReversalLayer(torch.autograd.Function):
+    @staticmethod
+    def forward(ctx, x, lambda_val):
+        ctx.lambda_val = lambda_val
+        return x.view_as(x)
 
-#     @staticmethod
-#     def backward(ctx, grad_output):
-#         lambda_val = ctx.lambda_val
-#         lambda_val = grad_output.new_tensor(lambda_val)
-#         dx = lambda_val * grad_output.neg()
-#         return dx, None
+    @staticmethod
+    def backward(ctx, grad_output):
+        lambda_val = ctx.lambda_val
+        lambda_val = grad_output.new_tensor(lambda_val)
+        dx = lambda_val * grad_output.neg()
+        return dx, None
 
 
 class Classifier(nn.Module):
@@ -53,6 +53,7 @@ class Classifier(nn.Module):
         self._init_classifier()
         self._init_bn()
         self._init_attention_map()
+        self.sensitive_attribute = cfg['sensitive_attribute']
         self._init_sensitive_attribute_classifier()
 
     def _init_classifier(self):
@@ -141,15 +142,8 @@ class Classifier(nn.Module):
             )
     
     def _init_sensitive_attribute_classifier(self):
-
         self.sensitive_attribute_classifier = nn.Linear(self.backbone.num_features * self.expand, 1)
-
-    # def _init_sensitive_attribute_classifier(self):
-    #     # Adjust this line to match the output feature size of the global pooling layer.
-    #     # Assuming the output feature size after global pooling is 2048:
-    #     self.sensitive_attribute_classifier = nn.Linear(2048, 1)  # Output size is 1 for binary classification
-
-
+    
     def cuda(self, device=None):
         return self._apply(lambda t: t.cuda(device))
 
@@ -185,33 +179,12 @@ class Classifier(nn.Module):
             logit = logit.squeeze(-1).squeeze(-1)
             logits.append(logit)
         
-<<<<<<< HEAD
         #Gradient Reversal 
         reverse_feat_map = GradientReversalLayer.apply(feat_map, lambda_val)
         pooled_feat = self.global_pool(reverse_feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(reverse_feat_map, logit_map)
 
-
         # pooled_feat = self.global_pool(feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(feat_map, logit_map)
         
-=======
-        # Sensitive attribute prediction
-        # Gradient reversal and sensitive attribute prediction
-        # reverse_feat_map = GradientReversalLayer.apply(feat_map, lambda_val)
-        
-        # pooled_feat = self.global_pool(reverse_feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(reverse_feat_map, logit_map)
-        # # sensitive_logits = self.sensitive_attribute_classifier(pooled_feat)
-
-        # pooled_feat = pooled_feat.view(pooled_feat.size(0), -1)  # Flatten the tensor
-        # sensitive_logits = self.sensitive_attribute_classifier(pooled_feat)
-
-
-        # return (logits, logit_maps, sensitive_logits)
-        # Sensitive attribute prediction
-        # Flatten feature map if necessary and pass through the sensitive attribute classifier
-        pooled_feat = self.global_pool(feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(feat_map, logit_map)
-        # sensitive_logits = self.sensitive_attribute_classifier(pooled_feat)
-
->>>>>>> 7c8e1873d550e42946d2817420d4414d55a70f43
         pooled_feat = pooled_feat.view(pooled_feat.size(0), -1)  # Flatten the tensor
         sensitive_logits = self.sensitive_attribute_classifier(pooled_feat)
 
