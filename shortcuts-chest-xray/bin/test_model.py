@@ -70,7 +70,7 @@ def test_epoch(cfg, args, model, dataloader):
         image, path = next(dataiter)
         image = image.to(device)
 
-        output, logit_maps, sensitive_logits = model(image)
+        output, logit_maps, sensitive_logits, sensitive_feat = model(image)
 
         batch_size = len(path)
 

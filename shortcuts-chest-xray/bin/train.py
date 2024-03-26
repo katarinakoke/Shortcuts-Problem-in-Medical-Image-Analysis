@@ -75,9 +75,13 @@ def get_loss(output, target, sensitive_logits, sensitive_target, index, device, 
         sensitive_label = torch.sigmoid(sensitive_logits).ge(0.5).float()
         sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
 
-    # else:
-    #     sensitive_loss = F.l1_loss(sensitive_logits, sensitive_target)
-        
+    elif cfg.sensitive_criterion == 'MAE':
+        sensitive_loss = F.l1_loss(sensitive_logits, sensitive_target)
+        total_variance = torch.var(sensitive_target)
+        unexplained_variance = torch.var(sensitive_target - sensitive_logits)
+        r_squared = 1 - unexplained_variance / total_variance
+        sensitive_acc = r_squared
+
     return (primary_loss, primary_acc), (sensitive_loss, sensitive_acc)
 
 
@@ -106,7 +110,7 @@ def train_epoch(summary, summary_dev, cfg, args, model, dataloader,
         image, target, sensitive_target = next(dataiter)
         image = image.to(device)
         target = target.to(device)
-        output, logit_maps, sensitive_logits = model(image)
+        output, logit_maps, sensitive_logits, sensitive_feat = model(image)
 
         # different number of tasks
         total_loss = 0
@@ -333,7 +337,7 @@ def test_epoch(summary, cfg, args, model, dataloader):
         image = image.to(device)
         target = target.to(device)
         sensitive_target = sensitive_target.to(device)
-        output, logit_map, sensitive_logits = model(image)
+        output, logit_map, sensitive_logits, sensitive_feat = model(image)
 
         # different number of tasks
         for t in range(len(cfg.num_classes)):

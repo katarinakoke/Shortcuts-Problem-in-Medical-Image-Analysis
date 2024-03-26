@@ -147,7 +147,8 @@ class Classifier(nn.Module):
     def cuda(self, device=None):
         return self._apply(lambda t: t.cuda(device))
 
-    def forward(self, x, lambda_val=1.0):
+    def forward(self, x):
+        lambda_val = self.cfg['lambda_val']
         # (N, C, H, W)
         feat_map = self.backbone(x)
         # [(N, 1), (N,1),...]
@@ -180,12 +181,12 @@ class Classifier(nn.Module):
             logits.append(logit)
         
         #Gradient Scaling 
-        reverse_feat_map = GradientScalingLayer.apply(feat_map, lambda_val)
-        pooled_feat = self.global_pool(reverse_feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(reverse_feat_map, logit_map)
+        scaled_feat_map = GradientScalingLayer.apply(feat_map, lambda_val)
+        pooled_feat = self.global_pool(scaled_feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(scaled_feat_map, logit_map)
 
         # pooled_feat = self.global_pool(feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(feat_map, logit_map)
         
-        pooled_feat = pooled_feat.view(pooled_feat.size(0), -1)  # Flatten the tensor
+        sensitive_feat = pooled_feat.view(pooled_feat.size(0), -1)  # Flatten the tensor
         sensitive_logits = self.sensitive_attribute_classifier(pooled_feat)
 
-        return logits, logit_maps, sensitive_logits
+        return logits, logit_maps, sensitive_logits, sensitive_feat
