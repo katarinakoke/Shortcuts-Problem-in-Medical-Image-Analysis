@@ -94,7 +94,7 @@ def test_epoch(cfg, args, model, dataloader):
 
 
 def run(args):
-    with open(args.cfg_path + 'config.json') as f:
+    with open(args.cfg_path) as f:
         cfg = edict(json.load(f))
 
     device_ids = list(map(int, args.device_ids.split(',')))

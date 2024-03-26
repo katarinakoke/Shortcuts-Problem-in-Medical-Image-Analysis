@@ -24,7 +24,7 @@ BACKBONES_TYPES = {'vgg19': 'vgg',
                    'densenet201': 'densenet',
                    'inception_v3': 'inception'}
 
-class GradientReversalLayer(torch.autograd.Function):
+class GradientScalingLayer(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, lambda_val):
         ctx.lambda_val = lambda_val
@@ -34,7 +34,7 @@ class GradientReversalLayer(torch.autograd.Function):
     def backward(ctx, grad_output):
         lambda_val = ctx.lambda_val
         lambda_val = grad_output.new_tensor(lambda_val)
-        dx = lambda_val * grad_output.neg()
+        dx = lambda_val * grad_output
         return dx, None
 
 
@@ -179,8 +179,8 @@ class Classifier(nn.Module):
             logit = logit.squeeze(-1).squeeze(-1)
             logits.append(logit)
         
-        #Gradient Reversal 
-        reverse_feat_map = GradientReversalLayer.apply(feat_map, lambda_val)
+        #Gradient Scaling 
+        reverse_feat_map = GradientScalingLayer.apply(feat_map, lambda_val)
         pooled_feat = self.global_pool(reverse_feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(reverse_feat_map, logit_map)
 
         # pooled_feat = self.global_pool(feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(feat_map, logit_map)

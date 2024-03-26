@@ -1,0 +1,43 @@
+---
+title: "23.03.2024."
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Meeting Notes: 23.03.2024 - Coding
+
+### What was done?
+
+- we adjusted the code for the data/dataset.py script
+- we added an output layer for predicting the sensitive attribute to the model/classifier.py script and a new class for gradient scaling
+- in the bin/train.py, we changed the get_loss function to add the loss of the sensitive attribute and adapted the code for the train/test epoch and run functions
+- changed the config.json to again adapt for the sensitive attribute
+- explored how the loss function work in a multi-head classification
+- we spent a lot of time understanding and debugging the code
+
+### What we learned?
+
+- ShorT:
+    1. We implement a multitask model with a main (pneumothorax) and an auxiliary task (sensitive attribute)
+    2. They share encoding and the same backbone before we split
+    3. Toal is to see how does the degree of the encoding change the fairness
+    4. To implement  this we need: gradient reversal layer, a multi-head model, performance metrics, fairness metrics, experiments
+    5. GR layer is used to add more or less weights to the embedding related to auxiliary task, in order to see what happens to the main classification model and how it changes corresponding to the change in auxiliary embeddings
+    6. Performance metrics: Area Under the Curve, accuracy, BCE, MAE
+    7. Fairness: equity odds
+- Experiments phase:
+    1. we need to define our sensitive attributes: sex, age
+    2. mark the baseline model performance so that we have something to compare to. this should be both the accuracy and the fairness
+    3. adjust the sensitive attributes
+    4. calculate accuracy and the fairness 
+    5. analysis
+    
+
+### What to do next?
+
+- Starting testing the model by running experiments
+- Add other sensitive attributes to the model since right now we only train using ‘Sex’. This also requires additional code adaptation
+- Add a function that gets the encodings from the sensitive attribute.
