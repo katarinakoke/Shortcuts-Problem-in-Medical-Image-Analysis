@@ -32,6 +32,8 @@ parser.add_argument('--num_workers', default=8, type=int, help="Number of "
                                                                "workers for each data loader")
 parser.add_argument('--device_ids', default='0', type=str, help="GPU indices "
                                                                 "comma separated, e.g. '0,1' ")
+parser.add_argument('--cfg_pred', default=None, metavar='CFG_PRED', type=str,
+                    help="Path to the my_test_with_pred file")
 
 if not os.path.exists('test'):
     os.mkdir('test')
@@ -71,6 +73,8 @@ def test_epoch(cfg, args, model, dataloader):
         image = image.to(device)
 
         output, logit_maps, sensitive_logits, sensitive_feat = model(image)
+        print("from test_epoch output:", output[0].shape)
+        print("from test_epoch sens output:", sensitive_logits.shape)
 
         batch_size = len(path)
 
@@ -79,7 +83,7 @@ def test_epoch(cfg, args, model, dataloader):
         y_score.append(pred)
         y_pred.append(pred_binary)
 
-        sensitive_pred = get_pred(sensitive_logits[0], cfg)
+        sensitive_pred = get_pred(sensitive_logits, cfg)
         sensitive_pred_binary = (sensitive_pred >= 0.5).astype(int)
         sensitive_y_score.append(sensitive_pred)
         sensitive_y_pred.append(sensitive_pred_binary)
@@ -87,8 +91,8 @@ def test_epoch(cfg, args, model, dataloader):
     y_score_flat = [item for sublist in y_score for item in sublist]
     y_pred_flat = [item for sublist in y_pred for item in sublist]
 
-    sensitive_y_score_flat = [item for sublist in y_score for item in sublist]
-    sensitive_y_pred_flat = [item for sublist in y_pred for item in sublist]
+    sensitive_y_score_flat = [item for sublist in sensitive_y_score for item in sublist]
+    sensitive_y_pred_flat = [item for sublist in sensitive_y_pred for item in sublist]
 
     return y_score_flat, y_pred_flat, sensitive_y_score_flat, sensitive_y_pred_flat
 
@@ -107,7 +111,7 @@ def run(args):
 
     model = Classifier(cfg)
     model = DataParallel(model, device_ids=device_ids).to(device).eval()
-    ckpt_path = os.path.join(args.model_path, 'best1.ckpt')
+    ckpt_path = os.path.join(args.model_path, 'Sex_seed0_lambda1_best1.ckpt')
     ckpt = torch.load(ckpt_path, map_location=device)
     model.module.load_state_dict(ckpt['state_dict'])
 
@@ -115,7 +119,7 @@ def run(args):
         ImageDataset(args.in_csv_path, cfg, mode='test'),
         batch_size=cfg.dev_batch_size, num_workers=args.num_workers,
         drop_last=False, shuffle=False)
-
+    
     # load test data frame and save predictions
     df = pd.read_csv(args.in_csv_path)
     y_score, y_pred, sensitive_y_score, sensitive_y_pred = test_epoch(cfg, args, model, dataloader_test)
@@ -132,7 +136,7 @@ def run(args):
     df[model_name_sensitive_score] = pd.Series(sensitive_y_score)
     df[model_name_sensitive_pred] = pd.Series(sensitive_y_pred)
 
-    df.to_csv(os.path.join(args.cfg_path, 'my_test_with_preds.csv'), index=False)
+    df.to_csv(os.path.join(args.cfg_pred, 'my_test_with_preds.csv'), index=False)
 
     print('Save best is step :', ckpt['step'], 'AUC :', ckpt['auc_dev_best'])
 

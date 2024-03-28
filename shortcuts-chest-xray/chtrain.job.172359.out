@@ -1,0 +1,1095 @@
+Running on desktop22:
+stdin: is not a tty
+Activating chexpert environment...
+/home/katkr/.conda/envs/chexpert/lib/python3.7/site-packages/sklearn/utils/validation.py:37: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  LARGE_SPARSE_SUPPORTED = LooseVersion(scipy_version) >= '0.14.0'
+Using the specified args:
+Namespace(cfg_path='/home/katkr/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/config/config_katkr.json', device_ids='0', logtofile=False, num_workers=2, pre_train=None, resume=0, save_path='/home/katkr/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/logdirs/logdir-30k-2', verbose=True)
+{
+    "base_path": "/home/data_shares/purrlab/CheXpert/CheXpert-v1.0-small",
+    "train_csv": "/home/katkr/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/subsets2/30k-2-train.csv",
+    "dev_csv": "/home/katkr/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/subsets2/30k-2-val.csv",
+    "backbone": "densenet121",
+    "sensitive_attribute": "Sex",
+    "lambda_val": 1.0,
+    "num_heads": 2,
+    "width": 512,
+    "height": 512,
+    "long_side": 512,
+    "fix_ratio": true,
+    "pixel_mean": 128.0,
+    "pixel_std": 64.0,
+    "use_pixel_std": true,
+    "use_equalizeHist": true,
+    "use_transforms_type": "Aug",
+    "gaussian_blur": 3,
+    "border_pad": "pixel_mean",
+    "num_classes": [
+        1
+    ],
+    "batch_weight": true,
+    "batch_weight_sensitive": true,
+    "enhance_index": [
+        2,
+        6
+    ],
+    "enhance_times": 1,
+    "pos_weight": [
+        1
+    ],
+    "sensitive_pos_weight": [
+        1
+    ],
+    "train_batch_size": 32,
+    "dev_batch_size": 32,
+    "pretrained": true,
+    "log_every": 10,
+    "test_every": 100,
+    "epoch": 10,
+    "norm_type": "BatchNorm",
+    "global_pool": "PCAM",
+    "fc_bn": true,
+    "attention_map": "FPA",
+    "lse_gamma": 0.5,
+    "fc_drop": 0,
+    "optimizer": "Adam",
+    "criterion": "BCE",
+    "sensitive_criterion": "BCE",
+    "lr": 0.0001,
+    "lr_factor": 0.1,
+    "lr_epochs": [
+        2
+    ],
+    "momentum": 0.9,
+    "weight_decay": 0.0,
+    "best_target": "auc",
+    "save_top_k": 3,
+    "save_index": [
+        0
+    ]
+}
+----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Conv2d-1         [-1, 64, 256, 256]           9,408
+       BatchNorm2d-2         [-1, 64, 256, 256]             128
+              ReLU-3         [-1, 64, 256, 256]               0
+         MaxPool2d-4         [-1, 64, 128, 128]               0
+       BatchNorm2d-5         [-1, 64, 128, 128]             128
+              ReLU-6         [-1, 64, 128, 128]               0
+            Conv2d-7        [-1, 128, 128, 128]           8,192
+       BatchNorm2d-8        [-1, 128, 128, 128]             256
+              ReLU-9        [-1, 128, 128, 128]               0
+           Conv2d-10         [-1, 32, 128, 128]          36,864
+      BatchNorm2d-11         [-1, 96, 128, 128]             192
+             ReLU-12         [-1, 96, 128, 128]               0
+           Conv2d-13        [-1, 128, 128, 128]          12,288
+      BatchNorm2d-14        [-1, 128, 128, 128]             256
+             ReLU-15        [-1, 128, 128, 128]               0
+           Conv2d-16         [-1, 32, 128, 128]          36,864
+      BatchNorm2d-17        [-1, 128, 128, 128]             256
+             ReLU-18        [-1, 128, 128, 128]               0
+           Conv2d-19        [-1, 128, 128, 128]          16,384
+      BatchNorm2d-20        [-1, 128, 128, 128]             256
+             ReLU-21        [-1, 128, 128, 128]               0
+           Conv2d-22         [-1, 32, 128, 128]          36,864
+      BatchNorm2d-23        [-1, 160, 128, 128]             320
+             ReLU-24        [-1, 160, 128, 128]               0
+           Conv2d-25        [-1, 128, 128, 128]          20,480
+      BatchNorm2d-26        [-1, 128, 128, 128]             256
+             ReLU-27        [-1, 128, 128, 128]               0
+           Conv2d-28         [-1, 32, 128, 128]          36,864
+      BatchNorm2d-29        [-1, 192, 128, 128]             384
+             ReLU-30        [-1, 192, 128, 128]               0
+           Conv2d-31        [-1, 128, 128, 128]          24,576
+      BatchNorm2d-32        [-1, 128, 128, 128]             256
+             ReLU-33        [-1, 128, 128, 128]               0
+           Conv2d-34         [-1, 32, 128, 128]          36,864
+      BatchNorm2d-35        [-1, 224, 128, 128]             448
+             ReLU-36        [-1, 224, 128, 128]               0
+           Conv2d-37        [-1, 128, 128, 128]          28,672
+      BatchNorm2d-38        [-1, 128, 128, 128]             256
+             ReLU-39        [-1, 128, 128, 128]               0
+           Conv2d-40         [-1, 32, 128, 128]          36,864
+      BatchNorm2d-41        [-1, 256, 128, 128]             512
+             ReLU-42        [-1, 256, 128, 128]               0
+           Conv2d-43        [-1, 128, 128, 128]          32,768
+        AvgPool2d-44          [-1, 128, 64, 64]               0
+      BatchNorm2d-45          [-1, 128, 64, 64]             256
+             ReLU-46          [-1, 128, 64, 64]               0
+           Conv2d-47          [-1, 128, 64, 64]          16,384
+      BatchNorm2d-48          [-1, 128, 64, 64]             256
+             ReLU-49          [-1, 128, 64, 64]               0
+           Conv2d-50           [-1, 32, 64, 64]          36,864
+      BatchNorm2d-51          [-1, 160, 64, 64]             320
+             ReLU-52          [-1, 160, 64, 64]               0
+           Conv2d-53          [-1, 128, 64, 64]          20,480
+      BatchNorm2d-54          [-1, 128, 64, 64]             256
+             ReLU-55          [-1, 128, 64, 64]               0
+           Conv2d-56           [-1, 32, 64, 64]          36,864
+      BatchNorm2d-57          [-1, 192, 64, 64]             384
+             ReLU-58          [-1, 192, 64, 64]               0
+           Conv2d-59          [-1, 128, 64, 64]          24,576
+      BatchNorm2d-60          [-1, 128, 64, 64]             256
+             ReLU-61          [-1, 128, 64, 64]               0
+           Conv2d-62           [-1, 32, 64, 64]          36,864
+      BatchNorm2d-63          [-1, 224, 64, 64]             448
+             ReLU-64          [-1, 224, 64, 64]               0
+           Conv2d-65          [-1, 128, 64, 64]          28,672
+      BatchNorm2d-66          [-1, 128, 64, 64]             256
+             ReLU-67          [-1, 128, 64, 64]               0
+           Conv2d-68           [-1, 32, 64, 64]          36,864
+      BatchNorm2d-69          [-1, 256, 64, 64]             512
+             ReLU-70          [-1, 256, 64, 64]               0
+           Conv2d-71          [-1, 128, 64, 64]          32,768
+      BatchNorm2d-72          [-1, 128, 64, 64]             256
+             ReLU-73          [-1, 128, 64, 64]               0
+           Conv2d-74           [-1, 32, 64, 64]          36,864
+      BatchNorm2d-75          [-1, 288, 64, 64]             576
+             ReLU-76          [-1, 288, 64, 64]               0
+           Conv2d-77          [-1, 128, 64, 64]          36,864
+      BatchNorm2d-78          [-1, 128, 64, 64]             256
+             ReLU-79          [-1, 128, 64, 64]               0
+           Conv2d-80           [-1, 32, 64, 64]          36,864
+      BatchNorm2d-81          [-1, 320, 64, 64]             640
+             ReLU-82          [-1, 320, 64, 64]               0
+           Conv2d-83          [-1, 128, 64, 64]          40,960
+      BatchNorm2d-84          [-1, 128, 64, 64]             256
+             ReLU-85          [-1, 128, 64, 64]               0
+           Conv2d-86           [-1, 32, 64, 64]          36,864
+      BatchNorm2d-87          [-1, 352, 64, 64]             704
+             ReLU-88          [-1, 352, 64, 64]               0
+           Conv2d-89          [-1, 128, 64, 64]          45,056
+      BatchNorm2d-90          [-1, 128, 64, 64]             256
+             ReLU-91          [-1, 128, 64, 64]               0
+           Conv2d-92           [-1, 32, 64, 64]          36,864
+      BatchNorm2d-93          [-1, 384, 64, 64]             768
+             ReLU-94          [-1, 384, 64, 64]               0
+           Conv2d-95          [-1, 128, 64, 64]          49,152
+      BatchNorm2d-96          [-1, 128, 64, 64]             256
+             ReLU-97          [-1, 128, 64, 64]               0
+           Conv2d-98           [-1, 32, 64, 64]          36,864
+      BatchNorm2d-99          [-1, 416, 64, 64]             832
+            ReLU-100          [-1, 416, 64, 64]               0
+          Conv2d-101          [-1, 128, 64, 64]          53,248
+     BatchNorm2d-102          [-1, 128, 64, 64]             256
+            ReLU-103          [-1, 128, 64, 64]               0
+          Conv2d-104           [-1, 32, 64, 64]          36,864
+     BatchNorm2d-105          [-1, 448, 64, 64]             896
+            ReLU-106          [-1, 448, 64, 64]               0
+          Conv2d-107          [-1, 128, 64, 64]          57,344
+     BatchNorm2d-108          [-1, 128, 64, 64]             256
+            ReLU-109          [-1, 128, 64, 64]               0
+          Conv2d-110           [-1, 32, 64, 64]          36,864
+     BatchNorm2d-111          [-1, 480, 64, 64]             960
+            ReLU-112          [-1, 480, 64, 64]               0
+          Conv2d-113          [-1, 128, 64, 64]          61,440
+     BatchNorm2d-114          [-1, 128, 64, 64]             256
+            ReLU-115          [-1, 128, 64, 64]               0
+          Conv2d-116           [-1, 32, 64, 64]          36,864
+     BatchNorm2d-117          [-1, 512, 64, 64]           1,024
+            ReLU-118          [-1, 512, 64, 64]               0
+          Conv2d-119          [-1, 256, 64, 64]         131,072
+       AvgPool2d-120          [-1, 256, 32, 32]               0
+     BatchNorm2d-121          [-1, 256, 32, 32]             512
+            ReLU-122          [-1, 256, 32, 32]               0
+          Conv2d-123          [-1, 128, 32, 32]          32,768
+     BatchNorm2d-124          [-1, 128, 32, 32]             256
+            ReLU-125          [-1, 128, 32, 32]               0
+          Conv2d-126           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-127          [-1, 288, 32, 32]             576
+            ReLU-128          [-1, 288, 32, 32]               0
+          Conv2d-129          [-1, 128, 32, 32]          36,864
+     BatchNorm2d-130          [-1, 128, 32, 32]             256
+            ReLU-131          [-1, 128, 32, 32]               0
+          Conv2d-132           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-133          [-1, 320, 32, 32]             640
+            ReLU-134          [-1, 320, 32, 32]               0
+          Conv2d-135          [-1, 128, 32, 32]          40,960
+     BatchNorm2d-136          [-1, 128, 32, 32]             256
+            ReLU-137          [-1, 128, 32, 32]               0
+          Conv2d-138           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-139          [-1, 352, 32, 32]             704
+            ReLU-140          [-1, 352, 32, 32]               0
+          Conv2d-141          [-1, 128, 32, 32]          45,056
+     BatchNorm2d-142          [-1, 128, 32, 32]             256
+            ReLU-143          [-1, 128, 32, 32]               0
+          Conv2d-144           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-145          [-1, 384, 32, 32]             768
+            ReLU-146          [-1, 384, 32, 32]               0
+          Conv2d-147          [-1, 128, 32, 32]          49,152
+     BatchNorm2d-148          [-1, 128, 32, 32]             256
+            ReLU-149          [-1, 128, 32, 32]               0
+          Conv2d-150           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-151          [-1, 416, 32, 32]             832
+            ReLU-152          [-1, 416, 32, 32]               0
+          Conv2d-153          [-1, 128, 32, 32]          53,248
+     BatchNorm2d-154          [-1, 128, 32, 32]             256
+            ReLU-155          [-1, 128, 32, 32]               0
+          Conv2d-156           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-157          [-1, 448, 32, 32]             896
+            ReLU-158          [-1, 448, 32, 32]               0
+          Conv2d-159          [-1, 128, 32, 32]          57,344
+     BatchNorm2d-160          [-1, 128, 32, 32]             256
+            ReLU-161          [-1, 128, 32, 32]               0
+          Conv2d-162           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-163          [-1, 480, 32, 32]             960
+            ReLU-164          [-1, 480, 32, 32]               0
+          Conv2d-165          [-1, 128, 32, 32]          61,440
+     BatchNorm2d-166          [-1, 128, 32, 32]             256
+            ReLU-167          [-1, 128, 32, 32]               0
+          Conv2d-168           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-169          [-1, 512, 32, 32]           1,024
+            ReLU-170          [-1, 512, 32, 32]               0
+          Conv2d-171          [-1, 128, 32, 32]          65,536
+     BatchNorm2d-172          [-1, 128, 32, 32]             256
+            ReLU-173          [-1, 128, 32, 32]               0
+          Conv2d-174           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-175          [-1, 544, 32, 32]           1,088
+            ReLU-176          [-1, 544, 32, 32]               0
+          Conv2d-177          [-1, 128, 32, 32]          69,632
+     BatchNorm2d-178          [-1, 128, 32, 32]             256
+            ReLU-179          [-1, 128, 32, 32]               0
+          Conv2d-180           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-181          [-1, 576, 32, 32]           1,152
+            ReLU-182          [-1, 576, 32, 32]               0
+          Conv2d-183          [-1, 128, 32, 32]          73,728
+     BatchNorm2d-184          [-1, 128, 32, 32]             256
+            ReLU-185          [-1, 128, 32, 32]               0
+          Conv2d-186           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-187          [-1, 608, 32, 32]           1,216
+            ReLU-188          [-1, 608, 32, 32]               0
+          Conv2d-189          [-1, 128, 32, 32]          77,824
+     BatchNorm2d-190          [-1, 128, 32, 32]             256
+            ReLU-191          [-1, 128, 32, 32]               0
+          Conv2d-192           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-193          [-1, 640, 32, 32]           1,280
+            ReLU-194          [-1, 640, 32, 32]               0
+          Conv2d-195          [-1, 128, 32, 32]          81,920
+     BatchNorm2d-196          [-1, 128, 32, 32]             256
+            ReLU-197          [-1, 128, 32, 32]               0
+          Conv2d-198           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-199          [-1, 672, 32, 32]           1,344
+            ReLU-200          [-1, 672, 32, 32]               0
+          Conv2d-201          [-1, 128, 32, 32]          86,016
+     BatchNorm2d-202          [-1, 128, 32, 32]             256
+            ReLU-203          [-1, 128, 32, 32]               0
+          Conv2d-204           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-205          [-1, 704, 32, 32]           1,408
+            ReLU-206          [-1, 704, 32, 32]               0
+          Conv2d-207          [-1, 128, 32, 32]          90,112
+     BatchNorm2d-208          [-1, 128, 32, 32]             256
+            ReLU-209          [-1, 128, 32, 32]               0
+          Conv2d-210           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-211          [-1, 736, 32, 32]           1,472
+            ReLU-212          [-1, 736, 32, 32]               0
+          Conv2d-213          [-1, 128, 32, 32]          94,208
+     BatchNorm2d-214          [-1, 128, 32, 32]             256
+            ReLU-215          [-1, 128, 32, 32]               0
+          Conv2d-216           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-217          [-1, 768, 32, 32]           1,536
+            ReLU-218          [-1, 768, 32, 32]               0
+          Conv2d-219          [-1, 128, 32, 32]          98,304
+     BatchNorm2d-220          [-1, 128, 32, 32]             256
+            ReLU-221          [-1, 128, 32, 32]               0
+          Conv2d-222           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-223          [-1, 800, 32, 32]           1,600
+            ReLU-224          [-1, 800, 32, 32]               0
+          Conv2d-225          [-1, 128, 32, 32]         102,400
+     BatchNorm2d-226          [-1, 128, 32, 32]             256
+            ReLU-227          [-1, 128, 32, 32]               0
+          Conv2d-228           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-229          [-1, 832, 32, 32]           1,664
+            ReLU-230          [-1, 832, 32, 32]               0
+          Conv2d-231          [-1, 128, 32, 32]         106,496
+     BatchNorm2d-232          [-1, 128, 32, 32]             256
+            ReLU-233          [-1, 128, 32, 32]               0
+          Conv2d-234           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-235          [-1, 864, 32, 32]           1,728
+            ReLU-236          [-1, 864, 32, 32]               0
+          Conv2d-237          [-1, 128, 32, 32]         110,592
+     BatchNorm2d-238          [-1, 128, 32, 32]             256
+            ReLU-239          [-1, 128, 32, 32]               0
+          Conv2d-240           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-241          [-1, 896, 32, 32]           1,792
+            ReLU-242          [-1, 896, 32, 32]               0
+          Conv2d-243          [-1, 128, 32, 32]         114,688
+     BatchNorm2d-244          [-1, 128, 32, 32]             256
+            ReLU-245          [-1, 128, 32, 32]               0
+          Conv2d-246           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-247          [-1, 928, 32, 32]           1,856
+            ReLU-248          [-1, 928, 32, 32]               0
+          Conv2d-249          [-1, 128, 32, 32]         118,784
+     BatchNorm2d-250          [-1, 128, 32, 32]             256
+            ReLU-251          [-1, 128, 32, 32]               0
+          Conv2d-252           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-253          [-1, 960, 32, 32]           1,920
+            ReLU-254          [-1, 960, 32, 32]               0
+          Conv2d-255          [-1, 128, 32, 32]         122,880
+     BatchNorm2d-256          [-1, 128, 32, 32]             256
+            ReLU-257          [-1, 128, 32, 32]               0
+          Conv2d-258           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-259          [-1, 992, 32, 32]           1,984
+            ReLU-260          [-1, 992, 32, 32]               0
+          Conv2d-261          [-1, 128, 32, 32]         126,976
+     BatchNorm2d-262          [-1, 128, 32, 32]             256
+            ReLU-263          [-1, 128, 32, 32]               0
+          Conv2d-264           [-1, 32, 32, 32]          36,864
+     BatchNorm2d-265         [-1, 1024, 32, 32]           2,048
+            ReLU-266         [-1, 1024, 32, 32]               0
+          Conv2d-267          [-1, 512, 32, 32]         524,288
+       AvgPool2d-268          [-1, 512, 16, 16]               0
+     BatchNorm2d-269          [-1, 512, 16, 16]           1,024
+            ReLU-270          [-1, 512, 16, 16]               0
+          Conv2d-271          [-1, 128, 16, 16]          65,536
+     BatchNorm2d-272          [-1, 128, 16, 16]             256
+            ReLU-273          [-1, 128, 16, 16]               0
+          Conv2d-274           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-275          [-1, 544, 16, 16]           1,088
+            ReLU-276          [-1, 544, 16, 16]               0
+          Conv2d-277          [-1, 128, 16, 16]          69,632
+     BatchNorm2d-278          [-1, 128, 16, 16]             256
+            ReLU-279          [-1, 128, 16, 16]               0
+          Conv2d-280           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-281          [-1, 576, 16, 16]           1,152
+            ReLU-282          [-1, 576, 16, 16]               0
+          Conv2d-283          [-1, 128, 16, 16]          73,728
+     BatchNorm2d-284          [-1, 128, 16, 16]             256
+            ReLU-285          [-1, 128, 16, 16]               0
+          Conv2d-286           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-287          [-1, 608, 16, 16]           1,216
+            ReLU-288          [-1, 608, 16, 16]               0
+          Conv2d-289          [-1, 128, 16, 16]          77,824
+     BatchNorm2d-290          [-1, 128, 16, 16]             256
+            ReLU-291          [-1, 128, 16, 16]               0
+          Conv2d-292           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-293          [-1, 640, 16, 16]           1,280
+            ReLU-294          [-1, 640, 16, 16]               0
+          Conv2d-295          [-1, 128, 16, 16]          81,920
+     BatchNorm2d-296          [-1, 128, 16, 16]             256
+            ReLU-297          [-1, 128, 16, 16]               0
+          Conv2d-298           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-299          [-1, 672, 16, 16]           1,344
+            ReLU-300          [-1, 672, 16, 16]               0
+          Conv2d-301          [-1, 128, 16, 16]          86,016
+     BatchNorm2d-302          [-1, 128, 16, 16]             256
+            ReLU-303          [-1, 128, 16, 16]               0
+          Conv2d-304           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-305          [-1, 704, 16, 16]           1,408
+            ReLU-306          [-1, 704, 16, 16]               0
+          Conv2d-307          [-1, 128, 16, 16]          90,112
+     BatchNorm2d-308          [-1, 128, 16, 16]             256
+            ReLU-309          [-1, 128, 16, 16]               0
+          Conv2d-310           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-311          [-1, 736, 16, 16]           1,472
+            ReLU-312          [-1, 736, 16, 16]               0
+          Conv2d-313          [-1, 128, 16, 16]          94,208
+     BatchNorm2d-314          [-1, 128, 16, 16]             256
+            ReLU-315          [-1, 128, 16, 16]               0
+          Conv2d-316           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-317          [-1, 768, 16, 16]           1,536
+            ReLU-318          [-1, 768, 16, 16]               0
+          Conv2d-319          [-1, 128, 16, 16]          98,304
+     BatchNorm2d-320          [-1, 128, 16, 16]             256
+            ReLU-321          [-1, 128, 16, 16]               0
+          Conv2d-322           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-323          [-1, 800, 16, 16]           1,600
+            ReLU-324          [-1, 800, 16, 16]               0
+          Conv2d-325          [-1, 128, 16, 16]         102,400
+     BatchNorm2d-326          [-1, 128, 16, 16]             256
+            ReLU-327          [-1, 128, 16, 16]               0
+          Conv2d-328           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-329          [-1, 832, 16, 16]           1,664
+            ReLU-330          [-1, 832, 16, 16]               0
+          Conv2d-331          [-1, 128, 16, 16]         106,496
+     BatchNorm2d-332          [-1, 128, 16, 16]             256
+            ReLU-333          [-1, 128, 16, 16]               0
+          Conv2d-334           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-335          [-1, 864, 16, 16]           1,728
+            ReLU-336          [-1, 864, 16, 16]               0
+          Conv2d-337          [-1, 128, 16, 16]         110,592
+     BatchNorm2d-338          [-1, 128, 16, 16]             256
+            ReLU-339          [-1, 128, 16, 16]               0
+          Conv2d-340           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-341          [-1, 896, 16, 16]           1,792
+            ReLU-342          [-1, 896, 16, 16]               0
+          Conv2d-343          [-1, 128, 16, 16]         114,688
+     BatchNorm2d-344          [-1, 128, 16, 16]             256
+            ReLU-345          [-1, 128, 16, 16]               0
+          Conv2d-346           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-347          [-1, 928, 16, 16]           1,856
+            ReLU-348          [-1, 928, 16, 16]               0
+          Conv2d-349          [-1, 128, 16, 16]         118,784
+     BatchNorm2d-350          [-1, 128, 16, 16]             256
+            ReLU-351          [-1, 128, 16, 16]               0
+          Conv2d-352           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-353          [-1, 960, 16, 16]           1,920
+            ReLU-354          [-1, 960, 16, 16]               0
+          Conv2d-355          [-1, 128, 16, 16]         122,880
+     BatchNorm2d-356          [-1, 128, 16, 16]             256
+            ReLU-357          [-1, 128, 16, 16]               0
+          Conv2d-358           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-359          [-1, 992, 16, 16]           1,984
+            ReLU-360          [-1, 992, 16, 16]               0
+          Conv2d-361          [-1, 128, 16, 16]         126,976
+     BatchNorm2d-362          [-1, 128, 16, 16]             256
+            ReLU-363          [-1, 128, 16, 16]               0
+          Conv2d-364           [-1, 32, 16, 16]          36,864
+     BatchNorm2d-365         [-1, 1024, 16, 16]           2,048
+        DenseNet-366         [-1, 1024, 16, 16]               0
+AdaptiveAvgPool2d-367           [-1, 1024, 1, 1]               0
+          Conv2d-368           [-1, 1024, 1, 1]       1,049,600
+     BatchNorm2d-369           [-1, 1024, 1, 1]           2,048
+            ReLU-370           [-1, 1024, 1, 1]               0
+  Conv2dNormRelu-371           [-1, 1024, 1, 1]               0
+          Conv2d-372         [-1, 1024, 16, 16]       1,049,600
+     BatchNorm2d-373         [-1, 1024, 16, 16]           2,048
+            ReLU-374         [-1, 1024, 16, 16]               0
+  Conv2dNormRelu-375         [-1, 1024, 16, 16]               0
+          Conv2d-376              [-1, 1, 8, 8]          50,177
+     BatchNorm2d-377              [-1, 1, 8, 8]               2
+            ReLU-378              [-1, 1, 8, 8]               0
+  Conv2dNormRelu-379              [-1, 1, 8, 8]               0
+          Conv2d-380              [-1, 1, 4, 4]              26
+     BatchNorm2d-381              [-1, 1, 4, 4]               2
+            ReLU-382              [-1, 1, 4, 4]               0
+  Conv2dNormRelu-383              [-1, 1, 4, 4]               0
+          Conv2d-384              [-1, 1, 2, 2]              10
+     BatchNorm2d-385              [-1, 1, 2, 2]               2
+            ReLU-386              [-1, 1, 2, 2]               0
+  Conv2dNormRelu-387              [-1, 1, 2, 2]               0
+          Conv2d-388              [-1, 1, 2, 2]              10
+     BatchNorm2d-389              [-1, 1, 2, 2]               2
+            ReLU-390              [-1, 1, 2, 2]               0
+  Conv2dNormRelu-391              [-1, 1, 2, 2]               0
+          Conv2d-392              [-1, 1, 4, 4]              26
+     BatchNorm2d-393              [-1, 1, 4, 4]               2
+            ReLU-394              [-1, 1, 4, 4]               0
+  Conv2dNormRelu-395              [-1, 1, 4, 4]               0
+          Conv2d-396              [-1, 1, 8, 8]              50
+     BatchNorm2d-397              [-1, 1, 8, 8]               2
+            ReLU-398              [-1, 1, 8, 8]               0
+  Conv2dNormRelu-399              [-1, 1, 8, 8]               0
+       FPAModule-400         [-1, 1024, 16, 16]               0
+    AttentionMap-401         [-1, 1024, 16, 16]               0
+          Conv2d-402            [-1, 1, 16, 16]           1,025
+        PcamPool-403           [-1, 1024, 1, 1]               0
+      GlobalPool-404           [-1, 1024, 1, 1]               0
+     BatchNorm2d-405           [-1, 1024, 1, 1]           2,048
+          Conv2d-406              [-1, 1, 1, 1]           1,025
+        PcamPool-407           [-1, 1024, 1, 1]               0
+      GlobalPool-408           [-1, 1024, 1, 1]               0
+          Linear-409                    [-1, 1]           1,025
+================================================================
+Total params: 9,112,586
+Trainable params: 9,112,586
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 3.00
+Forward/backward pass size (MB): 1551.09
+Params size (MB): 34.76
+Estimated Total Size (MB): 1588.85
+----------------------------------------------------------------
+INFO:root:2024-03-28 14:43:14, Train, Epoch : 1, Step : 10, Loss : 0.76751, Acc : 0.537, Sensitive_Loss : 0.76720, Sensitive_Acc : 16.900, Run Time : 18.47 sec
+INFO:root:2024-03-28 14:43:28, Train, Epoch : 1, Step : 20, Loss : 0.60010, Acc : 0.603, Sensitive_Loss : 0.65566, Sensitive_Acc : 14.600, Run Time : 14.22 sec
+INFO:root:2024-03-28 14:43:41, Train, Epoch : 1, Step : 30, Loss : 0.69803, Acc : 0.613, Sensitive_Loss : 0.50922, Sensitive_Acc : 17.300, Run Time : 13.02 sec
+INFO:root:2024-03-28 14:43:54, Train, Epoch : 1, Step : 40, Loss : 0.65764, Acc : 0.613, Sensitive_Loss : 0.37717, Sensitive_Acc : 16.300, Run Time : 12.81 sec
+INFO:root:2024-03-28 14:44:09, Train, Epoch : 1, Step : 50, Loss : 0.65027, Acc : 0.662, Sensitive_Loss : 0.37152, Sensitive_Acc : 15.400, Run Time : 15.20 sec
+INFO:root:2024-03-28 14:44:22, Train, Epoch : 1, Step : 60, Loss : 0.63620, Acc : 0.691, Sensitive_Loss : 0.36910, Sensitive_Acc : 18.300, Run Time : 12.65 sec
+INFO:root:2024-03-28 14:44:37, Train, Epoch : 1, Step : 70, Loss : 0.65759, Acc : 0.625, Sensitive_Loss : 0.30091, Sensitive_Acc : 16.900, Run Time : 14.95 sec
+INFO:root:2024-03-28 14:44:50, Train, Epoch : 1, Step : 80, Loss : 0.53355, Acc : 0.678, Sensitive_Loss : 0.29224, Sensitive_Acc : 16.600, Run Time : 12.99 sec
+INFO:root:2024-03-28 14:45:02, Train, Epoch : 1, Step : 90, Loss : 0.58400, Acc : 0.669, Sensitive_Loss : 0.34503, Sensitive_Acc : 18.200, Run Time : 12.38 sec
+INFO:root:2024-03-28 14:45:19, Train, Epoch : 1, Step : 100, Loss : 0.61919, Acc : 0.681, Sensitive_Loss : 0.29899, Sensitive_Acc : 16.400, Run Time : 16.33 sec
+INFO:root:2024-03-28 14:49:43, Dev, Step : 100, Loss : 0.62654, Acc : 0.660, Auc : 0.716, Sensitive_Loss : 0.75768, Sensitive_Acc : 15.213, Sensitive_Auc : 0.961, Mean auc: 0.716, Run Time : 264.42 sec
+INFO:root:2024-03-28 14:49:45, Best, Step : 100, Loss : 0.62654, Acc : 0.660, Auc : 0.716, Sensitive_Loss : 0.75768, Sensitive_Acc : 15.213, Sensitive_Auc : 0.961, Best Auc : 0.716
+INFO:root:2024-03-28 14:49:55, Train, Epoch : 1, Step : 110, Loss : 0.64970, Acc : 0.619, Sensitive_Loss : 0.27296, Sensitive_Acc : 16.900, Run Time : 276.69 sec
+INFO:root:2024-03-28 14:50:08, Train, Epoch : 1, Step : 120, Loss : 0.63742, Acc : 0.625, Sensitive_Loss : 0.28842, Sensitive_Acc : 15.400, Run Time : 12.31 sec
+INFO:root:2024-03-28 14:50:20, Train, Epoch : 1, Step : 130, Loss : 0.64203, Acc : 0.597, Sensitive_Loss : 0.22757, Sensitive_Acc : 16.700, Run Time : 12.10 sec
+INFO:root:2024-03-28 14:50:36, Train, Epoch : 1, Step : 140, Loss : 0.59849, Acc : 0.622, Sensitive_Loss : 0.22304, Sensitive_Acc : 16.900, Run Time : 16.11 sec
+INFO:root:2024-03-28 14:50:48, Train, Epoch : 1, Step : 150, Loss : 0.65716, Acc : 0.675, Sensitive_Loss : 0.29195, Sensitive_Acc : 14.300, Run Time : 11.97 sec
+INFO:root:2024-03-28 14:51:01, Train, Epoch : 1, Step : 160, Loss : 0.61589, Acc : 0.631, Sensitive_Loss : 0.16337, Sensitive_Acc : 15.300, Run Time : 12.96 sec
+INFO:root:2024-03-28 14:51:14, Train, Epoch : 1, Step : 170, Loss : 0.56667, Acc : 0.678, Sensitive_Loss : 0.22640, Sensitive_Acc : 16.200, Run Time : 13.28 sec
+INFO:root:2024-03-28 14:51:27, Train, Epoch : 1, Step : 180, Loss : 0.60051, Acc : 0.637, Sensitive_Loss : 0.20372, Sensitive_Acc : 16.000, Run Time : 13.08 sec
+INFO:root:2024-03-28 14:51:40, Train, Epoch : 1, Step : 190, Loss : 0.56170, Acc : 0.672, Sensitive_Loss : 0.18570, Sensitive_Acc : 19.400, Run Time : 13.02 sec
+INFO:root:2024-03-28 14:51:54, Train, Epoch : 1, Step : 200, Loss : 0.62141, Acc : 0.662, Sensitive_Loss : 0.22590, Sensitive_Acc : 15.100, Run Time : 13.82 sec
+INFO:root:2024-03-28 14:55:21, Dev, Step : 200, Loss : 0.60095, Acc : 0.682, Auc : 0.743, Sensitive_Loss : 0.16484, Sensitive_Acc : 16.862, Sensitive_Auc : 0.968, Mean auc: 0.743, Run Time : 206.62 sec
+INFO:root:2024-03-28 14:55:22, Best, Step : 200, Loss : 0.60095, Acc : 0.682, Auc : 0.743, Sensitive_Loss : 0.16484, Sensitive_Acc : 16.862, Sensitive_Auc : 0.968, Best Auc : 0.743
+INFO:root:2024-03-28 14:55:31, Train, Epoch : 1, Step : 210, Loss : 0.57183, Acc : 0.666, Sensitive_Loss : 0.25047, Sensitive_Acc : 18.500, Run Time : 216.87 sec
+INFO:root:2024-03-28 14:55:46, Train, Epoch : 1, Step : 220, Loss : 0.59206, Acc : 0.703, Sensitive_Loss : 0.15094, Sensitive_Acc : 18.900, Run Time : 14.89 sec
+INFO:root:2024-03-28 14:55:58, Train, Epoch : 1, Step : 230, Loss : 0.69688, Acc : 0.634, Sensitive_Loss : 0.21977, Sensitive_Acc : 14.900, Run Time : 12.18 sec
+INFO:root:2024-03-28 14:56:15, Train, Epoch : 1, Step : 240, Loss : 0.59266, Acc : 0.666, Sensitive_Loss : 0.17350, Sensitive_Acc : 16.000, Run Time : 16.93 sec
+INFO:root:2024-03-28 14:56:27, Train, Epoch : 1, Step : 250, Loss : 0.60237, Acc : 0.669, Sensitive_Loss : 0.19612, Sensitive_Acc : 18.300, Run Time : 12.41 sec
+INFO:root:2024-03-28 14:56:41, Train, Epoch : 1, Step : 260, Loss : 0.62601, Acc : 0.653, Sensitive_Loss : 0.23375, Sensitive_Acc : 17.400, Run Time : 13.88 sec
+INFO:root:2024-03-28 14:56:55, Train, Epoch : 1, Step : 270, Loss : 0.52219, Acc : 0.725, Sensitive_Loss : 0.23524, Sensitive_Acc : 17.500, Run Time : 14.14 sec
+INFO:root:2024-03-28 14:57:07, Train, Epoch : 1, Step : 280, Loss : 0.68754, Acc : 0.609, Sensitive_Loss : 0.19765, Sensitive_Acc : 16.400, Run Time : 11.75 sec
+INFO:root:2024-03-28 14:57:24, Train, Epoch : 1, Step : 290, Loss : 0.60383, Acc : 0.656, Sensitive_Loss : 0.18430, Sensitive_Acc : 15.800, Run Time : 16.51 sec
+INFO:root:2024-03-28 14:57:36, Train, Epoch : 1, Step : 300, Loss : 0.61629, Acc : 0.625, Sensitive_Loss : 0.20222, Sensitive_Acc : 15.000, Run Time : 11.88 sec
+INFO:root:2024-03-28 15:00:56, Dev, Step : 300, Loss : 0.59268, Acc : 0.688, Auc : 0.753, Sensitive_Loss : 0.22199, Sensitive_Acc : 16.713, Sensitive_Auc : 0.978, Mean auc: 0.753, Run Time : 200.34 sec
+INFO:root:2024-03-28 15:00:57, Best, Step : 300, Loss : 0.59268, Acc : 0.688, Auc : 0.753, Sensitive_Loss : 0.22199, Sensitive_Acc : 16.713, Sensitive_Auc : 0.978, Best Auc : 0.753
+INFO:root:2024-03-28 15:01:05, Train, Epoch : 1, Step : 310, Loss : 0.58391, Acc : 0.688, Sensitive_Loss : 0.16415, Sensitive_Acc : 17.000, Run Time : 209.48 sec
+INFO:root:2024-03-28 15:01:18, Train, Epoch : 1, Step : 320, Loss : 0.56580, Acc : 0.666, Sensitive_Loss : 0.13768, Sensitive_Acc : 16.600, Run Time : 12.62 sec
+INFO:root:2024-03-28 15:01:33, Train, Epoch : 1, Step : 330, Loss : 0.53640, Acc : 0.725, Sensitive_Loss : 0.17212, Sensitive_Acc : 16.100, Run Time : 15.50 sec
+INFO:root:2024-03-28 15:01:46, Train, Epoch : 1, Step : 340, Loss : 0.60802, Acc : 0.694, Sensitive_Loss : 0.18358, Sensitive_Acc : 14.600, Run Time : 12.39 sec
+INFO:root:2024-03-28 15:02:02, Train, Epoch : 1, Step : 350, Loss : 0.59801, Acc : 0.706, Sensitive_Loss : 0.17861, Sensitive_Acc : 17.300, Run Time : 16.45 sec
+INFO:root:2024-03-28 15:02:14, Train, Epoch : 1, Step : 360, Loss : 0.71257, Acc : 0.659, Sensitive_Loss : 0.18911, Sensitive_Acc : 16.600, Run Time : 12.06 sec
+INFO:root:2024-03-28 15:02:28, Train, Epoch : 1, Step : 370, Loss : 0.57835, Acc : 0.678, Sensitive_Loss : 0.10522, Sensitive_Acc : 15.800, Run Time : 13.50 sec
+INFO:root:2024-03-28 15:02:42, Train, Epoch : 1, Step : 380, Loss : 0.60118, Acc : 0.719, Sensitive_Loss : 0.15496, Sensitive_Acc : 17.900, Run Time : 14.14 sec
+INFO:root:2024-03-28 15:02:54, Train, Epoch : 1, Step : 390, Loss : 0.49086, Acc : 0.669, Sensitive_Loss : 0.10001, Sensitive_Acc : 17.400, Run Time : 12.01 sec
+INFO:root:2024-03-28 15:03:07, Train, Epoch : 1, Step : 400, Loss : 0.57499, Acc : 0.675, Sensitive_Loss : 0.24588, Sensitive_Acc : 19.900, Run Time : 13.54 sec
+INFO:root:2024-03-28 15:06:23, Dev, Step : 400, Loss : 0.61683, Acc : 0.672, Auc : 0.755, Sensitive_Loss : 0.23093, Sensitive_Acc : 16.500, Sensitive_Auc : 0.980, Mean auc: 0.755, Run Time : 195.71 sec
+INFO:root:2024-03-28 15:06:24, Best, Step : 400, Loss : 0.61683, Acc : 0.672, Auc : 0.755, Sensitive_Loss : 0.23093, Sensitive_Acc : 16.500, Sensitive_Auc : 0.980, Best Auc : 0.755
+INFO:root:2024-03-28 15:06:34, Train, Epoch : 1, Step : 410, Loss : 0.58652, Acc : 0.684, Sensitive_Loss : 0.19759, Sensitive_Acc : 17.500, Run Time : 206.53 sec
+INFO:root:2024-03-28 15:06:46, Train, Epoch : 1, Step : 420, Loss : 0.58450, Acc : 0.659, Sensitive_Loss : 0.17460, Sensitive_Acc : 15.600, Run Time : 12.69 sec
+INFO:root:2024-03-28 15:06:58, Train, Epoch : 1, Step : 430, Loss : 0.65244, Acc : 0.656, Sensitive_Loss : 0.20468, Sensitive_Acc : 16.000, Run Time : 11.69 sec
+INFO:root:2024-03-28 15:07:14, Train, Epoch : 1, Step : 440, Loss : 0.57917, Acc : 0.728, Sensitive_Loss : 0.14862, Sensitive_Acc : 17.900, Run Time : 15.91 sec
+INFO:root:2024-03-28 15:07:26, Train, Epoch : 1, Step : 450, Loss : 0.61400, Acc : 0.694, Sensitive_Loss : 0.15871, Sensitive_Acc : 19.000, Run Time : 11.73 sec
+INFO:root:2024-03-28 15:07:39, Train, Epoch : 1, Step : 460, Loss : 0.58371, Acc : 0.709, Sensitive_Loss : 0.16450, Sensitive_Acc : 16.900, Run Time : 13.14 sec
+INFO:root:2024-03-28 15:07:54, Train, Epoch : 1, Step : 470, Loss : 0.62141, Acc : 0.659, Sensitive_Loss : 0.20300, Sensitive_Acc : 16.300, Run Time : 14.82 sec
+INFO:root:2024-03-28 15:08:06, Train, Epoch : 1, Step : 480, Loss : 0.56071, Acc : 0.684, Sensitive_Loss : 0.16832, Sensitive_Acc : 16.100, Run Time : 11.94 sec
+INFO:root:2024-03-28 15:08:19, Train, Epoch : 1, Step : 490, Loss : 0.68648, Acc : 0.662, Sensitive_Loss : 0.12152, Sensitive_Acc : 17.000, Run Time : 13.54 sec
+INFO:root:2024-03-28 15:08:31, Train, Epoch : 1, Step : 500, Loss : 0.54987, Acc : 0.719, Sensitive_Loss : 0.17107, Sensitive_Acc : 14.700, Run Time : 12.27 sec
+INFO:root:2024-03-28 15:11:53, Dev, Step : 500, Loss : 0.60162, Acc : 0.682, Auc : 0.773, Sensitive_Loss : 0.18439, Sensitive_Acc : 16.862, Sensitive_Auc : 0.986, Mean auc: 0.773, Run Time : 202.01 sec
+INFO:root:2024-03-28 15:11:55, Best, Step : 500, Loss : 0.60162, Acc : 0.682, Auc : 0.773, Sensitive_Loss : 0.18439, Sensitive_Acc : 16.862, Sensitive_Auc : 0.986, Best Auc : 0.773
+INFO:root:2024-03-28 15:12:03, Train, Epoch : 1, Step : 510, Loss : 0.59784, Acc : 0.678, Sensitive_Loss : 0.15678, Sensitive_Acc : 16.200, Run Time : 211.13 sec
+INFO:root:2024-03-28 15:12:17, Train, Epoch : 1, Step : 520, Loss : 0.53530, Acc : 0.713, Sensitive_Loss : 0.15125, Sensitive_Acc : 17.100, Run Time : 14.43 sec
+INFO:root:2024-03-28 15:12:31, Train, Epoch : 1, Step : 530, Loss : 0.54006, Acc : 0.694, Sensitive_Loss : 0.10828, Sensitive_Acc : 17.500, Run Time : 13.92 sec
+INFO:root:2024-03-28 15:12:44, Train, Epoch : 1, Step : 540, Loss : 0.66671, Acc : 0.650, Sensitive_Loss : 0.12322, Sensitive_Acc : 16.300, Run Time : 12.68 sec
+INFO:root:2024-03-28 15:12:59, Train, Epoch : 1, Step : 550, Loss : 0.62670, Acc : 0.656, Sensitive_Loss : 0.15994, Sensitive_Acc : 17.900, Run Time : 15.33 sec
+INFO:root:2024-03-28 15:13:11, Train, Epoch : 1, Step : 560, Loss : 0.63172, Acc : 0.684, Sensitive_Loss : 0.15678, Sensitive_Acc : 15.900, Run Time : 11.79 sec
+INFO:root:2024-03-28 15:13:24, Train, Epoch : 1, Step : 570, Loss : 0.58153, Acc : 0.669, Sensitive_Loss : 0.11151, Sensitive_Acc : 16.300, Run Time : 12.81 sec
+INFO:root:2024-03-28 15:13:36, Train, Epoch : 1, Step : 580, Loss : 0.60003, Acc : 0.713, Sensitive_Loss : 0.12864, Sensitive_Acc : 16.400, Run Time : 12.55 sec
+INFO:root:2024-03-28 15:13:48, Train, Epoch : 1, Step : 590, Loss : 0.52285, Acc : 0.713, Sensitive_Loss : 0.11895, Sensitive_Acc : 17.600, Run Time : 11.97 sec
+INFO:root:2024-03-28 15:14:00, Train, Epoch : 1, Step : 600, Loss : 0.56374, Acc : 0.716, Sensitive_Loss : 0.15649, Sensitive_Acc : 17.900, Run Time : 12.38 sec
+INFO:root:2024-03-28 15:17:22, Dev, Step : 600, Loss : 0.62419, Acc : 0.685, Auc : 0.767, Sensitive_Loss : 0.23718, Sensitive_Acc : 16.660, Sensitive_Auc : 0.987, Mean auc: 0.767, Run Time : 201.13 sec
+INFO:root:2024-03-28 15:17:30, Train, Epoch : 1, Step : 610, Loss : 0.63814, Acc : 0.700, Sensitive_Loss : 0.17857, Sensitive_Acc : 15.900, Run Time : 209.12 sec
+INFO:root:2024-03-28 15:17:45, Train, Epoch : 1, Step : 620, Loss : 0.58885, Acc : 0.678, Sensitive_Loss : 0.17115, Sensitive_Acc : 17.100, Run Time : 15.50 sec
+INFO:root:2024-03-28 15:17:59, Train, Epoch : 1, Step : 630, Loss : 0.56988, Acc : 0.672, Sensitive_Loss : 0.19505, Sensitive_Acc : 17.900, Run Time : 13.86 sec
+INFO:root:2024-03-28 15:18:11, Train, Epoch : 1, Step : 640, Loss : 0.58034, Acc : 0.684, Sensitive_Loss : 0.16003, Sensitive_Acc : 14.200, Run Time : 12.52 sec
+INFO:root:2024-03-28 15:18:25, Train, Epoch : 1, Step : 650, Loss : 0.55527, Acc : 0.703, Sensitive_Loss : 0.11930, Sensitive_Acc : 17.700, Run Time : 13.80 sec
+INFO:root:2024-03-28 15:18:37, Train, Epoch : 1, Step : 660, Loss : 0.60499, Acc : 0.716, Sensitive_Loss : 0.13900, Sensitive_Acc : 15.700, Run Time : 12.03 sec
+INFO:root:2024-03-28 15:18:51, Train, Epoch : 1, Step : 670, Loss : 0.51319, Acc : 0.744, Sensitive_Loss : 0.08323, Sensitive_Acc : 17.400, Run Time : 13.94 sec
+INFO:root:2024-03-28 15:19:03, Train, Epoch : 1, Step : 680, Loss : 0.57148, Acc : 0.684, Sensitive_Loss : 0.12305, Sensitive_Acc : 17.000, Run Time : 12.17 sec
+INFO:root:2024-03-28 15:19:16, Train, Epoch : 1, Step : 690, Loss : 0.58979, Acc : 0.697, Sensitive_Loss : 0.13784, Sensitive_Acc : 19.500, Run Time : 12.53 sec
+INFO:root:2024-03-28 15:19:33, Train, Epoch : 1, Step : 700, Loss : 0.46890, Acc : 0.728, Sensitive_Loss : 0.19022, Sensitive_Acc : 17.400, Run Time : 17.23 sec
+INFO:root:2024-03-28 15:22:52, Dev, Step : 700, Loss : 0.59144, Acc : 0.694, Auc : 0.786, Sensitive_Loss : 0.17634, Sensitive_Acc : 16.915, Sensitive_Auc : 0.982, Mean auc: 0.786, Run Time : 198.36 sec
+INFO:root:2024-03-28 15:22:53, Best, Step : 700, Loss : 0.59144, Acc : 0.694, Auc : 0.786, Sensitive_Loss : 0.17634, Sensitive_Acc : 16.915, Sensitive_Auc : 0.982, Best Auc : 0.786
+INFO:root:2024-03-28 15:23:03, Train, Epoch : 1, Step : 710, Loss : 0.58823, Acc : 0.688, Sensitive_Loss : 0.14765, Sensitive_Acc : 14.900, Run Time : 209.58 sec
+INFO:root:2024-03-28 15:23:15, Train, Epoch : 1, Step : 720, Loss : 0.63309, Acc : 0.659, Sensitive_Loss : 0.12114, Sensitive_Acc : 16.600, Run Time : 11.82 sec
+INFO:root:2024-03-28 15:23:28, Train, Epoch : 1, Step : 730, Loss : 0.52956, Acc : 0.681, Sensitive_Loss : 0.12134, Sensitive_Acc : 20.000, Run Time : 13.75 sec
+INFO:root:2024-03-28 15:23:42, Train, Epoch : 1, Step : 740, Loss : 0.48768, Acc : 0.691, Sensitive_Loss : 0.15608, Sensitive_Acc : 16.200, Run Time : 13.85 sec
+INFO:root:2024-03-28 15:23:54, Train, Epoch : 1, Step : 750, Loss : 0.65986, Acc : 0.691, Sensitive_Loss : 0.14241, Sensitive_Acc : 17.500, Run Time : 12.00 sec
+INFO:root:2024-03-28 15:26:59
+INFO:root:y_pred: [0.28741318 0.63195777 0.87745917 ... 0.7241003  0.7352094  0.60091597]
+INFO:root:y_true: [1. 1. 1. ... 1. 0. 1.]
+INFO:root:sensitive_y_pred: [2.66068876e-01 1.59475189e-02 1.08323351e-04 9.96490538e-01
+ 1.48142055e-02 9.99978781e-01 9.97636080e-01 8.78700230e-04
+ 1.80996372e-03 9.99999404e-01 9.99784887e-01 1.33204028e-01
+ 2.41741240e-02 8.57088119e-02 3.94667586e-04 8.67324602e-03
+ 1.66773307e-03 9.34129059e-02 1.23769360e-06 3.11844423e-03
+ 9.99954581e-01 1.31261200e-02 2.66049086e-04 5.52062467e-02
+ 6.13606758e-02 3.65023278e-02 9.97059643e-01 6.31974101e-01
+ 2.72146519e-02 3.71960527e-03 8.51218551e-02 9.99996662e-01
+ 9.98436272e-01 3.36755723e-01 4.53540502e-04 9.92194772e-01
+ 1.33595560e-04 1.32285047e-03 9.99922752e-01 8.53927899e-03
+ 1.12871207e-01 9.07065842e-05 9.21341598e-01 9.99591410e-01
+ 8.98520231e-01 1.24538224e-02 9.92988527e-01 9.66668725e-01
+ 4.10571367e-01 1.14133936e-05 2.22058315e-02 3.59783601e-03
+ 4.83583333e-03 1.11620925e-01 9.99974847e-01 9.99992609e-01
+ 2.64222734e-04 8.08364898e-03 9.92704511e-01 1.39603217e-05
+ 4.88199992e-04 9.99956846e-01 1.02968365e-02 9.99946356e-01
+ 7.71792984e-05 6.07091759e-04 9.84145582e-01 6.84684068e-02
+ 6.62129605e-03 9.98963475e-01 9.99971390e-01 9.99994397e-01
+ 2.26701126e-02 9.99813616e-01 3.35416384e-02 1.70466766e-01
+ 9.99901772e-01 1.53089728e-04 1.21948549e-04 9.99851942e-01
+ 8.45062733e-03 4.09523753e-04 9.89925027e-01 2.15086224e-03
+ 9.96752024e-01 8.33239174e-05 9.49406967e-05 1.30263088e-05
+ 9.99729097e-01 9.99938130e-01 1.72409709e-04 4.02750492e-01
+ 9.93714035e-01 5.18177461e-04 9.99554813e-01 1.00948405e-03
+ 9.99657393e-01 4.15831283e-02 9.67928231e-01 4.05834668e-04
+ 9.55810398e-03 3.73926796e-02 5.59992623e-03 5.28873131e-03
+ 9.98504162e-01 2.92133100e-05 6.90860629e-01 1.76072659e-04
+ 2.53241844e-02 3.97669911e-01 1.93510743e-04 6.08038623e-03
+ 7.23155041e-04 3.14716890e-04 9.99908566e-01 6.41571358e-03
+ 1.38095417e-03 2.95218118e-02 1.03264663e-03 6.28267939e-04
+ 2.80393334e-03 9.99998331e-01 8.09121132e-01 9.99998093e-01
+ 2.31616899e-01 3.83933471e-03 5.64550236e-03 1.32753252e-04
+ 1.20281715e-04 6.65110943e-04 4.09242287e-02 7.48409033e-01
+ 3.11283823e-02 5.18170536e-01 5.96136507e-03 3.32020931e-02
+ 8.99739156e-04 9.99808013e-01 2.95913100e-01 9.99917388e-01
+ 1.03073895e-01 9.99390721e-01 9.91685927e-01 1.31304015e-03
+ 9.99724567e-01 7.60221016e-03 9.99861598e-01 9.99515891e-01
+ 9.98395383e-01 9.99336660e-01 4.15786868e-03 2.78355928e-05
+ 9.54436325e-03 6.35437027e-05 9.99919057e-01 4.23613843e-03
+ 9.72661495e-01 1.62923485e-02 9.65143323e-01 9.94256079e-01
+ 1.52344466e-03 1.55298635e-02 4.74203174e-04 9.99756157e-01
+ 1.82017665e-02 9.99968052e-01 9.91610706e-01 1.88264099e-03
+ 9.99984860e-01 2.16344371e-03 9.89831924e-01 9.85271096e-01
+ 3.89878568e-03 9.99899149e-01 9.92127776e-01 9.99993563e-01
+ 1.15984934e-03 7.33064138e-04 9.99943495e-01 2.48879701e-01
+ 5.41308615e-03 1.94944674e-03 3.17256709e-05 4.77434078e-04
+ 1.17123436e-05 9.94747221e-01 9.97137427e-01 6.13574564e-01]
+INFO:root:sensitive_y_true: [1. 0. 0. 1. 0. 1. 1. 0. 0. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.
+ 1. 0. 1. 1. 0. 0. 0. 1. 1. 1. 0. 1. 0. 0. 1. 0. 0. 0. 1. 1. 1. 0. 1. 1.
+ 0. 0. 0. 0. 0. 1. 1. 1. 0. 0. 1. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 1. 1. 1.
+ 0. 1. 0. 0. 1. 0. 0. 1. 0. 0. 1. 0. 0. 0. 0. 0. 1. 1. 0. 0. 1. 0. 1. 0.
+ 1. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.
+ 0. 1. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 1. 0. 1. 0. 1. 1. 0.
+ 1. 0. 1. 1. 1. 1. 1. 0. 0. 0. 1. 0. 1. 0. 1. 1. 0. 0. 0. 1. 0. 1. 1. 0.
+ 1. 0. 1. 1. 0. 1. 1. 1. 0. 0. 1. 0. 0. 0. 0. 0. 0. 1. 1. 0.]
+INFO:root:2024-03-28 15:26:59, Dev, Step : 750, Loss : 0.56489, Acc : 0.713, Auc : 0.784, Sensitive_Loss : 0.11458, Sensitive_Acc : 17.223, Sensitive_Auc : 0.983, Mean auc: 0.784, Run Time : 184.62 sec
+INFO:root:2024-03-28 15:27:12, Train, Epoch : 2, Step : 760, Loss : 0.54647, Acc : 0.741, Sensitive_Loss : 0.11766, Sensitive_Acc : 12.900, Run Time : 10.74 sec
+INFO:root:2024-03-28 15:27:20, Train, Epoch : 2, Step : 770, Loss : 0.54063, Acc : 0.744, Sensitive_Loss : 0.11585, Sensitive_Acc : 15.800, Run Time : 8.84 sec
+INFO:root:2024-03-28 15:27:30, Train, Epoch : 2, Step : 780, Loss : 0.49261, Acc : 0.709, Sensitive_Loss : 0.11362, Sensitive_Acc : 15.900, Run Time : 9.75 sec
+INFO:root:2024-03-28 15:27:41, Train, Epoch : 2, Step : 790, Loss : 0.56510, Acc : 0.688, Sensitive_Loss : 0.13384, Sensitive_Acc : 17.900, Run Time : 11.10 sec
+INFO:root:2024-03-28 15:27:51, Train, Epoch : 2, Step : 800, Loss : 0.56439, Acc : 0.672, Sensitive_Loss : 0.14776, Sensitive_Acc : 19.300, Run Time : 10.17 sec
+INFO:root:2024-03-28 15:30:54, Dev, Step : 800, Loss : 0.56464, Acc : 0.712, Auc : 0.795, Sensitive_Loss : 0.16048, Sensitive_Acc : 16.894, Sensitive_Auc : 0.987, Mean auc: 0.795, Run Time : 182.81 sec
+INFO:root:2024-03-28 15:30:55, Best, Step : 800, Loss : 0.56464, Acc : 0.712, Auc : 0.795, Sensitive_Loss : 0.16048, Sensitive_Acc : 16.894, Sensitive_Auc : 0.987, Best Auc : 0.795
+INFO:root:2024-03-28 15:31:02, Train, Epoch : 2, Step : 810, Loss : 0.56796, Acc : 0.728, Sensitive_Loss : 0.12015, Sensitive_Acc : 15.700, Run Time : 190.51 sec
+INFO:root:2024-03-28 15:31:14, Train, Epoch : 2, Step : 820, Loss : 0.46685, Acc : 0.759, Sensitive_Loss : 0.12814, Sensitive_Acc : 15.200, Run Time : 11.96 sec
+INFO:root:2024-03-28 15:31:23, Train, Epoch : 2, Step : 830, Loss : 0.50871, Acc : 0.750, Sensitive_Loss : 0.07399, Sensitive_Acc : 17.300, Run Time : 8.81 sec
+INFO:root:2024-03-28 15:31:32, Train, Epoch : 2, Step : 840, Loss : 0.53761, Acc : 0.716, Sensitive_Loss : 0.13295, Sensitive_Acc : 15.700, Run Time : 9.64 sec
+INFO:root:2024-03-28 15:31:44, Train, Epoch : 2, Step : 850, Loss : 0.58327, Acc : 0.719, Sensitive_Loss : 0.10320, Sensitive_Acc : 16.300, Run Time : 12.00 sec
+INFO:root:2024-03-28 15:31:54, Train, Epoch : 2, Step : 860, Loss : 0.60458, Acc : 0.669, Sensitive_Loss : 0.11420, Sensitive_Acc : 14.000, Run Time : 10.04 sec
+INFO:root:2024-03-28 15:32:04, Train, Epoch : 2, Step : 870, Loss : 0.54244, Acc : 0.681, Sensitive_Loss : 0.10265, Sensitive_Acc : 17.500, Run Time : 9.13 sec
+INFO:root:2024-03-28 15:32:14, Train, Epoch : 2, Step : 880, Loss : 0.46607, Acc : 0.775, Sensitive_Loss : 0.08336, Sensitive_Acc : 18.400, Run Time : 10.09 sec
+INFO:root:2024-03-28 15:32:25, Train, Epoch : 2, Step : 890, Loss : 0.53567, Acc : 0.728, Sensitive_Loss : 0.19520, Sensitive_Acc : 15.200, Run Time : 11.11 sec
+INFO:root:2024-03-28 15:32:34, Train, Epoch : 2, Step : 900, Loss : 0.51735, Acc : 0.706, Sensitive_Loss : 0.08224, Sensitive_Acc : 16.500, Run Time : 9.16 sec
+INFO:root:2024-03-28 15:35:45, Dev, Step : 900, Loss : 0.55772, Acc : 0.724, Auc : 0.795, Sensitive_Loss : 0.12168, Sensitive_Acc : 16.979, Sensitive_Auc : 0.989, Mean auc: 0.795, Run Time : 190.64 sec
+INFO:root:2024-03-28 15:35:51, Train, Epoch : 2, Step : 910, Loss : 0.46832, Acc : 0.766, Sensitive_Loss : 0.09224, Sensitive_Acc : 15.100, Run Time : 197.35 sec
+INFO:root:2024-03-28 15:36:01, Train, Epoch : 2, Step : 920, Loss : 0.49600, Acc : 0.762, Sensitive_Loss : 0.11175, Sensitive_Acc : 17.500, Run Time : 10.15 sec
+INFO:root:2024-03-28 15:36:12, Train, Epoch : 2, Step : 930, Loss : 0.57642, Acc : 0.694, Sensitive_Loss : 0.07841, Sensitive_Acc : 17.400, Run Time : 10.66 sec
+INFO:root:2024-03-28 15:36:22, Train, Epoch : 2, Step : 940, Loss : 0.53628, Acc : 0.719, Sensitive_Loss : 0.09079, Sensitive_Acc : 18.500, Run Time : 9.74 sec
+INFO:root:2024-03-28 15:36:32, Train, Epoch : 2, Step : 950, Loss : 0.63515, Acc : 0.694, Sensitive_Loss : 0.11364, Sensitive_Acc : 18.000, Run Time : 9.91 sec
+INFO:root:2024-03-28 15:36:42, Train, Epoch : 2, Step : 960, Loss : 0.56731, Acc : 0.700, Sensitive_Loss : 0.09236, Sensitive_Acc : 18.700, Run Time : 10.31 sec
+INFO:root:2024-03-28 15:36:52, Train, Epoch : 2, Step : 970, Loss : 0.48387, Acc : 0.747, Sensitive_Loss : 0.12146, Sensitive_Acc : 17.500, Run Time : 9.87 sec
+INFO:root:2024-03-28 15:37:02, Train, Epoch : 2, Step : 980, Loss : 0.50866, Acc : 0.691, Sensitive_Loss : 0.08500, Sensitive_Acc : 17.700, Run Time : 9.84 sec
+INFO:root:2024-03-28 15:37:12, Train, Epoch : 2, Step : 990, Loss : 0.60479, Acc : 0.669, Sensitive_Loss : 0.10905, Sensitive_Acc : 17.000, Run Time : 9.92 sec
+INFO:root:2024-03-28 15:37:23, Train, Epoch : 2, Step : 1000, Loss : 0.64030, Acc : 0.647, Sensitive_Loss : 0.08946, Sensitive_Acc : 16.900, Run Time : 11.31 sec
+INFO:root:2024-03-28 15:40:39, Dev, Step : 1000, Loss : 0.56852, Acc : 0.714, Auc : 0.782, Sensitive_Loss : 0.12025, Sensitive_Acc : 17.426, Sensitive_Auc : 0.990, Mean auc: 0.782, Run Time : 196.07 sec
+INFO:root:2024-03-28 15:40:48, Train, Epoch : 2, Step : 1010, Loss : 0.55004, Acc : 0.772, Sensitive_Loss : 0.09015, Sensitive_Acc : 17.900, Run Time : 204.79 sec
+INFO:root:2024-03-28 15:41:01, Train, Epoch : 2, Step : 1020, Loss : 0.50490, Acc : 0.716, Sensitive_Loss : 0.09062, Sensitive_Acc : 15.800, Run Time : 12.86 sec
+INFO:root:2024-03-28 15:41:10, Train, Epoch : 2, Step : 1030, Loss : 0.56282, Acc : 0.706, Sensitive_Loss : 0.07255, Sensitive_Acc : 16.000, Run Time : 9.77 sec
+INFO:root:2024-03-28 15:41:21, Train, Epoch : 2, Step : 1040, Loss : 0.49752, Acc : 0.728, Sensitive_Loss : 0.09366, Sensitive_Acc : 15.400, Run Time : 10.49 sec
+INFO:root:2024-03-28 15:41:33, Train, Epoch : 2, Step : 1050, Loss : 0.56637, Acc : 0.703, Sensitive_Loss : 0.10984, Sensitive_Acc : 15.600, Run Time : 11.85 sec
+INFO:root:2024-03-28 15:41:42, Train, Epoch : 2, Step : 1060, Loss : 0.56361, Acc : 0.728, Sensitive_Loss : 0.13986, Sensitive_Acc : 19.400, Run Time : 9.04 sec
+INFO:root:2024-03-28 15:41:53, Train, Epoch : 2, Step : 1070, Loss : 0.60953, Acc : 0.719, Sensitive_Loss : 0.13921, Sensitive_Acc : 15.000, Run Time : 10.94 sec
+INFO:root:2024-03-28 15:42:05, Train, Epoch : 2, Step : 1080, Loss : 0.56205, Acc : 0.725, Sensitive_Loss : 0.11391, Sensitive_Acc : 15.400, Run Time : 12.00 sec
+INFO:root:2024-03-28 15:42:15, Train, Epoch : 2, Step : 1090, Loss : 0.54725, Acc : 0.694, Sensitive_Loss : 0.12134, Sensitive_Acc : 17.100, Run Time : 9.94 sec
+INFO:root:2024-03-28 15:42:25, Train, Epoch : 2, Step : 1100, Loss : 0.66868, Acc : 0.681, Sensitive_Loss : 0.06983, Sensitive_Acc : 18.800, Run Time : 10.08 sec
+INFO:root:2024-03-28 15:45:46, Dev, Step : 1100, Loss : 0.58049, Acc : 0.693, Auc : 0.779, Sensitive_Loss : 0.13186, Sensitive_Acc : 16.957, Sensitive_Auc : 0.988, Mean auc: 0.779, Run Time : 201.07 sec
+INFO:root:2024-03-28 15:45:54, Train, Epoch : 2, Step : 1110, Loss : 0.53046, Acc : 0.722, Sensitive_Loss : 0.15782, Sensitive_Acc : 15.300, Run Time : 208.93 sec
+INFO:root:2024-03-28 15:46:07, Train, Epoch : 2, Step : 1120, Loss : 0.55083, Acc : 0.700, Sensitive_Loss : 0.12101, Sensitive_Acc : 19.000, Run Time : 13.33 sec
+INFO:root:2024-03-28 15:46:17, Train, Epoch : 2, Step : 1130, Loss : 0.52944, Acc : 0.731, Sensitive_Loss : 0.11630, Sensitive_Acc : 16.900, Run Time : 9.86 sec
+INFO:root:2024-03-28 15:46:28, Train, Epoch : 2, Step : 1140, Loss : 0.54382, Acc : 0.728, Sensitive_Loss : 0.11128, Sensitive_Acc : 16.600, Run Time : 11.20 sec
+INFO:root:2024-03-28 15:46:41, Train, Epoch : 2, Step : 1150, Loss : 0.51155, Acc : 0.738, Sensitive_Loss : 0.10193, Sensitive_Acc : 15.600, Run Time : 12.93 sec
+INFO:root:2024-03-28 15:46:51, Train, Epoch : 2, Step : 1160, Loss : 0.54792, Acc : 0.725, Sensitive_Loss : 0.12699, Sensitive_Acc : 18.500, Run Time : 9.63 sec
+INFO:root:2024-03-28 15:47:01, Train, Epoch : 2, Step : 1170, Loss : 0.54188, Acc : 0.703, Sensitive_Loss : 0.08271, Sensitive_Acc : 19.700, Run Time : 10.66 sec
+INFO:root:2024-03-28 15:47:13, Train, Epoch : 2, Step : 1180, Loss : 0.54313, Acc : 0.750, Sensitive_Loss : 0.07094, Sensitive_Acc : 14.900, Run Time : 11.84 sec
+INFO:root:2024-03-28 15:47:23, Train, Epoch : 2, Step : 1190, Loss : 0.58116, Acc : 0.703, Sensitive_Loss : 0.15201, Sensitive_Acc : 16.500, Run Time : 10.37 sec
+INFO:root:2024-03-28 15:47:34, Train, Epoch : 2, Step : 1200, Loss : 0.51342, Acc : 0.738, Sensitive_Loss : 0.11854, Sensitive_Acc : 16.500, Run Time : 10.07 sec
+INFO:root:2024-03-28 15:50:51, Dev, Step : 1200, Loss : 0.55681, Acc : 0.725, Auc : 0.795, Sensitive_Loss : 0.25632, Sensitive_Acc : 16.489, Sensitive_Auc : 0.992, Mean auc: 0.795, Run Time : 197.71 sec
+INFO:root:2024-03-28 15:50:52, Best, Step : 1200, Loss : 0.55681, Acc : 0.725, Auc : 0.795, Sensitive_Loss : 0.25632, Sensitive_Acc : 16.489, Sensitive_Auc : 0.992, Best Auc : 0.795
+INFO:root:2024-03-28 15:50:59, Train, Epoch : 2, Step : 1210, Loss : 0.52387, Acc : 0.697, Sensitive_Loss : 0.10387, Sensitive_Acc : 16.200, Run Time : 205.42 sec
+INFO:root:2024-03-28 15:51:08, Train, Epoch : 2, Step : 1220, Loss : 0.53280, Acc : 0.753, Sensitive_Loss : 0.11499, Sensitive_Acc : 17.300, Run Time : 9.39 sec
+INFO:root:2024-03-28 15:51:19, Train, Epoch : 2, Step : 1230, Loss : 0.52447, Acc : 0.719, Sensitive_Loss : 0.09168, Sensitive_Acc : 15.800, Run Time : 10.48 sec
+INFO:root:2024-03-28 15:51:30, Train, Epoch : 2, Step : 1240, Loss : 0.52151, Acc : 0.734, Sensitive_Loss : 0.12060, Sensitive_Acc : 17.800, Run Time : 10.73 sec
+INFO:root:2024-03-28 15:51:39, Train, Epoch : 2, Step : 1250, Loss : 0.58612, Acc : 0.728, Sensitive_Loss : 0.14257, Sensitive_Acc : 14.800, Run Time : 9.58 sec
+INFO:root:2024-03-28 15:51:50, Train, Epoch : 2, Step : 1260, Loss : 0.51896, Acc : 0.741, Sensitive_Loss : 0.09534, Sensitive_Acc : 15.200, Run Time : 10.78 sec
+INFO:root:2024-03-28 15:52:02, Train, Epoch : 2, Step : 1270, Loss : 0.53379, Acc : 0.709, Sensitive_Loss : 0.06791, Sensitive_Acc : 15.400, Run Time : 12.09 sec
+INFO:root:2024-03-28 15:52:11, Train, Epoch : 2, Step : 1280, Loss : 0.53718, Acc : 0.728, Sensitive_Loss : 0.08708, Sensitive_Acc : 16.000, Run Time : 9.43 sec
+INFO:root:2024-03-28 15:52:23, Train, Epoch : 2, Step : 1290, Loss : 0.59663, Acc : 0.716, Sensitive_Loss : 0.06424, Sensitive_Acc : 17.700, Run Time : 11.17 sec
+INFO:root:2024-03-28 15:52:35, Train, Epoch : 2, Step : 1300, Loss : 0.54035, Acc : 0.722, Sensitive_Loss : 0.10056, Sensitive_Acc : 15.500, Run Time : 12.86 sec
+INFO:root:2024-03-28 15:55:51, Dev, Step : 1300, Loss : 0.54553, Acc : 0.738, Auc : 0.809, Sensitive_Loss : 0.10370, Sensitive_Acc : 17.128, Sensitive_Auc : 0.994, Mean auc: 0.809, Run Time : 195.78 sec
+INFO:root:2024-03-28 15:55:52, Best, Step : 1300, Loss : 0.54553, Acc : 0.738, Auc : 0.809, Sensitive_Loss : 0.10370, Sensitive_Acc : 17.128, Sensitive_Auc : 0.994, Best Auc : 0.809
+INFO:root:2024-03-28 15:55:59, Train, Epoch : 2, Step : 1310, Loss : 0.52847, Acc : 0.713, Sensitive_Loss : 0.07712, Sensitive_Acc : 16.200, Run Time : 203.50 sec
+INFO:root:2024-03-28 15:56:08, Train, Epoch : 2, Step : 1320, Loss : 0.56581, Acc : 0.684, Sensitive_Loss : 0.05159, Sensitive_Acc : 15.100, Run Time : 9.32 sec
+INFO:root:2024-03-28 15:56:18, Train, Epoch : 2, Step : 1330, Loss : 0.59593, Acc : 0.722, Sensitive_Loss : 0.08243, Sensitive_Acc : 17.400, Run Time : 9.91 sec
+INFO:root:2024-03-28 15:56:29, Train, Epoch : 2, Step : 1340, Loss : 0.58552, Acc : 0.694, Sensitive_Loss : 0.10308, Sensitive_Acc : 19.200, Run Time : 10.40 sec
+INFO:root:2024-03-28 15:56:40, Train, Epoch : 2, Step : 1350, Loss : 0.51760, Acc : 0.756, Sensitive_Loss : 0.08954, Sensitive_Acc : 18.900, Run Time : 11.10 sec
+INFO:root:2024-03-28 15:56:49, Train, Epoch : 2, Step : 1360, Loss : 0.61140, Acc : 0.700, Sensitive_Loss : 0.07509, Sensitive_Acc : 18.500, Run Time : 9.67 sec
+INFO:root:2024-03-28 15:57:00, Train, Epoch : 2, Step : 1370, Loss : 0.54112, Acc : 0.738, Sensitive_Loss : 0.11406, Sensitive_Acc : 16.500, Run Time : 10.22 sec
+INFO:root:2024-03-28 15:57:12, Train, Epoch : 2, Step : 1380, Loss : 0.60523, Acc : 0.697, Sensitive_Loss : 0.14088, Sensitive_Acc : 15.400, Run Time : 12.29 sec
+INFO:root:2024-03-28 15:57:22, Train, Epoch : 2, Step : 1390, Loss : 0.54607, Acc : 0.744, Sensitive_Loss : 0.08023, Sensitive_Acc : 15.800, Run Time : 9.86 sec
+INFO:root:2024-03-28 15:57:31, Train, Epoch : 2, Step : 1400, Loss : 0.55560, Acc : 0.731, Sensitive_Loss : 0.15708, Sensitive_Acc : 15.900, Run Time : 9.75 sec
+INFO:root:2024-03-28 16:00:47, Dev, Step : 1400, Loss : 0.54231, Acc : 0.734, Auc : 0.808, Sensitive_Loss : 0.08561, Sensitive_Acc : 17.319, Sensitive_Auc : 0.991, Mean auc: 0.808, Run Time : 195.03 sec
+INFO:root:2024-03-28 16:00:53, Train, Epoch : 2, Step : 1410, Loss : 0.58741, Acc : 0.700, Sensitive_Loss : 0.12132, Sensitive_Acc : 17.200, Run Time : 201.72 sec
+INFO:root:2024-03-28 16:01:05, Train, Epoch : 2, Step : 1420, Loss : 0.50029, Acc : 0.713, Sensitive_Loss : 0.11880, Sensitive_Acc : 16.800, Run Time : 11.33 sec
+INFO:root:2024-03-28 16:01:15, Train, Epoch : 2, Step : 1430, Loss : 0.54548, Acc : 0.706, Sensitive_Loss : 0.09231, Sensitive_Acc : 17.600, Run Time : 10.13 sec
+INFO:root:2024-03-28 16:01:24, Train, Epoch : 2, Step : 1440, Loss : 0.50379, Acc : 0.741, Sensitive_Loss : 0.14560, Sensitive_Acc : 18.800, Run Time : 9.49 sec
+INFO:root:2024-03-28 16:01:35, Train, Epoch : 2, Step : 1450, Loss : 0.56615, Acc : 0.728, Sensitive_Loss : 0.13274, Sensitive_Acc : 17.800, Run Time : 10.86 sec
+INFO:root:2024-03-28 16:01:46, Train, Epoch : 2, Step : 1460, Loss : 0.56332, Acc : 0.713, Sensitive_Loss : 0.10340, Sensitive_Acc : 16.000, Run Time : 10.81 sec
+INFO:root:2024-03-28 16:01:56, Train, Epoch : 2, Step : 1470, Loss : 0.51524, Acc : 0.738, Sensitive_Loss : 0.10902, Sensitive_Acc : 20.100, Run Time : 9.94 sec
+INFO:root:2024-03-28 16:02:05, Train, Epoch : 2, Step : 1480, Loss : 0.54982, Acc : 0.753, Sensitive_Loss : 0.10586, Sensitive_Acc : 16.200, Run Time : 9.35 sec
+INFO:root:2024-03-28 16:02:15, Train, Epoch : 2, Step : 1490, Loss : 0.51572, Acc : 0.731, Sensitive_Loss : 0.10144, Sensitive_Acc : 17.800, Run Time : 9.67 sec
+INFO:root:2024-03-28 16:02:27, Train, Epoch : 2, Step : 1500, Loss : 0.55562, Acc : 0.722, Sensitive_Loss : 0.07215, Sensitive_Acc : 17.400, Run Time : 12.42 sec
+INFO:root:2024-03-28 16:05:41, Dev, Step : 1500, Loss : 0.54142, Acc : 0.730, Auc : 0.806, Sensitive_Loss : 0.08147, Sensitive_Acc : 17.319, Sensitive_Auc : 0.997, Mean auc: 0.806, Run Time : 193.66 sec
+INFO:root:2024-03-28 16:07:47
+INFO:root:y_pred: [0.13230363 0.42512694 0.94541633 ... 0.9113516  0.6436121  0.5097252 ]
+INFO:root:y_true: [1. 1. 1. ... 1. 0. 1.]
+INFO:root:sensitive_y_pred: [9.6158195e-01 1.4087480e-01 4.5720040e-07 9.9930596e-01 8.2210067e-04
+ 9.9995136e-01 9.9946636e-01 1.2679712e-05 1.4829774e-02 9.9997103e-01
+ 9.9987769e-01 1.1700600e-04 2.3619393e-04 1.1359701e-01 1.2415834e-04
+ 1.4585222e-03 5.6360345e-03 5.7061639e-04 3.1712239e-07 4.8561958e-03
+ 9.9969471e-01 9.3835834e-03 1.2688093e-04 3.2262453e-03 7.9585314e-01
+ 2.0385768e-01 9.9986303e-01 8.6077410e-01 1.4755959e-02 1.3808623e-03
+ 3.1599577e-03 9.9998891e-01 9.9769717e-01 9.8493016e-01 6.1330822e-04
+ 9.9018121e-01 2.5598733e-06 7.9602085e-04 9.9942541e-01 5.6472071e-04
+ 2.1620840e-02 2.6238140e-05 8.3742350e-01 9.9937397e-01 9.9923527e-01
+ 9.5326500e-03 9.8503995e-01 8.7537277e-01 2.9683980e-01 7.1843765e-06
+ 2.4993455e-03 4.2653075e-04 1.7963167e-03 2.4831729e-01 9.9999022e-01
+ 9.9998724e-01 3.6299637e-06 5.5771847e-03 9.8996699e-01 1.8350340e-08
+ 8.0370010e-05 9.9998832e-01 1.6274309e-04 9.9954045e-01 1.0531807e-06
+ 6.1208627e-04 4.7552094e-02 2.3440678e-04 1.0017840e-02 9.9586415e-01
+ 9.9996352e-01 9.9989986e-01 5.4349875e-01 9.9777371e-01 2.1563727e-02
+ 9.6726138e-03 9.9993658e-01 2.2706152e-05 1.5765584e-06 9.9856585e-01
+ 5.3010625e-03 1.6249623e-02 9.9893588e-01 2.4612490e-03 9.6554315e-01
+ 7.4517782e-05 1.1696930e-04 2.6666946e-06 9.9879384e-01 9.9100471e-01
+ 2.1723579e-04 3.4966348e-03 8.8811183e-01 6.5958318e-07 9.9993455e-01
+ 3.3790378e-03 9.9991727e-01 1.5102106e-04 4.3938610e-01 2.4424467e-05
+ 5.0444398e-03 6.1852799e-04 2.3104895e-03 9.6149808e-03 9.9968302e-01
+ 4.8181559e-05 1.3075326e-01 1.5300668e-05 5.7521882e-03 2.3829420e-01
+ 2.8309027e-05 5.7312441e-03 2.2663446e-05 2.4595900e-04 9.9972707e-01
+ 1.5266023e-03 1.4013492e-05 1.1079700e-03 1.1014243e-03 4.5140876e-04
+ 1.1489250e-04 9.9992943e-01 9.8469955e-01 9.9997747e-01 8.7443545e-02
+ 1.4896840e-05 3.8106421e-03 1.3260670e-05 8.0492600e-06 6.5366339e-06
+ 4.3650169e-02 8.9569069e-02 2.7507186e-04 8.9600688e-01 3.0851318e-03
+ 7.0471782e-04 7.6520297e-04 9.9997711e-01 2.4086265e-02 9.9998677e-01
+ 3.3020463e-02 9.9973136e-01 9.9829024e-01 3.5693849e-04 9.9993634e-01
+ 1.3746642e-01 9.9965990e-01 9.9978107e-01 9.9999213e-01 9.9972528e-01
+ 1.6644602e-01 1.9534903e-07 2.9306478e-04 8.5885512e-07 9.8957878e-01
+ 4.7231433e-03 9.9405563e-01 5.7785958e-04 9.9565542e-01 9.7501707e-01
+ 2.8442084e-05 1.0746195e-01 1.4108057e-04 9.9938977e-01 1.4233434e-02
+ 9.9662590e-01 9.8284125e-01 1.0128136e-06 9.9999869e-01 1.9318200e-05
+ 9.9775726e-01 9.8561656e-01 8.8803499e-05 9.9991477e-01 9.8329401e-01
+ 9.9999738e-01 5.6875353e-03 1.4926725e-03 9.9980205e-01 6.4841163e-01
+ 2.7365412e-03 6.4901970e-03 1.0799686e-05 2.8415432e-05 9.1691647e-05
+ 9.9740607e-01 9.9304295e-01 1.7681584e-01]
+INFO:root:sensitive_y_true: [1. 0. 0. 1. 0. 1. 1. 0. 0. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.
+ 1. 0. 1. 1. 0. 0. 0. 1. 1. 1. 0. 1. 0. 0. 1. 0. 0. 0. 1. 1. 1. 0. 1. 1.
+ 0. 0. 0. 0. 0. 1. 1. 1. 0. 0. 1. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 1. 1. 1.
+ 0. 1. 0. 0. 1. 0. 0. 1. 0. 0. 1. 0. 0. 0. 0. 0. 1. 1. 0. 0. 1. 0. 1. 0.
+ 1. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.
+ 0. 1. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 1. 0. 1. 0. 1. 1. 0.
+ 1. 0. 1. 1. 1. 1. 1. 0. 0. 0. 1. 0. 1. 0. 1. 1. 0. 0. 0. 1. 0. 1. 1. 0.
+ 1. 0. 1. 1. 0. 1. 1. 1. 0. 0. 1. 0. 0. 0. 0. 0. 0. 1. 1. 0.]
+INFO:root:2024-03-28 16:07:47, Dev, Step : 1500, Loss : 0.54142, Acc : 0.730, Auc : 0.806, Sensitive_Loss : 0.08147, Sensitive_Acc : 17.319, Sensitive_Auc : 0.997, Mean auc: 0.806, Run Time : 126.37 sec
+INFO:root:2024-03-28 16:08:00, Train, Epoch : 3, Step : 1510, Loss : 0.52358, Acc : 0.734, Sensitive_Loss : 0.10421, Sensitive_Acc : 16.800, Run Time : 11.37 sec
+INFO:root:2024-03-28 16:08:10, Train, Epoch : 3, Step : 1520, Loss : 0.49811, Acc : 0.744, Sensitive_Loss : 0.08383, Sensitive_Acc : 17.000, Run Time : 10.47 sec
+INFO:root:2024-03-28 16:08:26, Train, Epoch : 3, Step : 1530, Loss : 0.53590, Acc : 0.738, Sensitive_Loss : 0.08229, Sensitive_Acc : 17.000, Run Time : 15.66 sec
+INFO:root:2024-03-28 16:08:36, Train, Epoch : 3, Step : 1540, Loss : 0.47626, Acc : 0.759, Sensitive_Loss : 0.09375, Sensitive_Acc : 16.900, Run Time : 10.52 sec
+INFO:root:2024-03-28 16:08:47, Train, Epoch : 3, Step : 1550, Loss : 0.51336, Acc : 0.756, Sensitive_Loss : 0.04115, Sensitive_Acc : 17.700, Run Time : 10.95 sec
+INFO:root:2024-03-28 16:09:02, Train, Epoch : 3, Step : 1560, Loss : 0.43991, Acc : 0.803, Sensitive_Loss : 0.07531, Sensitive_Acc : 18.800, Run Time : 14.35 sec
+INFO:root:2024-03-28 16:09:13, Train, Epoch : 3, Step : 1570, Loss : 0.49044, Acc : 0.759, Sensitive_Loss : 0.05666, Sensitive_Acc : 17.200, Run Time : 11.65 sec
+INFO:root:2024-03-28 16:09:27, Train, Epoch : 3, Step : 1580, Loss : 0.51926, Acc : 0.734, Sensitive_Loss : 0.09709, Sensitive_Acc : 18.400, Run Time : 13.58 sec
+INFO:root:2024-03-28 16:09:40, Train, Epoch : 3, Step : 1590, Loss : 0.56888, Acc : 0.722, Sensitive_Loss : 0.06592, Sensitive_Acc : 17.900, Run Time : 12.92 sec
+INFO:root:2024-03-28 16:09:50, Train, Epoch : 3, Step : 1600, Loss : 0.49194, Acc : 0.750, Sensitive_Loss : 0.03720, Sensitive_Acc : 17.100, Run Time : 10.39 sec
+INFO:root:2024-03-28 16:13:13, Dev, Step : 1600, Loss : 0.54389, Acc : 0.737, Auc : 0.818, Sensitive_Loss : 0.08006, Sensitive_Acc : 17.138, Sensitive_Auc : 0.996, Mean auc: 0.818, Run Time : 203.18 sec
+INFO:root:2024-03-28 16:13:14, Best, Step : 1600, Loss : 0.54389, Acc : 0.737, Auc : 0.818, Sensitive_Loss : 0.08006, Sensitive_Acc : 17.138, Sensitive_Auc : 0.996, Best Auc : 0.818
+INFO:root:2024-03-28 16:13:21, Train, Epoch : 3, Step : 1610, Loss : 0.48039, Acc : 0.812, Sensitive_Loss : 0.06786, Sensitive_Acc : 16.700, Run Time : 210.67 sec
+INFO:root:2024-03-28 16:13:31, Train, Epoch : 3, Step : 1620, Loss : 0.48882, Acc : 0.781, Sensitive_Loss : 0.08736, Sensitive_Acc : 15.900, Run Time : 10.71 sec
+INFO:root:2024-03-28 16:13:44, Train, Epoch : 3, Step : 1630, Loss : 0.47859, Acc : 0.787, Sensitive_Loss : 0.06229, Sensitive_Acc : 17.400, Run Time : 12.54 sec
+INFO:root:2024-03-28 16:13:53, Train, Epoch : 3, Step : 1640, Loss : 0.49241, Acc : 0.744, Sensitive_Loss : 0.07097, Sensitive_Acc : 15.100, Run Time : 9.36 sec
+INFO:root:2024-03-28 16:14:03, Train, Epoch : 3, Step : 1650, Loss : 0.52633, Acc : 0.738, Sensitive_Loss : 0.05236, Sensitive_Acc : 17.800, Run Time : 9.17 sec
+INFO:root:2024-03-28 16:14:12, Train, Epoch : 3, Step : 1660, Loss : 0.58828, Acc : 0.725, Sensitive_Loss : 0.05092, Sensitive_Acc : 16.700, Run Time : 9.94 sec
+INFO:root:2024-03-28 16:14:22, Train, Epoch : 3, Step : 1670, Loss : 0.44724, Acc : 0.759, Sensitive_Loss : 0.09614, Sensitive_Acc : 17.300, Run Time : 10.02 sec
+INFO:root:2024-03-28 16:14:32, Train, Epoch : 3, Step : 1680, Loss : 0.46667, Acc : 0.791, Sensitive_Loss : 0.05492, Sensitive_Acc : 17.400, Run Time : 9.61 sec
+INFO:root:2024-03-28 16:14:42, Train, Epoch : 3, Step : 1690, Loss : 0.49601, Acc : 0.759, Sensitive_Loss : 0.04598, Sensitive_Acc : 18.100, Run Time : 9.70 sec
+INFO:root:2024-03-28 16:14:54, Train, Epoch : 3, Step : 1700, Loss : 0.52142, Acc : 0.728, Sensitive_Loss : 0.04629, Sensitive_Acc : 18.800, Run Time : 12.12 sec
+INFO:root:2024-03-28 16:18:21, Dev, Step : 1700, Loss : 0.53671, Acc : 0.741, Auc : 0.820, Sensitive_Loss : 0.08789, Sensitive_Acc : 17.106, Sensitive_Auc : 0.996, Mean auc: 0.820, Run Time : 207.02 sec
+INFO:root:2024-03-28 16:18:22, Best, Step : 1700, Loss : 0.53671, Acc : 0.741, Auc : 0.820, Sensitive_Loss : 0.08789, Sensitive_Acc : 17.106, Sensitive_Auc : 0.996, Best Auc : 0.820
+INFO:root:2024-03-28 16:18:29, Train, Epoch : 3, Step : 1710, Loss : 0.46438, Acc : 0.738, Sensitive_Loss : 0.05305, Sensitive_Acc : 18.700, Run Time : 214.81 sec
+INFO:root:2024-03-28 16:18:38, Train, Epoch : 3, Step : 1720, Loss : 0.51555, Acc : 0.750, Sensitive_Loss : 0.03896, Sensitive_Acc : 16.600, Run Time : 9.63 sec
+INFO:root:2024-03-28 16:18:50, Train, Epoch : 3, Step : 1730, Loss : 0.46732, Acc : 0.731, Sensitive_Loss : 0.05847, Sensitive_Acc : 15.500, Run Time : 11.51 sec
+INFO:root:2024-03-28 16:19:01, Train, Epoch : 3, Step : 1740, Loss : 0.45896, Acc : 0.759, Sensitive_Loss : 0.04067, Sensitive_Acc : 16.000, Run Time : 11.39 sec
+INFO:root:2024-03-28 16:19:11, Train, Epoch : 3, Step : 1750, Loss : 0.49524, Acc : 0.766, Sensitive_Loss : 0.04700, Sensitive_Acc : 15.000, Run Time : 9.69 sec
+INFO:root:2024-03-28 16:19:21, Train, Epoch : 3, Step : 1760, Loss : 0.56368, Acc : 0.691, Sensitive_Loss : 0.04251, Sensitive_Acc : 17.100, Run Time : 10.30 sec
+INFO:root:2024-03-28 16:19:32, Train, Epoch : 3, Step : 1770, Loss : 0.46339, Acc : 0.759, Sensitive_Loss : 0.03951, Sensitive_Acc : 15.100, Run Time : 11.21 sec
+INFO:root:2024-03-28 16:19:42, Train, Epoch : 3, Step : 1780, Loss : 0.48246, Acc : 0.778, Sensitive_Loss : 0.06060, Sensitive_Acc : 17.300, Run Time : 9.74 sec
+INFO:root:2024-03-28 16:19:54, Train, Epoch : 3, Step : 1790, Loss : 0.56339, Acc : 0.781, Sensitive_Loss : 0.04566, Sensitive_Acc : 16.600, Run Time : 11.48 sec
+INFO:root:2024-03-28 16:20:05, Train, Epoch : 3, Step : 1800, Loss : 0.51859, Acc : 0.759, Sensitive_Loss : 0.07754, Sensitive_Acc : 18.200, Run Time : 11.01 sec
+INFO:root:2024-03-28 16:23:34, Dev, Step : 1800, Loss : 0.53374, Acc : 0.742, Auc : 0.822, Sensitive_Loss : 0.08616, Sensitive_Acc : 17.170, Sensitive_Auc : 0.996, Mean auc: 0.822, Run Time : 209.03 sec
+INFO:root:2024-03-28 16:23:34, Best, Step : 1800, Loss : 0.53374, Acc : 0.742, Auc : 0.822, Sensitive_Loss : 0.08616, Sensitive_Acc : 17.170, Sensitive_Auc : 0.996, Best Auc : 0.822
+INFO:root:2024-03-28 16:23:41, Train, Epoch : 3, Step : 1810, Loss : 0.47955, Acc : 0.809, Sensitive_Loss : 0.02830, Sensitive_Acc : 16.700, Run Time : 216.30 sec
+INFO:root:2024-03-28 16:23:51, Train, Epoch : 3, Step : 1820, Loss : 0.52059, Acc : 0.766, Sensitive_Loss : 0.09436, Sensitive_Acc : 15.500, Run Time : 10.48 sec
+INFO:root:2024-03-28 16:24:03, Train, Epoch : 3, Step : 1830, Loss : 0.48370, Acc : 0.725, Sensitive_Loss : 0.04533, Sensitive_Acc : 16.900, Run Time : 11.29 sec
+INFO:root:2024-03-28 16:24:12, Train, Epoch : 3, Step : 1840, Loss : 0.49124, Acc : 0.731, Sensitive_Loss : 0.04617, Sensitive_Acc : 17.300, Run Time : 9.68 sec
+INFO:root:2024-03-28 16:24:22, Train, Epoch : 3, Step : 1850, Loss : 0.47960, Acc : 0.769, Sensitive_Loss : 0.09298, Sensitive_Acc : 18.400, Run Time : 9.86 sec
+INFO:root:2024-03-28 16:24:32, Train, Epoch : 3, Step : 1860, Loss : 0.52456, Acc : 0.750, Sensitive_Loss : 0.04723, Sensitive_Acc : 16.300, Run Time : 10.15 sec
+INFO:root:2024-03-28 16:24:42, Train, Epoch : 3, Step : 1870, Loss : 0.48133, Acc : 0.750, Sensitive_Loss : 0.05879, Sensitive_Acc : 15.500, Run Time : 9.20 sec
+INFO:root:2024-03-28 16:24:51, Train, Epoch : 3, Step : 1880, Loss : 0.51696, Acc : 0.753, Sensitive_Loss : 0.08311, Sensitive_Acc : 15.800, Run Time : 9.49 sec
+INFO:root:2024-03-28 16:25:01, Train, Epoch : 3, Step : 1890, Loss : 0.47647, Acc : 0.797, Sensitive_Loss : 0.03555, Sensitive_Acc : 16.700, Run Time : 9.69 sec
+INFO:root:2024-03-28 16:25:11, Train, Epoch : 3, Step : 1900, Loss : 0.41921, Acc : 0.738, Sensitive_Loss : 0.05673, Sensitive_Acc : 17.800, Run Time : 10.22 sec
+INFO:root:2024-03-28 16:28:55, Dev, Step : 1900, Loss : 0.55418, Acc : 0.734, Auc : 0.820, Sensitive_Loss : 0.07514, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.820, Run Time : 224.43 sec
+INFO:root:2024-03-28 16:29:06, Train, Epoch : 3, Step : 1910, Loss : 0.50949, Acc : 0.744, Sensitive_Loss : 0.04322, Sensitive_Acc : 18.600, Run Time : 234.87 sec
+INFO:root:2024-03-28 16:29:24, Train, Epoch : 3, Step : 1920, Loss : 0.46832, Acc : 0.766, Sensitive_Loss : 0.06334, Sensitive_Acc : 14.500, Run Time : 18.36 sec
+INFO:root:2024-03-28 16:29:40, Train, Epoch : 3, Step : 1930, Loss : 0.47940, Acc : 0.766, Sensitive_Loss : 0.07461, Sensitive_Acc : 17.400, Run Time : 15.52 sec
+INFO:root:2024-03-28 16:29:55, Train, Epoch : 3, Step : 1940, Loss : 0.54277, Acc : 0.747, Sensitive_Loss : 0.04706, Sensitive_Acc : 17.100, Run Time : 15.57 sec
+INFO:root:2024-03-28 16:30:11, Train, Epoch : 3, Step : 1950, Loss : 0.50189, Acc : 0.747, Sensitive_Loss : 0.08385, Sensitive_Acc : 16.600, Run Time : 15.72 sec
+INFO:root:2024-03-28 16:30:28, Train, Epoch : 3, Step : 1960, Loss : 0.50788, Acc : 0.756, Sensitive_Loss : 0.03919, Sensitive_Acc : 17.900, Run Time : 17.14 sec
+INFO:root:2024-03-28 16:30:43, Train, Epoch : 3, Step : 1970, Loss : 0.50676, Acc : 0.731, Sensitive_Loss : 0.06612, Sensitive_Acc : 15.900, Run Time : 14.81 sec
+INFO:root:2024-03-28 16:31:00, Train, Epoch : 3, Step : 1980, Loss : 0.44996, Acc : 0.791, Sensitive_Loss : 0.06782, Sensitive_Acc : 16.700, Run Time : 16.60 sec
+INFO:root:2024-03-28 16:31:14, Train, Epoch : 3, Step : 1990, Loss : 0.48583, Acc : 0.781, Sensitive_Loss : 0.03945, Sensitive_Acc : 17.600, Run Time : 14.80 sec
+INFO:root:2024-03-28 16:31:31, Train, Epoch : 3, Step : 2000, Loss : 0.50487, Acc : 0.759, Sensitive_Loss : 0.09039, Sensitive_Acc : 17.100, Run Time : 16.77 sec
+INFO:root:2024-03-28 16:36:03, Dev, Step : 2000, Loss : 0.53260, Acc : 0.744, Auc : 0.824, Sensitive_Loss : 0.08961, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.824, Run Time : 271.78 sec
+INFO:root:2024-03-28 16:36:05, Best, Step : 2000, Loss : 0.53260, Acc : 0.744, Auc : 0.824, Sensitive_Loss : 0.08961, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Best Auc : 0.824
+INFO:root:2024-03-28 16:36:13, Train, Epoch : 3, Step : 2010, Loss : 0.50812, Acc : 0.769, Sensitive_Loss : 0.05302, Sensitive_Acc : 16.200, Run Time : 281.80 sec
+INFO:root:2024-03-28 16:36:23, Train, Epoch : 3, Step : 2020, Loss : 0.50043, Acc : 0.741, Sensitive_Loss : 0.05550, Sensitive_Acc : 18.000, Run Time : 10.49 sec
+INFO:root:2024-03-28 16:36:35, Train, Epoch : 3, Step : 2030, Loss : 0.43246, Acc : 0.797, Sensitive_Loss : 0.09851, Sensitive_Acc : 21.000, Run Time : 11.13 sec
+INFO:root:2024-03-28 16:36:45, Train, Epoch : 3, Step : 2040, Loss : 0.49507, Acc : 0.750, Sensitive_Loss : 0.04858, Sensitive_Acc : 17.200, Run Time : 10.80 sec
+INFO:root:2024-03-28 16:36:56, Train, Epoch : 3, Step : 2050, Loss : 0.49228, Acc : 0.753, Sensitive_Loss : 0.05053, Sensitive_Acc : 18.400, Run Time : 10.85 sec
+INFO:root:2024-03-28 16:37:07, Train, Epoch : 3, Step : 2060, Loss : 0.43084, Acc : 0.759, Sensitive_Loss : 0.04087, Sensitive_Acc : 19.300, Run Time : 10.83 sec
+INFO:root:2024-03-28 16:37:17, Train, Epoch : 3, Step : 2070, Loss : 0.40565, Acc : 0.800, Sensitive_Loss : 0.06279, Sensitive_Acc : 17.200, Run Time : 10.05 sec
+INFO:root:2024-03-28 16:37:27, Train, Epoch : 3, Step : 2080, Loss : 0.49203, Acc : 0.744, Sensitive_Loss : 0.04717, Sensitive_Acc : 18.000, Run Time : 10.21 sec
+INFO:root:2024-03-28 16:37:38, Train, Epoch : 3, Step : 2090, Loss : 0.42671, Acc : 0.794, Sensitive_Loss : 0.07701, Sensitive_Acc : 16.100, Run Time : 11.09 sec
+INFO:root:2024-03-28 16:37:51, Train, Epoch : 3, Step : 2100, Loss : 0.44125, Acc : 0.797, Sensitive_Loss : 0.03467, Sensitive_Acc : 15.900, Run Time : 12.68 sec
+INFO:root:2024-03-28 16:41:17, Dev, Step : 2100, Loss : 0.54031, Acc : 0.738, Auc : 0.824, Sensitive_Loss : 0.06694, Sensitive_Acc : 17.202, Sensitive_Auc : 0.995, Mean auc: 0.824, Run Time : 206.06 sec
+INFO:root:2024-03-28 16:41:18, Best, Step : 2100, Loss : 0.54031, Acc : 0.738, Auc : 0.824, Sensitive_Loss : 0.06694, Sensitive_Acc : 17.202, Sensitive_Auc : 0.995, Best Auc : 0.824
+INFO:root:2024-03-28 16:41:25, Train, Epoch : 3, Step : 2110, Loss : 0.48889, Acc : 0.769, Sensitive_Loss : 0.04703, Sensitive_Acc : 17.000, Run Time : 213.66 sec
+INFO:root:2024-03-28 16:41:35, Train, Epoch : 3, Step : 2120, Loss : 0.51010, Acc : 0.719, Sensitive_Loss : 0.06621, Sensitive_Acc : 16.700, Run Time : 10.64 sec
+INFO:root:2024-03-28 16:41:48, Train, Epoch : 3, Step : 2130, Loss : 0.53403, Acc : 0.753, Sensitive_Loss : 0.04380, Sensitive_Acc : 18.000, Run Time : 12.25 sec
+INFO:root:2024-03-28 16:41:58, Train, Epoch : 3, Step : 2140, Loss : 0.42170, Acc : 0.787, Sensitive_Loss : 0.04907, Sensitive_Acc : 18.100, Run Time : 10.17 sec
+INFO:root:2024-03-28 16:42:10, Train, Epoch : 3, Step : 2150, Loss : 0.48807, Acc : 0.775, Sensitive_Loss : 0.04888, Sensitive_Acc : 17.600, Run Time : 11.73 sec
+INFO:root:2024-03-28 16:42:20, Train, Epoch : 3, Step : 2160, Loss : 0.41189, Acc : 0.778, Sensitive_Loss : 0.04416, Sensitive_Acc : 17.200, Run Time : 10.43 sec
+INFO:root:2024-03-28 16:42:30, Train, Epoch : 3, Step : 2170, Loss : 0.47899, Acc : 0.753, Sensitive_Loss : 0.08872, Sensitive_Acc : 19.300, Run Time : 9.70 sec
+INFO:root:2024-03-28 16:42:39, Train, Epoch : 3, Step : 2180, Loss : 0.54434, Acc : 0.741, Sensitive_Loss : 0.04777, Sensitive_Acc : 15.700, Run Time : 9.75 sec
+INFO:root:2024-03-28 16:42:52, Train, Epoch : 3, Step : 2190, Loss : 0.50308, Acc : 0.787, Sensitive_Loss : 0.04670, Sensitive_Acc : 15.700, Run Time : 12.04 sec
+INFO:root:2024-03-28 16:43:01, Train, Epoch : 3, Step : 2200, Loss : 0.47270, Acc : 0.762, Sensitive_Loss : 0.05496, Sensitive_Acc : 15.800, Run Time : 9.56 sec
+INFO:root:2024-03-28 16:46:32, Dev, Step : 2200, Loss : 0.52640, Acc : 0.749, Auc : 0.827, Sensitive_Loss : 0.07186, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.827, Run Time : 210.44 sec
+INFO:root:2024-03-28 16:46:32, Best, Step : 2200, Loss : 0.52640, Acc : 0.749, Auc : 0.827, Sensitive_Loss : 0.07186, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Best Auc : 0.827
+INFO:root:2024-03-28 16:46:39, Train, Epoch : 3, Step : 2210, Loss : 0.48875, Acc : 0.722, Sensitive_Loss : 0.03454, Sensitive_Acc : 17.900, Run Time : 217.99 sec
+INFO:root:2024-03-28 16:46:50, Train, Epoch : 3, Step : 2220, Loss : 0.47067, Acc : 0.769, Sensitive_Loss : 0.07639, Sensitive_Acc : 16.900, Run Time : 10.87 sec
+INFO:root:2024-03-28 16:47:03, Train, Epoch : 3, Step : 2230, Loss : 0.41250, Acc : 0.822, Sensitive_Loss : 0.05906, Sensitive_Acc : 17.900, Run Time : 13.02 sec
+INFO:root:2024-03-28 16:47:13, Train, Epoch : 3, Step : 2240, Loss : 0.52395, Acc : 0.722, Sensitive_Loss : 0.04745, Sensitive_Acc : 16.100, Run Time : 10.30 sec
+INFO:root:2024-03-28 16:47:24, Train, Epoch : 3, Step : 2250, Loss : 0.44017, Acc : 0.772, Sensitive_Loss : 0.08653, Sensitive_Acc : 15.700, Run Time : 10.74 sec
+INFO:root:2024-03-28 16:50:59
+INFO:root:y_pred: [0.13863009 0.5568029  0.9059221  ... 0.8663328  0.69564253 0.67696494]
+INFO:root:y_true: [1. 1. 1. ... 1. 0. 1.]
+INFO:root:sensitive_y_pred: [9.49963152e-01 1.82897761e-01 2.90713206e-06 9.99950171e-01
+ 1.31896441e-03 9.99963760e-01 9.99876738e-01 1.46227860e-04
+ 1.40534304e-02 9.99998212e-01 9.99959230e-01 1.06919615e-03
+ 6.21375022e-03 1.70009091e-01 7.14575697e-04 2.55971262e-03
+ 1.90733690e-02 2.22810241e-03 1.76235051e-06 2.66142171e-02
+ 9.99923706e-01 3.69110587e-03 7.02941383e-04 6.07441887e-02
+ 8.30963433e-01 1.57985896e-01 9.99955893e-01 9.78446007e-01
+ 4.03116941e-02 5.61082643e-03 3.08763888e-02 9.99992728e-01
+ 9.99898791e-01 9.84022975e-01 3.24027403e-03 9.96396720e-01
+ 4.16908097e-06 3.44047230e-03 9.99296784e-01 8.99836421e-04
+ 2.72670407e-02 6.12851873e-05 7.79712975e-01 9.99906778e-01
+ 9.98983800e-01 8.98496285e-02 9.98742640e-01 8.89785945e-01
+ 7.50913084e-01 1.17350073e-05 1.66497089e-03 8.48951051e-04
+ 8.56270920e-03 6.64258301e-01 9.99999404e-01 9.99989033e-01
+ 1.21306603e-05 4.39202785e-03 9.99238491e-01 1.89465581e-07
+ 1.68345388e-04 9.99993324e-01 5.26522235e-05 9.99933958e-01
+ 6.39755035e-06 6.30772265e-04 7.64976069e-02 3.21140653e-03
+ 1.26920436e-02 9.99754250e-01 9.99990702e-01 9.99926329e-01
+ 1.11408651e-01 9.99967694e-01 4.70988676e-02 7.97272921e-02
+ 9.99992013e-01 1.76998547e-05 1.21558023e-05 9.99854326e-01
+ 1.35069210e-02 5.33593679e-03 9.98984158e-01 1.80159637e-03
+ 9.77037430e-01 1.09721084e-04 1.66678510e-04 1.57757895e-05
+ 9.99880314e-01 9.98970866e-01 1.72078449e-04 3.40371653e-02
+ 9.97458041e-01 1.18827964e-04 9.99954700e-01 6.65864768e-03
+ 9.99977589e-01 6.44553080e-03 9.90919948e-01 1.56767099e-04
+ 1.42427282e-02 2.74575152e-03 1.24366451e-02 3.31406631e-02
+ 9.99979019e-01 2.52682512e-04 1.47593170e-01 2.00494076e-04
+ 1.96989384e-02 2.90347695e-01 2.92124110e-04 6.49689464e-03
+ 3.71664530e-04 2.19024412e-04 9.99893785e-01 1.75202067e-03
+ 1.01858801e-04 7.59813711e-02 5.80834458e-03 8.60102067e-04
+ 1.00769289e-03 9.99980330e-01 9.89316463e-01 9.99997735e-01
+ 2.19869062e-01 1.66699977e-03 2.48578819e-03 7.65163859e-05
+ 1.02280928e-05 1.87832338e-04 7.47874007e-02 8.03755879e-01
+ 2.92740413e-03 9.97800648e-01 3.24963895e-03 2.92497091e-02
+ 9.00296960e-04 9.99995708e-01 7.13199899e-02 9.99988675e-01
+ 6.26838431e-02 9.99976635e-01 9.99909759e-01 1.71494015e-04
+ 9.99993563e-01 9.67737958e-02 9.99887347e-01 9.99971986e-01
+ 9.99982595e-01 9.99948978e-01 7.89207593e-02 3.37337292e-06
+ 6.07904745e-04 2.77300251e-06 9.98525798e-01 4.13012989e-02
+ 9.98699307e-01 2.85148853e-03 9.97859061e-01 9.93937969e-01
+ 1.34268503e-05 1.37373105e-01 6.38717902e-04 9.99978900e-01
+ 4.25389707e-02 9.98544335e-01 9.99851584e-01 3.58863399e-05
+ 9.99999881e-01 8.13251943e-04 9.99918699e-01 9.92276251e-01
+ 5.13478124e-04 9.99967813e-01 9.98925745e-01 9.99999762e-01
+ 3.90716083e-03 1.18281215e-03 9.99882221e-01 9.35778558e-01
+ 2.67109601e-03 2.79517490e-02 5.59106156e-05 3.66155436e-05
+ 2.91401171e-04 9.98082757e-01 9.99905586e-01 8.07747245e-01]
+INFO:root:sensitive_y_true: [1. 0. 0. 1. 0. 1. 1. 0. 0. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.
+ 1. 0. 1. 1. 0. 0. 0. 1. 1. 1. 0. 1. 0. 0. 1. 0. 0. 0. 1. 1. 1. 0. 1. 1.
+ 0. 0. 0. 0. 0. 1. 1. 1. 0. 0. 1. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 1. 1. 1.
+ 0. 1. 0. 0. 1. 0. 0. 1. 0. 0. 1. 0. 0. 0. 0. 0. 1. 1. 0. 0. 1. 0. 1. 0.
+ 1. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.
+ 0. 1. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 1. 0. 1. 0. 1. 1. 0.
+ 1. 0. 1. 1. 1. 1. 1. 0. 0. 0. 1. 0. 1. 0. 1. 1. 0. 0. 0. 1. 0. 1. 1. 0.
+ 1. 0. 1. 1. 0. 1. 1. 1. 0. 0. 1. 0. 0. 0. 0. 0. 0. 1. 1. 0.]
+INFO:root:2024-03-28 16:50:59, Dev, Step : 2250, Loss : 0.52288, Acc : 0.751, Auc : 0.826, Sensitive_Loss : 0.06805, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.826, Run Time : 214.66 sec
+INFO:root:2024-03-28 16:51:11, Train, Epoch : 4, Step : 2260, Loss : 0.42892, Acc : 0.781, Sensitive_Loss : 0.04580, Sensitive_Acc : 18.400, Run Time : 11.24 sec
+INFO:root:2024-03-28 16:51:23, Train, Epoch : 4, Step : 2270, Loss : 0.47754, Acc : 0.794, Sensitive_Loss : 0.06758, Sensitive_Acc : 17.000, Run Time : 11.87 sec
+INFO:root:2024-03-28 16:51:35, Train, Epoch : 4, Step : 2280, Loss : 0.46453, Acc : 0.747, Sensitive_Loss : 0.06406, Sensitive_Acc : 17.300, Run Time : 12.15 sec
+INFO:root:2024-03-28 16:51:45, Train, Epoch : 4, Step : 2290, Loss : 0.42061, Acc : 0.825, Sensitive_Loss : 0.04710, Sensitive_Acc : 16.700, Run Time : 10.10 sec
+INFO:root:2024-03-28 16:51:55, Train, Epoch : 4, Step : 2300, Loss : 0.51148, Acc : 0.762, Sensitive_Loss : 0.05005, Sensitive_Acc : 16.300, Run Time : 9.83 sec
+INFO:root:2024-03-28 16:55:15, Dev, Step : 2300, Loss : 0.52015, Acc : 0.754, Auc : 0.827, Sensitive_Loss : 0.06209, Sensitive_Acc : 17.213, Sensitive_Auc : 0.995, Mean auc: 0.827, Run Time : 200.45 sec
+INFO:root:2024-03-28 16:55:16, Best, Step : 2300, Loss : 0.52015, Acc : 0.754, Auc : 0.827, Sensitive_Loss : 0.06209, Sensitive_Acc : 17.213, Sensitive_Auc : 0.995, Best Auc : 0.827
+INFO:root:2024-03-28 16:55:24, Train, Epoch : 4, Step : 2310, Loss : 0.46779, Acc : 0.806, Sensitive_Loss : 0.03516, Sensitive_Acc : 16.800, Run Time : 209.30 sec
+INFO:root:2024-03-28 16:55:36, Train, Epoch : 4, Step : 2320, Loss : 0.43859, Acc : 0.791, Sensitive_Loss : 0.04340, Sensitive_Acc : 17.400, Run Time : 12.08 sec
+INFO:root:2024-03-28 16:55:46, Train, Epoch : 4, Step : 2330, Loss : 0.42237, Acc : 0.781, Sensitive_Loss : 0.04207, Sensitive_Acc : 15.300, Run Time : 9.40 sec
+INFO:root:2024-03-28 16:55:57, Train, Epoch : 4, Step : 2340, Loss : 0.50504, Acc : 0.762, Sensitive_Loss : 0.03720, Sensitive_Acc : 18.600, Run Time : 11.46 sec
+INFO:root:2024-03-28 16:56:09, Train, Epoch : 4, Step : 2350, Loss : 0.47336, Acc : 0.781, Sensitive_Loss : 0.04248, Sensitive_Acc : 18.800, Run Time : 11.59 sec
+INFO:root:2024-03-28 16:56:19, Train, Epoch : 4, Step : 2360, Loss : 0.53232, Acc : 0.759, Sensitive_Loss : 0.03708, Sensitive_Acc : 16.500, Run Time : 9.71 sec
+INFO:root:2024-03-28 16:56:30, Train, Epoch : 4, Step : 2370, Loss : 0.53060, Acc : 0.750, Sensitive_Loss : 0.04633, Sensitive_Acc : 16.400, Run Time : 11.64 sec
+INFO:root:2024-03-28 16:56:42, Train, Epoch : 4, Step : 2380, Loss : 0.49451, Acc : 0.759, Sensitive_Loss : 0.05095, Sensitive_Acc : 19.300, Run Time : 12.21 sec
+INFO:root:2024-03-28 16:56:53, Train, Epoch : 4, Step : 2390, Loss : 0.45813, Acc : 0.791, Sensitive_Loss : 0.04041, Sensitive_Acc : 14.100, Run Time : 10.28 sec
+INFO:root:2024-03-28 16:57:04, Train, Epoch : 4, Step : 2400, Loss : 0.44815, Acc : 0.797, Sensitive_Loss : 0.08249, Sensitive_Acc : 16.700, Run Time : 11.47 sec
+INFO:root:2024-03-28 17:00:28, Dev, Step : 2400, Loss : 0.52877, Acc : 0.749, Auc : 0.828, Sensitive_Loss : 0.06070, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.828, Run Time : 204.34 sec
+INFO:root:2024-03-28 17:00:30, Best, Step : 2400, Loss : 0.52877, Acc : 0.749, Auc : 0.828, Sensitive_Loss : 0.06070, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Best Auc : 0.828
+INFO:root:2024-03-28 17:00:38, Train, Epoch : 4, Step : 2410, Loss : 0.50764, Acc : 0.731, Sensitive_Loss : 0.02887, Sensitive_Acc : 17.200, Run Time : 213.49 sec
+INFO:root:2024-03-28 17:00:47, Train, Epoch : 4, Step : 2420, Loss : 0.51080, Acc : 0.744, Sensitive_Loss : 0.04419, Sensitive_Acc : 16.000, Run Time : 9.25 sec
+INFO:root:2024-03-28 17:00:57, Train, Epoch : 4, Step : 2430, Loss : 0.42189, Acc : 0.800, Sensitive_Loss : 0.05920, Sensitive_Acc : 15.700, Run Time : 9.72 sec
+INFO:root:2024-03-28 17:01:07, Train, Epoch : 4, Step : 2440, Loss : 0.52195, Acc : 0.719, Sensitive_Loss : 0.02873, Sensitive_Acc : 16.200, Run Time : 10.85 sec
+INFO:root:2024-03-28 17:01:17, Train, Epoch : 4, Step : 2450, Loss : 0.48373, Acc : 0.731, Sensitive_Loss : 0.03412, Sensitive_Acc : 18.500, Run Time : 9.60 sec
+INFO:root:2024-03-28 17:01:27, Train, Epoch : 4, Step : 2460, Loss : 0.52646, Acc : 0.728, Sensitive_Loss : 0.04757, Sensitive_Acc : 14.100, Run Time : 10.03 sec
+INFO:root:2024-03-28 17:01:37, Train, Epoch : 4, Step : 2470, Loss : 0.47516, Acc : 0.794, Sensitive_Loss : 0.04210, Sensitive_Acc : 18.400, Run Time : 9.87 sec
+INFO:root:2024-03-28 17:01:48, Train, Epoch : 4, Step : 2480, Loss : 0.40624, Acc : 0.812, Sensitive_Loss : 0.06707, Sensitive_Acc : 18.500, Run Time : 11.21 sec
+INFO:root:2024-03-28 17:01:58, Train, Epoch : 4, Step : 2490, Loss : 0.44388, Acc : 0.756, Sensitive_Loss : 0.02242, Sensitive_Acc : 18.200, Run Time : 9.69 sec
+INFO:root:2024-03-28 17:02:07, Train, Epoch : 4, Step : 2500, Loss : 0.36852, Acc : 0.809, Sensitive_Loss : 0.04126, Sensitive_Acc : 16.300, Run Time : 9.62 sec
+INFO:root:2024-03-28 17:05:26, Dev, Step : 2500, Loss : 0.52598, Acc : 0.751, Auc : 0.827, Sensitive_Loss : 0.07003, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.827, Run Time : 198.59 sec
+INFO:root:2024-03-28 17:05:33, Train, Epoch : 4, Step : 2510, Loss : 0.50373, Acc : 0.781, Sensitive_Loss : 0.03323, Sensitive_Acc : 15.400, Run Time : 205.15 sec
+INFO:root:2024-03-28 17:05:48, Train, Epoch : 4, Step : 2520, Loss : 0.42440, Acc : 0.794, Sensitive_Loss : 0.05140, Sensitive_Acc : 17.400, Run Time : 15.19 sec
+INFO:root:2024-03-28 17:05:57, Train, Epoch : 4, Step : 2530, Loss : 0.45588, Acc : 0.753, Sensitive_Loss : 0.03405, Sensitive_Acc : 17.100, Run Time : 9.42 sec
+INFO:root:2024-03-28 17:06:07, Train, Epoch : 4, Step : 2540, Loss : 0.47035, Acc : 0.781, Sensitive_Loss : 0.03629, Sensitive_Acc : 14.900, Run Time : 9.92 sec
+INFO:root:2024-03-28 17:06:18, Train, Epoch : 4, Step : 2550, Loss : 0.51291, Acc : 0.772, Sensitive_Loss : 0.04737, Sensitive_Acc : 16.400, Run Time : 11.05 sec
+INFO:root:2024-03-28 17:06:29, Train, Epoch : 4, Step : 2560, Loss : 0.50705, Acc : 0.769, Sensitive_Loss : 0.05335, Sensitive_Acc : 17.400, Run Time : 10.78 sec
+INFO:root:2024-03-28 17:06:40, Train, Epoch : 4, Step : 2570, Loss : 0.50848, Acc : 0.766, Sensitive_Loss : 0.04462, Sensitive_Acc : 17.100, Run Time : 11.30 sec
+INFO:root:2024-03-28 17:06:53, Train, Epoch : 4, Step : 2580, Loss : 0.51104, Acc : 0.738, Sensitive_Loss : 0.02763, Sensitive_Acc : 17.100, Run Time : 13.23 sec
+INFO:root:2024-03-28 17:07:04, Train, Epoch : 4, Step : 2590, Loss : 0.41698, Acc : 0.819, Sensitive_Loss : 0.08194, Sensitive_Acc : 17.000, Run Time : 10.69 sec
+INFO:root:2024-03-28 17:07:14, Train, Epoch : 4, Step : 2600, Loss : 0.40798, Acc : 0.781, Sensitive_Loss : 0.05282, Sensitive_Acc : 18.500, Run Time : 9.33 sec
+INFO:root:2024-03-28 17:10:41, Dev, Step : 2600, Loss : 0.54059, Acc : 0.740, Auc : 0.826, Sensitive_Loss : 0.07344, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.826, Run Time : 207.93 sec
+INFO:root:2024-03-28 17:10:49, Train, Epoch : 4, Step : 2610, Loss : 0.44930, Acc : 0.766, Sensitive_Loss : 0.03357, Sensitive_Acc : 18.800, Run Time : 215.52 sec
+INFO:root:2024-03-28 17:11:00, Train, Epoch : 4, Step : 2620, Loss : 0.43596, Acc : 0.791, Sensitive_Loss : 0.05731, Sensitive_Acc : 19.100, Run Time : 10.64 sec
+INFO:root:2024-03-28 17:11:12, Train, Epoch : 4, Step : 2630, Loss : 0.48764, Acc : 0.778, Sensitive_Loss : 0.02966, Sensitive_Acc : 14.400, Run Time : 12.53 sec
+INFO:root:2024-03-28 17:11:24, Train, Epoch : 4, Step : 2640, Loss : 0.45512, Acc : 0.759, Sensitive_Loss : 0.04324, Sensitive_Acc : 18.100, Run Time : 12.03 sec
+INFO:root:2024-03-28 17:11:34, Train, Epoch : 4, Step : 2650, Loss : 0.48629, Acc : 0.772, Sensitive_Loss : 0.03877, Sensitive_Acc : 15.100, Run Time : 9.88 sec
+INFO:root:2024-03-28 17:11:44, Train, Epoch : 4, Step : 2660, Loss : 0.50056, Acc : 0.781, Sensitive_Loss : 0.05971, Sensitive_Acc : 17.800, Run Time : 9.76 sec
+INFO:root:2024-03-28 17:11:55, Train, Epoch : 4, Step : 2670, Loss : 0.45688, Acc : 0.753, Sensitive_Loss : 0.04019, Sensitive_Acc : 15.800, Run Time : 11.07 sec
+INFO:root:2024-03-28 17:12:06, Train, Epoch : 4, Step : 2680, Loss : 0.44975, Acc : 0.794, Sensitive_Loss : 0.03728, Sensitive_Acc : 16.700, Run Time : 10.67 sec
+INFO:root:2024-03-28 17:12:15, Train, Epoch : 4, Step : 2690, Loss : 0.46906, Acc : 0.750, Sensitive_Loss : 0.03580, Sensitive_Acc : 15.600, Run Time : 8.91 sec
+INFO:root:2024-03-28 17:12:25, Train, Epoch : 4, Step : 2700, Loss : 0.50841, Acc : 0.803, Sensitive_Loss : 0.03377, Sensitive_Acc : 15.500, Run Time : 10.81 sec
+INFO:root:2024-03-28 17:15:38, Dev, Step : 2700, Loss : 0.54046, Acc : 0.747, Auc : 0.827, Sensitive_Loss : 0.06013, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.827, Run Time : 192.91 sec
+INFO:root:2024-03-28 17:15:45, Train, Epoch : 4, Step : 2710, Loss : 0.46621, Acc : 0.784, Sensitive_Loss : 0.02148, Sensitive_Acc : 17.200, Run Time : 199.85 sec
+INFO:root:2024-03-28 17:15:57, Train, Epoch : 4, Step : 2720, Loss : 0.44704, Acc : 0.797, Sensitive_Loss : 0.03192, Sensitive_Acc : 16.300, Run Time : 11.76 sec
+INFO:root:2024-03-28 17:16:06, Train, Epoch : 4, Step : 2730, Loss : 0.48224, Acc : 0.738, Sensitive_Loss : 0.06509, Sensitive_Acc : 19.300, Run Time : 9.40 sec
+INFO:root:2024-03-28 17:16:16, Train, Epoch : 4, Step : 2740, Loss : 0.52337, Acc : 0.772, Sensitive_Loss : 0.04476, Sensitive_Acc : 17.500, Run Time : 9.61 sec
+INFO:root:2024-03-28 17:16:27, Train, Epoch : 4, Step : 2750, Loss : 0.43765, Acc : 0.778, Sensitive_Loss : 0.03591, Sensitive_Acc : 17.400, Run Time : 10.85 sec
+INFO:root:2024-03-28 17:16:37, Train, Epoch : 4, Step : 2760, Loss : 0.44144, Acc : 0.766, Sensitive_Loss : 0.04555, Sensitive_Acc : 18.200, Run Time : 10.42 sec
+INFO:root:2024-03-28 17:16:47, Train, Epoch : 4, Step : 2770, Loss : 0.41120, Acc : 0.756, Sensitive_Loss : 0.03185, Sensitive_Acc : 16.700, Run Time : 9.65 sec
+INFO:root:2024-03-28 17:16:59, Train, Epoch : 4, Step : 2780, Loss : 0.45244, Acc : 0.803, Sensitive_Loss : 0.04972, Sensitive_Acc : 18.800, Run Time : 12.01 sec
+INFO:root:2024-03-28 17:17:10, Train, Epoch : 4, Step : 2790, Loss : 0.48138, Acc : 0.769, Sensitive_Loss : 0.02738, Sensitive_Acc : 16.900, Run Time : 11.10 sec
+INFO:root:2024-03-28 17:17:20, Train, Epoch : 4, Step : 2800, Loss : 0.46860, Acc : 0.775, Sensitive_Loss : 0.07619, Sensitive_Acc : 17.700, Run Time : 9.99 sec
+INFO:root:2024-03-28 17:20:40, Dev, Step : 2800, Loss : 0.52617, Acc : 0.754, Auc : 0.828, Sensitive_Loss : 0.06208, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.828, Run Time : 199.86 sec
+INFO:root:2024-03-28 17:20:41, Best, Step : 2800, Loss : 0.52617, Acc : 0.754, Auc : 0.828, Sensitive_Loss : 0.06208, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Best Auc : 0.828
+INFO:root:2024-03-28 17:20:47, Train, Epoch : 4, Step : 2810, Loss : 0.42161, Acc : 0.794, Sensitive_Loss : 0.05023, Sensitive_Acc : 18.100, Run Time : 207.17 sec
+INFO:root:2024-03-28 17:20:58, Train, Epoch : 4, Step : 2820, Loss : 0.42980, Acc : 0.812, Sensitive_Loss : 0.07293, Sensitive_Acc : 16.800, Run Time : 10.91 sec
+INFO:root:2024-03-28 17:21:09, Train, Epoch : 4, Step : 2830, Loss : 0.41310, Acc : 0.778, Sensitive_Loss : 0.07518, Sensitive_Acc : 16.900, Run Time : 10.71 sec
+INFO:root:2024-03-28 17:21:19, Train, Epoch : 4, Step : 2840, Loss : 0.43801, Acc : 0.775, Sensitive_Loss : 0.05122, Sensitive_Acc : 18.400, Run Time : 10.08 sec
+INFO:root:2024-03-28 17:21:31, Train, Epoch : 4, Step : 2850, Loss : 0.43876, Acc : 0.825, Sensitive_Loss : 0.04472, Sensitive_Acc : 15.000, Run Time : 12.17 sec
+INFO:root:2024-03-28 17:21:42, Train, Epoch : 4, Step : 2860, Loss : 0.49697, Acc : 0.766, Sensitive_Loss : 0.04184, Sensitive_Acc : 18.700, Run Time : 10.99 sec
+INFO:root:2024-03-28 17:21:52, Train, Epoch : 4, Step : 2870, Loss : 0.41240, Acc : 0.812, Sensitive_Loss : 0.07867, Sensitive_Acc : 19.300, Run Time : 10.30 sec
+INFO:root:2024-03-28 17:22:04, Train, Epoch : 4, Step : 2880, Loss : 0.39975, Acc : 0.806, Sensitive_Loss : 0.07509, Sensitive_Acc : 17.300, Run Time : 12.19 sec
+INFO:root:2024-03-28 17:22:16, Train, Epoch : 4, Step : 2890, Loss : 0.42890, Acc : 0.775, Sensitive_Loss : 0.05258, Sensitive_Acc : 17.400, Run Time : 11.50 sec
+INFO:root:2024-03-28 17:22:26, Train, Epoch : 4, Step : 2900, Loss : 0.48478, Acc : 0.750, Sensitive_Loss : 0.04156, Sensitive_Acc : 18.600, Run Time : 9.82 sec
+INFO:root:2024-03-28 17:25:45, Dev, Step : 2900, Loss : 0.52796, Acc : 0.751, Auc : 0.830, Sensitive_Loss : 0.05890, Sensitive_Acc : 17.202, Sensitive_Auc : 0.995, Mean auc: 0.830, Run Time : 198.70 sec
+INFO:root:2024-03-28 17:25:46, Best, Step : 2900, Loss : 0.52796, Acc : 0.751, Auc : 0.830, Sensitive_Loss : 0.05890, Sensitive_Acc : 17.202, Sensitive_Auc : 0.995, Best Auc : 0.830
+INFO:root:2024-03-28 17:25:54, Train, Epoch : 4, Step : 2910, Loss : 0.51309, Acc : 0.759, Sensitive_Loss : 0.07557, Sensitive_Acc : 16.300, Run Time : 207.99 sec
+INFO:root:2024-03-28 17:26:03, Train, Epoch : 4, Step : 2920, Loss : 0.53712, Acc : 0.766, Sensitive_Loss : 0.03871, Sensitive_Acc : 17.400, Run Time : 9.22 sec
+INFO:root:2024-03-28 17:26:13, Train, Epoch : 4, Step : 2930, Loss : 0.49420, Acc : 0.772, Sensitive_Loss : 0.03570, Sensitive_Acc : 16.400, Run Time : 9.64 sec
+INFO:root:2024-03-28 17:26:23, Train, Epoch : 4, Step : 2940, Loss : 0.47927, Acc : 0.769, Sensitive_Loss : 0.03713, Sensitive_Acc : 18.500, Run Time : 10.09 sec
+INFO:root:2024-03-28 17:26:33, Train, Epoch : 4, Step : 2950, Loss : 0.48794, Acc : 0.797, Sensitive_Loss : 0.03000, Sensitive_Acc : 17.500, Run Time : 9.87 sec
+INFO:root:2024-03-28 17:26:42, Train, Epoch : 4, Step : 2960, Loss : 0.47819, Acc : 0.778, Sensitive_Loss : 0.06630, Sensitive_Acc : 15.600, Run Time : 9.58 sec
+INFO:root:2024-03-28 17:26:54, Train, Epoch : 4, Step : 2970, Loss : 0.50177, Acc : 0.738, Sensitive_Loss : 0.04664, Sensitive_Acc : 17.800, Run Time : 11.45 sec
+INFO:root:2024-03-28 17:27:03, Train, Epoch : 4, Step : 2980, Loss : 0.40229, Acc : 0.809, Sensitive_Loss : 0.03480, Sensitive_Acc : 17.500, Run Time : 9.35 sec
+INFO:root:2024-03-28 17:27:13, Train, Epoch : 4, Step : 2990, Loss : 0.49634, Acc : 0.775, Sensitive_Loss : 0.02448, Sensitive_Acc : 17.400, Run Time : 9.65 sec
+INFO:root:2024-03-28 17:27:24, Train, Epoch : 4, Step : 3000, Loss : 0.49652, Acc : 0.772, Sensitive_Loss : 0.04992, Sensitive_Acc : 16.500, Run Time : 11.04 sec
+INFO:root:2024-03-28 17:30:39, Dev, Step : 3000, Loss : 0.52619, Acc : 0.752, Auc : 0.830, Sensitive_Loss : 0.06644, Sensitive_Acc : 17.202, Sensitive_Auc : 0.995, Mean auc: 0.830, Run Time : 194.84 sec
+INFO:root:2024-03-28 17:30:39, Best, Step : 3000, Loss : 0.52619, Acc : 0.752, Auc : 0.830, Sensitive_Loss : 0.06644, Sensitive_Acc : 17.202, Sensitive_Auc : 0.995, Best Auc : 0.830
+INFO:root:2024-03-28 17:32:46
+INFO:root:y_pred: [0.11198562 0.54093564 0.9191304  ... 0.8512943  0.5517343  0.6680411 ]
+INFO:root:y_true: [1. 1. 1. ... 1. 0. 1.]
+INFO:root:sensitive_y_pred: [9.54661548e-01 5.93911000e-02 1.71610498e-06 9.99986768e-01
+ 5.02374314e-04 9.99970794e-01 9.99957442e-01 1.84265937e-05
+ 3.76369711e-03 9.99998450e-01 9.99960899e-01 8.73607409e-04
+ 1.52954692e-02 9.02406052e-02 5.17101609e-04 2.89362436e-03
+ 6.26823027e-03 7.93435727e-04 5.85956627e-07 3.85308042e-02
+ 9.99926925e-01 1.28544925e-03 2.69209006e-04 9.78576764e-02
+ 8.23724627e-01 8.54421109e-02 9.99988794e-01 9.93162870e-01
+ 2.64780391e-02 3.24595906e-03 2.01344751e-02 9.99994278e-01
+ 9.99979138e-01 9.89242613e-01 4.74489992e-03 9.97440934e-01
+ 2.82202973e-06 2.41910876e-03 9.99660134e-01 6.54890435e-04
+ 2.20274217e-02 2.03726449e-05 7.53253520e-01 9.99935865e-01
+ 9.99606788e-01 5.61883077e-02 9.99214768e-01 9.05184567e-01
+ 7.42119730e-01 3.38607174e-06 7.85945216e-04 1.15158223e-03
+ 4.63838177e-03 7.57995546e-01 9.99999762e-01 9.99991417e-01
+ 4.22512539e-06 2.64008692e-03 9.99754965e-01 5.25634007e-08
+ 3.77377582e-05 9.99997020e-01 1.55539947e-05 9.99985814e-01
+ 4.33963760e-06 3.16724851e-04 2.35978663e-02 1.92381348e-03
+ 4.62499587e-03 9.99905705e-01 9.99994636e-01 9.99973536e-01
+ 8.07690620e-02 9.99994040e-01 6.71017915e-02 7.80066103e-02
+ 9.99997497e-01 9.18448950e-06 9.45360352e-06 9.99952912e-01
+ 1.42703522e-02 1.87283359e-03 9.98106360e-01 4.91113402e-04
+ 9.62995410e-01 4.92134495e-05 9.23734624e-05 1.18449007e-05
+ 9.99945283e-01 9.98712420e-01 2.88127067e-05 1.86243132e-02
+ 9.99889016e-01 7.46413862e-05 9.99973893e-01 3.23464861e-03
+ 9.99996901e-01 5.10112010e-03 9.96002018e-01 1.08787826e-04
+ 2.07624659e-02 1.48460583e-03 5.14159864e-03 2.31574494e-02
+ 9.99994993e-01 1.41586483e-04 1.78886324e-01 1.40133328e-04
+ 9.85185709e-03 2.53811598e-01 1.97434871e-04 1.66093523e-03
+ 3.07589653e-04 1.19117358e-04 9.99959111e-01 1.54002733e-03
+ 5.77965911e-05 1.09867789e-01 5.67126321e-03 8.05196585e-04
+ 2.47787917e-04 9.99990344e-01 9.93124664e-01 9.99999642e-01
+ 1.30389214e-01 2.29087798e-03 1.78379694e-03 3.60094455e-05
+ 6.12735766e-06 5.69460826e-05 7.44239166e-02 7.78117239e-01
+ 2.94449623e-03 9.98675048e-01 1.15468749e-03 1.88498739e-02
+ 6.70448004e-04 9.99999166e-01 8.93741772e-02 9.99990463e-01
+ 5.44446222e-02 9.99994516e-01 9.99971628e-01 1.38466494e-04
+ 9.99997139e-01 8.31126422e-02 9.99960184e-01 9.99994874e-01
+ 9.99989033e-01 9.99992847e-01 3.24173979e-02 9.24771030e-07
+ 6.71146729e-04 9.22765139e-07 9.99050081e-01 4.23914939e-02
+ 9.99159217e-01 2.52572261e-03 9.99324083e-01 9.93929744e-01
+ 3.27745238e-06 8.79194438e-02 5.59848093e-04 9.99991417e-01
+ 2.11453568e-02 9.99190986e-01 9.99976397e-01 8.37296921e-06
+ 1.00000000e+00 4.94656037e-04 9.99952316e-01 9.97432411e-01
+ 2.22111601e-04 9.99991536e-01 9.99064267e-01 1.00000000e+00
+ 7.57465430e-04 2.86428869e-04 9.99947786e-01 9.33516264e-01
+ 7.36879592e-04 1.28876017e-02 3.12224802e-05 1.99215719e-05
+ 1.44497622e-04 9.98111248e-01 9.99980450e-01 9.10010040e-01]
+INFO:root:sensitive_y_true: [1. 0. 0. 1. 0. 1. 1. 0. 0. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0.
+ 1. 0. 1. 1. 0. 0. 0. 1. 1. 1. 0. 1. 0. 0. 1. 0. 0. 0. 1. 1. 1. 0. 1. 1.
+ 0. 0. 0. 0. 0. 1. 1. 1. 0. 0. 1. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 1. 1. 1.
+ 0. 1. 0. 0. 1. 0. 0. 1. 0. 0. 1. 0. 0. 0. 0. 0. 1. 1. 0. 0. 1. 0. 1. 0.
+ 1. 0. 1. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0.
+ 0. 1. 1. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 1. 0. 1. 0. 1. 1. 0.
+ 1. 0. 1. 1. 1. 1. 1. 0. 0. 0. 1. 0. 1. 0. 1. 1. 0. 0. 0. 1. 0. 1. 1. 0.
+ 1. 0. 1. 1. 0. 1. 1. 1. 0. 0. 1. 0. 0. 0. 0. 0. 0. 1. 1. 0.]
+INFO:root:2024-03-28 17:32:46, Dev, Step : 3000, Loss : 0.52619, Acc : 0.752, Auc : 0.830, Sensitive_Loss : 0.06644, Sensitive_Acc : 17.202, Sensitive_Auc : 0.995, Mean auc: 0.830, Run Time : 126.75 sec
+INFO:root:2024-03-28 17:32:47, Best, Step : 3000, Loss : 0.52619, Acc : 0.752,Auc : 0.830, Best Auc : 0.830, Sensitive_Loss : 0.06644, Sensitive_Acc : 17.202, Sensitive_Auc : 0.995
+INFO:root:2024-03-28 17:32:59, Train, Epoch : 5, Step : 3010, Loss : 0.45218, Acc : 0.797, Sensitive_Loss : 0.04375, Sensitive_Acc : 14.700, Run Time : 11.59 sec
+INFO:root:2024-03-28 17:33:13, Train, Epoch : 5, Step : 3020, Loss : 0.47323, Acc : 0.772, Sensitive_Loss : 0.03702, Sensitive_Acc : 14.200, Run Time : 13.64 sec
+INFO:root:2024-03-28 17:33:24, Train, Epoch : 5, Step : 3030, Loss : 0.40322, Acc : 0.809, Sensitive_Loss : 0.02806, Sensitive_Acc : 16.500, Run Time : 11.38 sec
+INFO:root:2024-03-28 17:33:34, Train, Epoch : 5, Step : 3040, Loss : 0.46860, Acc : 0.784, Sensitive_Loss : 0.03043, Sensitive_Acc : 19.100, Run Time : 10.28 sec
+INFO:root:2024-03-28 17:33:48, Train, Epoch : 5, Step : 3050, Loss : 0.45757, Acc : 0.803, Sensitive_Loss : 0.03978, Sensitive_Acc : 17.800, Run Time : 14.05 sec
+INFO:root:2024-03-28 17:33:59, Train, Epoch : 5, Step : 3060, Loss : 0.42750, Acc : 0.775, Sensitive_Loss : 0.05578, Sensitive_Acc : 16.500, Run Time : 11.01 sec
+INFO:root:2024-03-28 17:34:10, Train, Epoch : 5, Step : 3070, Loss : 0.47675, Acc : 0.753, Sensitive_Loss : 0.07117, Sensitive_Acc : 17.300, Run Time : 10.75 sec
+INFO:root:2024-03-28 17:34:25, Train, Epoch : 5, Step : 3080, Loss : 0.46617, Acc : 0.784, Sensitive_Loss : 0.04334, Sensitive_Acc : 19.500, Run Time : 14.87 sec
+INFO:root:2024-03-28 17:34:36, Train, Epoch : 5, Step : 3090, Loss : 0.37687, Acc : 0.838, Sensitive_Loss : 0.03688, Sensitive_Acc : 16.200, Run Time : 11.19 sec
+INFO:root:2024-03-28 17:34:47, Train, Epoch : 5, Step : 3100, Loss : 0.43584, Acc : 0.772, Sensitive_Loss : 0.03995, Sensitive_Acc : 15.700, Run Time : 10.49 sec
+INFO:root:2024-03-28 17:38:04, Dev, Step : 3100, Loss : 0.53341, Acc : 0.750, Auc : 0.830, Sensitive_Loss : 0.06237, Sensitive_Acc : 17.202, Sensitive_Auc : 0.996, Mean auc: 0.830, Run Time : 196.88 sec
+INFO:root:2024-03-28 17:38:11, Train, Epoch : 5, Step : 3110, Loss : 0.42853, Acc : 0.784, Sensitive_Loss : 0.05743, Sensitive_Acc : 16.100, Run Time : 204.52 sec
+INFO:root:2024-03-28 17:38:21, Train, Epoch : 5, Step : 3120, Loss : 0.44629, Acc : 0.762, Sensitive_Loss : 0.04757, Sensitive_Acc : 16.200, Run Time : 9.64 sec
+INFO:root:2024-03-28 17:38:30, Train, Epoch : 5, Step : 3130, Loss : 0.41690, Acc : 0.809, Sensitive_Loss : 0.02432, Sensitive_Acc : 19.200, Run Time : 9.32 sec
+INFO:root:2024-03-28 17:38:43, Train, Epoch : 5, Step : 3140, Loss : 0.38743, Acc : 0.809, Sensitive_Loss : 0.02546, Sensitive_Acc : 16.000, Run Time : 12.53 sec
+INFO:root:2024-03-28 17:38:53, Train, Epoch : 5, Step : 3150, Loss : 0.47295, Acc : 0.791, Sensitive_Loss : 0.04086, Sensitive_Acc : 17.000, Run Time : 9.84 sec
+INFO:root:2024-03-28 17:39:02, Train, Epoch : 5, Step : 3160, Loss : 0.43817, Acc : 0.800, Sensitive_Loss : 0.04462, Sensitive_Acc : 16.000, Run Time : 9.01 sec
+INFO:root:2024-03-28 17:39:11, Train, Epoch : 5, Step : 3170, Loss : 0.40091, Acc : 0.784, Sensitive_Loss : 0.04189, Sensitive_Acc : 12.900, Run Time : 9.54 sec
+INFO:root:2024-03-28 17:39:21, Train, Epoch : 5, Step : 3180, Loss : 0.45567, Acc : 0.769, Sensitive_Loss : 0.05645, Sensitive_Acc : 15.900, Run Time : 10.24 sec
+INFO:root:2024-03-28 17:39:31, Train, Epoch : 5, Step : 3190, Loss : 0.41146, Acc : 0.812, Sensitive_Loss : 0.03549, Sensitive_Acc : 18.100, Run Time : 9.15 sec
+INFO:root:2024-03-28 17:39:40, Train, Epoch : 5, Step : 3200, Loss : 0.45584, Acc : 0.784, Sensitive_Loss : 0.03963, Sensitive_Acc : 16.600, Run Time : 9.79 sec
+INFO:root:2024-03-28 17:43:09, Dev, Step : 3200, Loss : 0.54152, Acc : 0.745, Auc : 0.827, Sensitive_Loss : 0.06468, Sensitive_Acc : 17.202, Sensitive_Auc : 0.997, Mean auc: 0.827, Run Time : 208.50 sec
+INFO:root:2024-03-28 17:43:20, Train, Epoch : 5, Step : 3210, Loss : 0.38447, Acc : 0.809, Sensitive_Loss : 0.03035, Sensitive_Acc : 17.400, Run Time : 219.66 sec
+INFO:root:2024-03-28 17:43:34, Train, Epoch : 5, Step : 3220, Loss : 0.46987, Acc : 0.775, Sensitive_Loss : 0.05505, Sensitive_Acc : 15.900, Run Time : 13.64 sec
+INFO:root:2024-03-28 17:43:48, Train, Epoch : 5, Step : 3230, Loss : 0.47862, Acc : 0.759, Sensitive_Loss : 0.05523, Sensitive_Acc : 17.800, Run Time : 14.78 sec

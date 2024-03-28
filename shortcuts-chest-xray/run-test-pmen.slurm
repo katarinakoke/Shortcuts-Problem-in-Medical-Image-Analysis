@@ -19,4 +19,4 @@ source /home/pmen/.bashrc
 conda activate chexpert
 echo "Activating chexpert environment..."
 # Run script
-python -u bin/test_model.py --device 0 --num_workers 2 --model_path /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/logdirs/logdir-30k-2 --in_csv_path /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/config/my_test.csv --cfg_path /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/config/config_pmen.json
+python -u bin/test_model.py --device 0 --num_workers 2 --model_path /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/logdirs/logdir-30k-2 --in_csv_path /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/config/my_test.csv --cfg_path /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/config/config_pmen.json --cfg_pred /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/config/

@@ -44,38 +44,6 @@ parser.add_argument('--logtofile', default=False, type=bool, help="Save log "
                     "in save_path/log.txt if set True")
 parser.add_argument('--verbose', default=False, type=bool, help="Detail info")
 
-# def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
-#     target = target.to(device)
-#     sensitive_target = sensitive_target.to(device)
-
-#     # For the primary task
-#     primary_target = target[:, index].view(-1)
-#     pos_weight_primary = torch.from_numpy(np.array(cfg.pos_weight[index], dtype=np.float32)).to(device).type_as(primary_target)
-    
-#     # Adjust loss calculation based on batch_weight
-#     if cfg.batch_weight:
-#         weight = (primary_target.size()[0] - primary_target.sum()) / primary_target.sum() if primary_target.sum() > 0 else None
-#         primary_loss = F.binary_cross_entropy_with_logits(output[index].view(-1), primary_target, pos_weight=weight if weight is not None else pos_weight_primary)
-#     else:
-#         primary_loss = F.binary_cross_entropy_with_logits(output[index].view(-1), primary_target, pos_weight=pos_weight_primary)
-
-#     primary_label = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
-#     primary_acc = (primary_target == primary_label).float().sum() / len(primary_label)
-
-#     # For the sensitive attribute, ensure both tensors are the correct shape
-#     sensitive_target = sensitive_target.view(-1)  # Flatten the sensitive_target
-#     sensitive_logits = sensitive_logits.view(-1)  # Ensure logits are also flattened if not already
-#     pos_weight_sensitive = torch.from_numpy(np.array(cfg.sensitive_pos_weight, dtype=np.float32)).to(device).type_as(sensitive_target)
-    
-#     # Adjust loss calculation for sensitive attribute based on batch_weight_sensitive
-#     weight_sensitive = (sensitive_target.size()[0] - sensitive_target.sum()) / sensitive_target.sum() if sensitive_target.sum() > 0 else None
-#     sensitive_loss = F.binary_cross_entropy_with_logits(sensitive_logits, sensitive_target, pos_weight=weight_sensitive if weight_sensitive is not None else pos_weight_sensitive)
-
-#     sensitive_label = torch.sigmoid(sensitive_logits).ge(0.5).float()
-#     sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
-
-#     return (primary_loss, primary_acc), (sensitive_loss, sensitive_acc)
-
 def get_loss(output, target, sensitive_logits, sensitive_target, index, device, cfg):
     
     target = target.to(device)
@@ -125,7 +93,7 @@ def get_loss(output, target, sensitive_logits, sensitive_target, index, device, 
             sensitive_loss = F.binary_cross_entropy_with_logits(sensitive_logits, sensitive_target, 
                 pos_weight=weight_sensitive)
 
-        sensitive_label = torch.sigmoid(output[index].view(-1)).ge(0.5).float()
+        sensitive_label = torch.sigmoid(sensitive_logits[index].view(-1)).ge(0.5).float()
         sensitive_acc = (sensitive_target == sensitive_label).float().sum() / len(sensitive_label)
     else:
         raise Exception('Unknown criterion : {}'.format(cfg.sensitive_criterion))
