@@ -187,6 +187,6 @@ class Classifier(nn.Module):
         # pooled_feat = self.global_pool(feat_map, None) if 'PCAM' not in self.cfg.global_pool else self.global_pool(feat_map, logit_map)
         
         sensitive_feat = pooled_feat.view(pooled_feat.size(0), -1)  # Flatten the tensor
-        sensitive_logits = self.sensitive_attribute_classifier(pooled_feat)
+        sensitive_logits = self.sensitive_attribute_classifier(sensitive_feat)
 
         return logits, logit_maps, sensitive_logits, sensitive_feat

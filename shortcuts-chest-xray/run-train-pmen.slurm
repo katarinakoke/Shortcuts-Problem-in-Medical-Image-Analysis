@@ -2,7 +2,7 @@
 
 #SBATCH --job-name=JupyterServer     # Job name
 #SBATCH --output=chtrain.job.%j.out  # Name of output file (%j $#SBATCH --cpus-per-task=1            # Schedule one core
-#SBATCH --time=08:00:00              # Run time (hh:mm:ss) - 8 $#SBATCH --mem=64G                    # Memory requirement
+#SBATCH --time=12:00:00              # Run time (hh:mm:ss) - 8 $#SBATCH --mem=64G                    # Memory requirement
 #SBATCH --partition=brown            # Use the brown partition
 #SBATCH --gres=gpu:a100_40gb:1       # Request one A100 40GB GPU
 #SBATCH -N 1 # number of nodes
@@ -20,4 +20,4 @@ conda activate chexpert
 
 
 #Run Script 
-python -u bin/train.py /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/config/config.json /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/logdirs/logdir-30k-2 --device 0 --num_workers 2 --verbose true
+python -u bin/train.py /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/config/config_pmen.json /home/pmen/Shortcuts-Problem-in-Medical-Image-Analysis/shortcuts-chest-xray/logdirs/logdir-30k-2 --device 0 --num_workers 2 --verbose true
