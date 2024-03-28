@@ -300,7 +300,7 @@ def train_epoch(summary, summary_dev, cfg, args, model, dataloader,
                      'sensitive_auc_dev_best': best_dict['sensitive_auc_dev_best'],
                      'sensitive_loss_dev_best': best_dict['sensitive_loss_dev_best'],
                      'state_dict': model.module.state_dict()},
-                    os.path.join(args.save_path, 'best{}.ckpt'.format(
+                    os.path.join(args.save_path, 'Best_Random_Sex_0_pos01{}.ckpt'.format(
                         best_dict['best_idx']))
                 )
                 best_dict['best_idx'] += 1
@@ -585,18 +585,6 @@ def run(args):
             best_dict['loss_dev_best'] = mean_loss
             if cfg.best_target == 'loss':
                 save_best = True
-        
-        # mean_sensitive_acc = summary_dev['sensitive_acc'][cfg.save_index].mean()
-        # if mean_sensitive_acc >= best_dict['sensitive_acc_dev_best']:
-        #     best_dict['sensitive_acc_dev_best'] = mean_sensitive_acc
-        #     if cfg.best_target == 'sensitive_acc':
-        #         save_best = True
-
-        # mean_sensitive_auc = summary_dev['sensitive_auc'][cfg.save_index].mean()
-        # if mean_sensitive_auc >= best_dict['sensitive_auc_dev_best']:
-        #     best_dict['sensitive_auc_dev_best'] = mean_sensitive_auc
-        #     if cfg.best_target == 'sensitive_auc':
-        #         save_best = True
 
         if save_best:
             torch.save(
@@ -610,7 +598,7 @@ def run(args):
                  'sensitive_loss_dev_best': best_dict['sensitive_loss_dev_best'],
                  'state_dict': model.module.state_dict()},
                 os.path.join(args.save_path,
-                             'best{}.ckpt'.format(best_dict['best_idx']))
+                             'Best_Random_Sex_0_pos01{}.ckpt'.format(best_dict['best_idx']))
             )
 
             best_dict['best_idx'] += 1
