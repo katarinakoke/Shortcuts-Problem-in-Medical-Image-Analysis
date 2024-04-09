@@ -19,8 +19,8 @@ from tensorboardX import SummaryWriter
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 
-torch.manual_seed(1)
-torch.cuda.manual_seed_all(1)
+torch.manual_seed(0)
+torch.cuda.manual_seed_all(0)
 
 from data.dataset import ImageDataset  # noqa
 from model.classifier import Classifier  # noqa
@@ -300,7 +300,7 @@ def train_epoch(summary, summary_dev, cfg, args, model, dataloader,
                      'sensitive_auc_dev_best': best_dict['sensitive_auc_dev_best'],
                      'sensitive_loss_dev_best': best_dict['sensitive_loss_dev_best'],
                      'state_dict': model.module.state_dict()},
-                    os.path.join(args.save_path, 'Best_Random_Sex_1_neg01{}.ckpt'.format(
+                    os.path.join(args.save_path, 'Best_Balanced_Sex_0_neg005{}.ckpt'.format(
                         best_dict['best_idx']))
                 )
                 best_dict['best_idx'] += 1
@@ -598,7 +598,7 @@ def run(args):
                  'sensitive_loss_dev_best': best_dict['sensitive_loss_dev_best'],
                  'state_dict': model.module.state_dict()},
                 os.path.join(args.save_path,
-                             'Best_Random_Sex_1_neg01{}.ckpt'.format(best_dict['best_idx']))
+                             'Best_Balanced_Sex_0_neg005{}.ckpt'.format(best_dict['best_idx']))
             )
 
             best_dict['best_idx'] += 1
