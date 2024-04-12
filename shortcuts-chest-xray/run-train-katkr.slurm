@@ -3,7 +3,7 @@
 #SBATCH --job-name=JupyterServer     # Job name
 #SBATCH --output=chtrain.job.%j.out  # Name of output file (%j expands to jobID)
 #SBATCH --cpus-per-task=1            # Schedule one core
-#SBATCH --time=08:00:00              # Run time (hh:mm:ss) - 8 hours
+#SBATCH --time=06:00:00              # Run time (hh:mm:ss) - 8 hours
 #SBATCH --mem=64G                    # Memory requirement
 #SBATCH --partition=brown            # Use the brown partition
 #SBATCH --gres=gpu:a100_40gb:1       # Request one A100 40GB GPU

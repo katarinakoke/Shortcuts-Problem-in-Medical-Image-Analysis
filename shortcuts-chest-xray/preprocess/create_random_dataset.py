@@ -46,6 +46,6 @@ train.to_csv(f'{base_filename}_train.csv', index=False)
 idstoremove = get_patient_ids_to_remove(test, val)
 test = test.drop(idstoremove)
 
-val.to_csv(f'{base_filename}_val.csv', index=False)
-test.to_csv(f'{base_filename}_test.csv', index=False)
+val.to_csv(f'../{base_filename}_val.csv', index=False)
+test.to_csv(f'../{base_filename}_test.csv', index=False)
 

@@ -58,7 +58,7 @@ male_pn1 = filter_and_sample(frontal_df, 'Male', 0)
 # Convert a data frame to a csv file
 balanced_df = pd.concat([female_p1, female_pn1, male_p1, male_pn1])
 balanced_df = balanced_df.sample(frac=1, random_state=42).reset_index(drop=False)
-# balanced_df.to_csv('balanced2_subset.csv', index=False)
+# balanced_df.to_csv('balanced_subset.csv', index=False)
 
 # Let's assume 'balanced_df' has already been prepared up to the shuffling stage and includes 'Path'
 # First, extract patient IDs and prepare the stratification group
@@ -85,21 +85,6 @@ val_df = val_df.drop(columns=['Patient_ID', 'Stratify_Group'])
 test_df = test_df.drop(columns=['Patient_ID', 'Stratify_Group'])
 
 # Save the datasets to CSV files
-train_df.to_csv('balanced_dataset_train.csv', index=False)
-val_df.to_csv('balanced_dataset_val.csv', index=False)
-test_df.to_csv('balanced_dataset_test.csv', index=False)
-
-
-# # Split into train, val and save to a csv file
-# train, remaining = train_test_split(balanced_dataset, train_size=0.7, random_state=0)
-# val, test = train_test_split(remaining, train_size=0.5, random_state=42)  # Split remaining evenly
-
-# idstoremove = get_patient_ids_to_remove(train, pd.concat([val, test]))
-# train = train.drop(idstoremove)
-# train.to_csv(f'{base_filename}_train.csv', index=False)
-
-# idstoremove = get_patient_ids_to_remove(test, val)
-# test = test.drop(idstoremove)
-
-# val.to_csv(f'{base_filename}_val.csv', index=False)
-# test.to_csv(f'{base_filename}_test.csv', index=False)
+train_df.to_csv('../balanced_dataset_train.csv', index=False)
+val_df.to_csv('../balanced_dataset_val.csv', index=False)
+test_df.to_csv('../balanced_dataset_test.csv', index=False)
