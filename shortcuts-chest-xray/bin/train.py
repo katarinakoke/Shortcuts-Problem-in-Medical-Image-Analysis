@@ -19,8 +19,8 @@ from tensorboardX import SummaryWriter
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 
-torch.manual_seed(0)
-torch.cuda.manual_seed_all(0)
+torch.manual_seed(2)
+torch.cuda.manual_seed_all(2)
 
 from data.dataset import ImageDataset  # noqa
 from model.classifier import Classifier  # noqa
