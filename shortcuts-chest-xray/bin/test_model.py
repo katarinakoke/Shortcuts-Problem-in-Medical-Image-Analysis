@@ -111,7 +111,7 @@ def run(args):
 
     model = Classifier(cfg)
     model = DataParallel(model, device_ids=device_ids).to(device).eval()
-    ckpt_path = os.path.join(args.model_path, 'Sex_seed0_lambda1_best1.ckpt')
+    ckpt_path = os.path.join(args.model_path, 'Best_Balanced_Sex_0_01.ckpt')
     ckpt = torch.load(ckpt_path, map_location=device)
     model.module.load_state_dict(ckpt['state_dict'])
 
@@ -136,7 +136,7 @@ def run(args):
     df[model_name_sensitive_score] = pd.Series(sensitive_y_score)
     df[model_name_sensitive_pred] = pd.Series(sensitive_y_pred)
 
-    df.to_csv(os.path.join(args.cfg_pred, 'my_test_with_preds.csv'), index=False)
+    df.to_csv(os.path.join(args.cfg_pred, 'Pred_Balanced_Sex_0_0.csv'), index=False)
 
     print('Save best is step :', ckpt['step'], 'AUC :', ckpt['auc_dev_best'])
 
