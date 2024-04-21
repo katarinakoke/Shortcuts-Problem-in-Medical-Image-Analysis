@@ -16,15 +16,12 @@ def average_precision(y_pred, y_true):
 def main():
 	# A list to store the results
 	results = []
-	count = 0
 
     # Opening the predictions folder
 	for filename in os.listdir('.'):
 
         # Taking the prediction files only
 		if filename.endswith('.csv'):
-			if count >= 2:
-				break
 
 			# Getting the model name
 			model_name = filename.rstrip('.csv')
@@ -54,7 +51,6 @@ def main():
                 'Equalized Odds Difference': eo_difference,
                 'Equalized Odds Ratio': eo_ratio
             })
-			count += 1
 			
     # Saving the results
 	results_df = pd.DataFrame(results)
