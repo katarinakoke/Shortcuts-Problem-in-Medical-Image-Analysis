@@ -1,0 +1,42 @@
+---
+title: "26.02.2024,"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Meeting Notes: 26.02.2024 - Meeting with Amelia
+
+### Questions for Amelia:
+
+- The datasets all have close to 30 thousand:
+    - Random: 60/40 for gender and 8/92 for pneumothorax
+    - Balanced: 50/50 for gender and 50/50 for pneumothorax
+    - Biased: 80/20 for gender and 50/50 for pneumothorax
+    
+    → our idea is to have the random represent the true distribution of the data, while the balanced and biased are arbitrarily  made. biased still has 50/50 for pneumothorax since we want to check how **only** gender impacts the performance/fairness
+    
+- we used to only delete patients with the same id, but now we first do group shuffle to minimize this loss
+- we are doing 5 different lambda values (including baseline) and then changing seeds. currently we have to seed 2 (most of the experiments) and plan to have seed 4
+- For chest drains, we have made the datasets - but the true unknown distribution is a problem
+    - how did she do it for her paper, where could we find such information about the true distribution
+- We are planning to use AUC and Precision-Recall Curve, to measure the performance of the main task
+- Fairness: *read first*
+- more experiments: what are shortcuts? improve the conclusion by experimenting more on shortcuts - the trade off between accuracy and performance
+
+
+### NOTES: 
+
+- Look into other metrics : 
+    - Review of metrics
+    - Fairness: group performance
+    - Equalised Odds is good for our fairness
+
+### IDEAS:
+
+- Train the model without the sensitive attribute head, and fine-tune with the annotations for chest drains
+- Train the model by combining the 3 different datasets (PADCHEST, NIH, CheXpert)
+- Skin lesion dataset
