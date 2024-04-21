@@ -109,7 +109,7 @@ def run(args):
 
     model = Classifier(cfg)
     model = DataParallel(model, device_ids=device_ids).to(device).eval()
-    ckpt_path = os.path.join(args.model_path, 'Best_Biased_Sex_1_pos011.ckpt')
+    ckpt_path = os.path.join(args.model_path, 'Best_Random_Sex_1_0.ckpt')
     ckpt = torch.load(ckpt_path, map_location=device)
     model.module.load_state_dict(ckpt['state_dict'])
 
@@ -134,7 +134,7 @@ def run(args):
     df[model_name_sensitive_score] = pd.Series(sensitive_y_score)
     df[model_name_sensitive_pred] = pd.Series(sensitive_y_pred)
 
-    df.to_csv(os.path.join(args.cfg_pred, 'Pred_Biased_Sex_1_pos01.csv'), index=False)
+    df.to_csv(os.path.join(args.cfg_pred, 'Pred_Random_Sex_1_0.csv'), index=False)
 
     print("base_path: ", cfg.base_path, "\ntrain_csv: ", cfg.train_csv, "\ndev_csv: ", cfg.dev_csv, "\npred_csv: ", cfg.pred_csv, "\npred_model: ", cfg.pred_model)
 
