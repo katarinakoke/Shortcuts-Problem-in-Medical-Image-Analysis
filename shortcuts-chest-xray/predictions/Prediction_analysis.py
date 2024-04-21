@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from sklearn import metrics
 from sklearn.metrics import average_precision_score
@@ -33,7 +34,7 @@ def main():
 
 			y_pred = file['y_pred_Problem_in']
 			y_true = file['Pneumothorax'].map({1.: 1 , 0.: 0, -1.: 0}).fillna(0)
-			sensitive_features = file['Sex']
+			sens_features = file['Sex']
 			
             # Area under the curve
 			auc = area_under_the_curve(y_pred, y_true)
@@ -42,8 +43,8 @@ def main():
 			avg_precision = average_precision(y_pred, y_true)
 			
             # Fairness
-			eo_difference = equalized_odds_difference(y_true, y_pred, sensitive_features)
-			eo_ratio = equalized_odds_ratio(y_true, y_pred, sensitive_features)
+			eo_difference = equalized_odds_difference(y_true, y_pred, sensitive_features=sens_features)
+			eo_ratio = equalized_odds_ratio(y_true, y_pred, sensitive_features=sens_features)
 			
             # Append results for this model to the results list
 			results.append({
@@ -57,7 +58,7 @@ def main():
 			
     # Saving the results
 	results_df = pd.DataFrame(results)
-	results_df.to_csv('model_evaluation_results.csv', index=False)
+	results_df.to_csv('Prediction_analysis.csv', index=False)
 
 if __name__ == '__main__':
 	main()
