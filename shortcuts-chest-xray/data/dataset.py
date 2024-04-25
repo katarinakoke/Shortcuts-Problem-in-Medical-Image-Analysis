@@ -8,7 +8,6 @@ from data.utils import transform
 
 np.random.seed(0)
 
-
 class ImageDataset(Dataset):
     def __init__(self, label_path, cfg, mode='train'):
         self.cfg = cfg
