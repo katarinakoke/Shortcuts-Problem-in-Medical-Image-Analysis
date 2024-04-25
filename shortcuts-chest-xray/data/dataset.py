@@ -32,8 +32,8 @@ class ImageDataset(Dataset):
                 self._senstive_attribute.append(sensitive_attribute)
 
                 image_path = fields[0]
-                # image_path = os.path.join(cfg.base_path, os.path.join(*(image_path.split(os.path.sep)[1:])))
-                image_path = os.path.join(cfg.base_path, image_path)
+                image_path = os.path.join(cfg.base_path, os.path.join(*(image_path.split(os.path.sep)[1:])))
+                # image_path = os.path.join(cfg.base_path, image_path)
                 self._image_paths.append(image_path)
                 assert os.path.exists(image_path), image_path
 
