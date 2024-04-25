@@ -62,6 +62,7 @@ from sklearn.model_selection import GroupShuffleSplit
 
 df = pd.read_csv("datasets/chest_drains_annotations.csv")
 #df.to_csv('../chest_drains_annotations_no_duplicates.csv', index=False)
+df['Pneumothorax'] = df['Finding Labels'].str.contains('Pneumothorax').astype(int) #-- labels as 0 znd 1
 
 # Splitting the dataset into training and remaining (test + validation) with patient-level separation
 gss = GroupShuffleSplit(test_size=0.3, n_splits=1, random_state=42)
