@@ -6,7 +6,7 @@
 #SBATCH --time=00:20:00              # Run time (hh:mm:ss)
 #SBATCH --mem=25G                    # Memory requirement
 #SBATCH --partition=brown            # Use the brown partition
-#SBATCH --gres=gpu:a100_40gb:2             # Request one A100 40GB GPU
+#SBATCH --gres=gpu:a30:3             # Request one A100 40GB GPU
 #SBATCH -N 1                         # Number of nodes
 
 echo "Running on $(hostname):"
