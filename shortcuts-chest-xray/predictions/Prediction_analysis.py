@@ -27,6 +27,7 @@ def main():
 
 			# Getting the model name
 			model_name = filename.rstrip('.csv')
+			print(model_name)
 
 			# Reading the csv file
 			file = pd.read_csv(filename)
@@ -86,7 +87,7 @@ def main():
 	results_df['Lambda'] = results_df['Lambda'].map(lambda_mapping)
 
 	# Saving the csv file
-	results_df.to_csv('Prediction_analysis.csv', index=False)
+	results_df.to_csv('Prediction_analysis_sex.csv', index=False)
 
 if __name__ == '__main__':
 	main()
